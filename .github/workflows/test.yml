@@ -1,0 +1,28 @@
+name: Compile and Run Unit Tests
+
+on:
+  # Triggers the workflow on pull requests to the "master" branch
+  pull_request:
+    branches: [ "master" ]
+
+# This workflow contains one job that builds and tests the code with Gradle (by running all unit tests)
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Java (currently using version 21)
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+      
+      - name: Test with Gradle
+        run: ./gradlew test
