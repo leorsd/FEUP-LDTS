@@ -16,9 +16,8 @@ public class Level implements Scene{
     private Player player2;
     private int xBoundary;
     private int yBoundary;
-    private LevelTutorial levelTutorial;
 
-    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, Player player1, Player player2, int xBoundary, int yBoundary, LevelTutorial levelTutorial) {
+    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, Player player1, Player player2, int xBoundary, int yBoundary) {
         this.walls = walls;
         this.monsters = monsters;
         this.traps = traps;
@@ -26,7 +25,6 @@ public class Level implements Scene{
         this.player2 = player2;
         this.xBoundary = xBoundary;
         this.yBoundary = yBoundary;
-        this.levelTutorial = levelTutorial;
     }
 
     public List<Wall> getWalls() {
