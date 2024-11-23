@@ -106,11 +106,6 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
-    public void drawText(Position position, BufferedImage image) {
-        drawImage(position,image);
-    }
-
-    @Override
     public void drawTrap(Trap trap) {
         drawImage(trap.getPosition(),trap.getImage());
     }
@@ -208,7 +203,7 @@ public class LanternaGUI implements GUI {
         }
     }
 
-    private void drawImage(Position position, BufferedImage image){
+    public void drawImage(Position position, BufferedImage image){
         TextGraphics graphics = screen.newTextGraphics();
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
