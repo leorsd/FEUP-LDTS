@@ -24,8 +24,6 @@ public interface GUI {
 
     void drawTrap(Trap trap);
 
-    void drawText(Position position, BufferedImage image);
-
     void clear();
 
     void refresh() throws IOException;
