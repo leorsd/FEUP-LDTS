@@ -1,4 +1,6 @@
-package Model;
+package Model.Elements.Characters;
+
+import Model.Position;
 
 import java.awt.image.BufferedImage;
 

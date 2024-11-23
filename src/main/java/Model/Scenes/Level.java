@@ -1,4 +1,10 @@
-package Model;
+package Model.Scenes;
+
+import Model.Elements.Characters.Monster;
+import Model.Elements.Characters.Player;
+import Model.Elements.Trap;
+import Model.Elements.Wall;
+import Model.Position;
 
 import java.util.List;
 

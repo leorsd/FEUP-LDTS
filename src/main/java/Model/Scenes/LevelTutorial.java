@@ -1,4 +1,4 @@
-package Model;
+package Model.Scenes;
 
 public class LevelTutorial {
     private String tutorial;

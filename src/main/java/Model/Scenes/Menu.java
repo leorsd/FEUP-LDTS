@@ -1,4 +1,4 @@
-package Model;
+package Model.Scenes;
 
 import java.util.List;
 
