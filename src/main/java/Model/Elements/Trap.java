@@ -8,13 +8,13 @@ public class Trap extends Element{
     private String target;
     private String color;
 
-    Trap(String target, String color, Position position) {
+    public Trap(String target, String color, Position position) {
         super(position, null);
         this.target = target;
         this.color = color;
     }
 
-    Trap(String target, Position position, BufferedImage image) {
+    public Trap(String target, Position position, BufferedImage image) {
         super(position, image);
         this.target = target;
         this.color = null;
