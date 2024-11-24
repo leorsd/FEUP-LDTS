@@ -81,7 +81,7 @@ public class LevelLoader {
     private void readKey(String line) throws IOException {
         String[] parts = line.split(",");
         if (parts.length != 3) {
-            throw new IOException("Key specification needs to be like: x,y,imagePath");
+            throw new IOException("Key specification needs to be like: x, y, imagePath");
         }
         this.keys.add(new Key(new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[2]))));
     }
