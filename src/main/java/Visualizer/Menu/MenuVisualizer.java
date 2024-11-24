@@ -26,7 +26,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         gui.drawImage(new Position(guiWidth-menuimage.getWidth()/2, (int)(guiHeight*0.20)), menuimage);
 
         if (getScene().getEntriesSize() != 2) {
-            throw new FileNotFoundException("Not enough images for the entries of the menu");
+            throw new IOException("Not enough images for the entries of the menu");
         }
 
         BufferedImage arrow = ImageIO.read(new File("resources/images/arrow.png"));
