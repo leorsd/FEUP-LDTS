@@ -1,0 +1,54 @@
+300, 300, resources/Images/Background1.png
+
+0, 290, 9, 9, resources/Images/Lavena.png
+
+9, 290, 9, 9, resources/Images/Tergon.png
+
+0, 0, resources/Images/Key1.png
+
+200, 290, 9, 9, resources/Images/Monster1.png
+240, 290, 9, 9, resources/Images/Monster1.png
+270, 290, 9, 9, resources/Images/Monster1.png
+
+150, 150, Lavena
+
+250, 0
+250, 1
+250, 2
+250, 3
+250, 4
+250, 5
+250, 6
+250, 7
+250, 8
+250, 10
+250, 11
+250, 12
+250, 13
+250, 14
+250, 15
+250, 16
+250, 17
+250, 18
+250, 19
+250, 20
+251, 0
+251, 1
+251, 2
+251, 3
+251, 4
+251, 5
+251, 6
+251, 7
+251, 8
+251, 10
+251, 11
+251, 12
+251, 13
+251, 14
+251, 15
+251, 16
+251, 17
+251, 18
+251, 19
+251, 20

@@ -1,0 +1,31 @@
+Text files to describe the configuration of a level should contain the comma separated positions of all elements. Players and
+monsters also need to specify size in x and y directions. Traps need to specify their target. Players, keys and monsters need
+to specify the path to the image to use when drawing them. Each element gets one line and elements of different types are separated by an empty line.
+The file starts by indicating the size of the level size and path to background image (x,y,image) followed by an empty line and only then the elements.
+Two empty lines indicate that there's no element of that kind. The order of types of elements is the following:
+Player1, Player2, Keys, Monsters, Traps, Walls.
+
+Example:
+
+"
+levelSize.x, levelSize.y, backgroundImage
+
+player1.x, player1.y, size.x, size.y, image
+
+player2.x, player2.y, size.x, size.y, image
+
+key1.x, key1.y, image
+key2.x, key2.y, image
+
+monster1.x, monster1.y, size.x, size.y, image
+monster2.x, monster2.y, size.x, size.y, image
+monster3.x, monster3.y, size.x, size.y, image
+monster4.x, monster4.y, size.x, size.y, image
+
+trap1.x, trap1.y, target
+
+wall1.x, wall1.y
+wall2.x, wall2.y
+wall3.x, wall3.y
+wall4.x, wall4.y
+"
