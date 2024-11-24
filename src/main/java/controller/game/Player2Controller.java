@@ -14,7 +14,7 @@ public class Player2Controller extends Controller<Level> {
     }
 
     public void movePlayer2Left() {
-        Position desiredPosition = new Position(getModel().getPlayer2().getPosition().getX() - 1, getModel().getPlayer2().getPosition().getY() + 1);
+        Position desiredPosition = new Position(getModel().getPlayer2().getPosition().getX() - 1, getModel().getPlayer2().getPosition().getY());
         movePlayer(desiredPosition);
     }
 
