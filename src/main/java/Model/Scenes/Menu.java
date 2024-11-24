@@ -17,14 +17,18 @@ public class Menu implements Scene{
     }
 
     public void selectNextEntry() {
+        if (entries.isEmpty()) return;
         highlightedEntryIndex = (highlightedEntryIndex + 1) % entries.size();
     }
 
     public void selectPreviousEntry() {
+        if (entries.isEmpty()) return;
         highlightedEntryIndex = (highlightedEntryIndex - 1) % entries.size();
     }
 
     public String getHighlightedEntry() {
+        if (entries.isEmpty())
+            return null;
         return entries.get(highlightedEntryIndex);
     }
 }
