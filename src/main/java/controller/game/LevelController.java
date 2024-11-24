@@ -41,13 +41,20 @@ public class LevelController extends Controller<Level> {
             gameManager.setCurrentScene(new Menu());
             return;
         }
+        System.out.println("Bounds: " + getModel().getxBoundary() + " " + getModel().getyBoundary());
+        System.out.println("player1 position: " + getModel().getPlayer1().getPosition().getX() + " " + getModel().getPlayer1().getPosition().getY());
+        System.out.println("player2 position: " + getModel().getPlayer2().getPosition().getX() + " " + getModel().getPlayer2().getPosition().getY());
+        if (!(actions.contains(GUI.ACTION.UP) || actions.contains(GUI.ACTION.DOWN) || actions.contains(GUI.ACTION.LEFT) || actions.contains(GUI.ACTION.RIGHT))) {
+            player1Controller.update(gameManager, Set.of(GUI.ACTION.DOWN), updateTime);
+        }
+        if (!(actions.contains(GUI.ACTION.W) || actions.contains(GUI.ACTION.S) || actions.contains(GUI.ACTION.A) || actions.contains(GUI.ACTION.D))) {
+            player2Controller.update(gameManager, Set.of(GUI.ACTION.S), updateTime);
+        }
         for (GUI.ACTION action : actions) {
             if (action == GUI.ACTION.UP || action == GUI.ACTION.RIGHT || action == GUI.ACTION.DOWN || action == GUI.ACTION.LEFT) {
-                player2Controller.update(gameManager, Set.of(GUI.ACTION.S), updateTime);
                 player1Controller.update(gameManager, Set.of(action), updateTime);
             }
             if (action == GUI.ACTION.W || action == GUI.ACTION.D || action == GUI.ACTION.S || action == GUI.ACTION.A) {
-                player1Controller.update(gameManager, Set.of(GUI.ACTION.DOWN), updateTime);
                 player2Controller.update(gameManager, Set.of(action), updateTime);
             }
         }

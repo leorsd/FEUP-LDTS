@@ -42,10 +42,11 @@ public class Player1Controller extends Controller<Level> {
         int playerSizeY = getModel().getPlayer1().getSizeY();
         for (int i = 0; i < playerSizeX; i++) {
             for (int j = 0; j < playerSizeY; j++) {
-                if (!getModel().isPositionFree(new Position(getModel().getPlayer1().getPosition().getX(),
-                        getModel().getPlayer1().getPosition().getY() ))) return;
+                if (!getModel().isPositionFree(new Position(getModel().getPlayer1().getPosition().getX() + i,
+                        getModel().getPlayer1().getPosition().getY() + j))) return;
             }
         }
+        getModel().getPlayer1().setPosition(position);
     }
 
     @Override
