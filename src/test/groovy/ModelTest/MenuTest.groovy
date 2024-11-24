@@ -3,52 +3,90 @@ import Model.Scenes.Menu
 
 class MenuTest extends Specification {
 
-    def "test menu with entries"() {
-        given: "a menu with 3 entries"
-        def entries = ['Play', 'Settings', 'Exit']
+    def "should correctly highlight the next entry"() {
+        given:"a Menu with three entries"
+        def entries = ["Entry1", "Entry2", "Entry3"]
         def menu = new Menu(entries)
 
-        expect: "the first entry is highlighted by default"
-        menu.getHighlightedEntry() == 'Play'
-        menu.getHighlightedEntryIndex() == 0
-
-        when: "selecting the next entry"
+        when:"selectNextEntry is called"
         menu.selectNextEntry()
 
-        then: "the second entry should be highlighted"
-        menu.getHighlightedEntry() == 'Settings'
+        then:"the highlighted entry should be the second one"
         menu.getHighlightedEntryIndex() == 1
+        menu.getHighlightedEntry() == "Entry2"
 
-        when: "selecting next twice (cycling through the entries)"
-        menu.selectNextEntry()
+        when:"selectNextEntry is called again"
         menu.selectNextEntry()
 
-        then: "the first entry should be highlighted again"
-        menu.getHighlightedEntry() == 'Play'
+        then:"the highlighted entry should be the third one"
+        menu.getHighlightedEntryIndex() == 2
+        menu.getHighlightedEntry() == "Entry3"
+
+        when:"selectNextEntry is called again (wrapping around)"
+        menu.selectNextEntry()
+
+        then:"the highlighted entry should be the first one"
         menu.getHighlightedEntryIndex() == 0
-
-        when: "selecting next and then previous entry"
-        menu.selectNextEntry()
-        menu.selectPreviousEntry()
-
-        then: "the first entry should still be highlighted"
-        menu.getHighlightedEntryIndex() == 0
-        menu.getHighlightedEntry() == 'Play'
+        menu.getHighlightedEntry() == "Entry1"
     }
 
-    def "test menu without entries"() {
-        given: "a menu with no entries"
-        def menu = new Menu()
+    def "should correctly highlight the previous entry"() {
+        given:"a Menu with three entries"
+        def entries = ["Entry1", "Entry2", "Entry3"]
+        def menu = new Menu(entries)
 
-        expect: "there should be no highlighted entry"
-        menu.getHighlightedEntry() == null
-        menu.getEntriesSize() == 0
-
-        when: "trying to select next or previous entry"
-        menu.selectNextEntry()
+        when:"selectPreviousEntry is called (wrapping around)"
         menu.selectPreviousEntry()
 
-        then: "no exception should be thrown and still no entry should be selected"
+        then:"the highlighted entry should be the last one"
+        menu.getHighlightedEntryIndex() == 2
+        menu.getHighlightedEntry() == "Entry3"
+
+        when:"selectPreviousEntry is called again"
+        menu.selectPreviousEntry()
+
+        then:"the highlighted entry should be the second one"
+        menu.getHighlightedEntryIndex() == 1
+        menu.getHighlightedEntry() == "Entry2"
+
+        when:"selectPreviousEntry is called again"
+        menu.selectPreviousEntry()
+
+        then:"the highlighted entry should be the first one"
+        menu.getHighlightedEntryIndex() == 0
+        menu.getHighlightedEntry() == "Entry1"
+    }
+
+    def "should return null if trying to get highlighted entry when no entries exist"() {
+        given:"a Menu with no entries"
+        def menu = new Menu([])
+
+        expect:"getHighlightedEntry should return null"
         menu.getHighlightedEntry() == null
+    }
+
+    def "should correctly return the number of entries"() {
+        given:"a Menu with specific entries"
+        def entries = ["Entry1", "Entry2", "Entry3"]
+        def menu = new Menu(entries)
+
+        expect:"getEntriesSize should return the number of entries"
+        menu.getEntriesSize() == 3
+    }
+
+    def "should handle initialization with default entries"() {
+        given:"a Menu initialized without entries"
+        def menu = new Menu()
+
+        expect:"the Menu should have default entries"
+        menu.getEntriesSize() == 2
+        menu.getHighlightedEntry() == "src/main/resources/Levels/level1"
+
+        when:"select the next entry"
+        menu.selectNextEntry()
+
+        then:"it should highlight the second one"
+        menu.getHighlightedEntry() == "EXIT"
+
     }
 }
