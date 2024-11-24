@@ -30,32 +30,40 @@ import java.util.HashSet;
 import static GUI.GUI.ACTION.*;
 
 public class LanternaGUI implements GUI {
+    private final AWTTerminalFrame terminalFrame;
     private final Screen screen;
     private final HashSet<ACTION> inputs = new HashSet<>();
 
     public LanternaGUI(int width, int height) throws IOException, FontFormatException, URISyntaxException {
         AWTTerminalFontConfiguration fontConfig = loadSquareFont();
-        Terminal terminal = createTerminal(width, height, fontConfig);
-        this.screen = createScreen(terminal);
+        this.terminalFrame = createAWTTerminalFrame(width, height, fontConfig);
+        this.screen = createScreen(terminalFrame); // Pass the terminalFrame directly
         initializeKeyListener();
     }
 
     private Screen createScreen(Terminal terminal) throws IOException {
-        final Screen screen;
-        screen = new TerminalScreen(terminal);
-
+        Screen screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
         return screen;
     }
 
-    private Terminal createTerminal(int width, int height, AWTTerminalFontConfiguration fontConfig) throws IOException {
+    private AWTTerminalFrame createAWTTerminalFrame(int width, int height, AWTTerminalFontConfiguration fontConfig) throws IOException {
         TerminalSize terminalSize = new TerminalSize(width, height);
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-        terminalFactory.setForceAWTOverSwing(true);
-        terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
-        return terminalFactory.createTerminal();
+        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
+                .setForceAWTOverSwing(true)
+                .setInitialTerminalSize(terminalSize)
+                .setTerminalEmulatorFontConfiguration(fontConfig);
+
+        Terminal terminal = terminalFactory.createTerminal();
+        if (terminal instanceof AWTTerminalFrame) {
+            AWTTerminalFrame frame = (AWTTerminalFrame) terminal;
+            frame.setVisible(true);
+            return frame;
+        } else {
+            throw new IllegalStateException("Terminal is not an instance of AWTTerminalFrame");
+        }
     }
 
     private AWTTerminalFontConfiguration loadSquareFont() throws URISyntaxException, FontFormatException, IOException {
@@ -67,12 +75,10 @@ public class LanternaGUI implements GUI {
         ge.registerFont(font);
 
         Font loadedFont = font.deriveFont(Font.PLAIN, 5);
-        AWTTerminalFontConfiguration fontConfig = AWTTerminalFontConfiguration.newInstance(loadedFont);
-        return fontConfig;
+        return AWTTerminalFontConfiguration.newInstance(loadedFont);
     }
 
     private void initializeKeyListener() {
-        AWTTerminalFrame terminalFrame = (AWTTerminalFrame) screen;
         terminalFrame.getComponent(0).addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -84,7 +90,6 @@ public class LanternaGUI implements GUI {
             }
         });
     }
-
     @Override
     public int getGUIWidth() {
         return screen.getTerminalSize().getColumns();

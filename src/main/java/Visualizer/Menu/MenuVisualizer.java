@@ -21,22 +21,38 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
     public void drawElements(GUI gui) throws IOException {
         int guiWidth= gui.getGUIWidth();
         int guiHeight= gui.getGUIHeight();
-
-        BufferedImage menuimage = ImageIO.read(new File("resources/images/menu.png"));
+        File menuFile = new File("src/main/resources/images/menu.png");
+        BufferedImage menuimage = null;
+        try {
+            menuimage = ImageIO.read(menuFile);
+        } catch (IOException e) {
+            System.out.println("Menu failed to load");
+        }
         gui.drawImage(new Position((guiWidth-menuimage.getWidth())/2, (int)(guiHeight*0.20)), menuimage);
 
         if (getScene().getEntriesSize() != 2) {
             throw new IOException("Not enough images for the entries of the menu");
         }
 
-        BufferedImage arrow = ImageIO.read(new File("resources/images/arrow.png"));
+        BufferedImage arrow = null;
+        try {
+            arrow = ImageIO.read(new File("src/main/resources/images/arrow.png"));
+        } catch (IOException e) {
+            System.out.println("Failed arrow");
+        }
+
         for (int i = 0; i < getScene().getEntriesSize(); i++) {
-            BufferedImage image = ImageIO.read(new File("resources/images/option"+i+".png"));
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new File("src/main/resources/images/option" + i + ".png"));
+            } catch (IOException e) {
+                System.out.println("Failed option");
+            }
             if (i == getScene().getHighlightedEntryIndex()) {
-                gui.drawImage(new Position(guiWidth-image.getWidth()/2, (int)(guiHeight*(0.40+0.10*i))), image);
-                gui.drawImage(new Position((guiWidth-image.getWidth()/2)-50, (int)(guiHeight*(0.40+0.10*i))), arrow);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.40+0.10*i))), image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2-50, (int)(guiHeight*(0.40+0.10*i))), arrow);
             }else{
-                gui.drawImage(new Position(guiWidth-image.getWidth()/2,(int)(guiHeight*(0.40+0.10*i))),image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.40+0.10*i))),image);
             }
         }
     }

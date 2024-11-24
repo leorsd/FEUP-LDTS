@@ -56,8 +56,8 @@ public class LevelLoader {
         if (parts.length != 5) {
             throw new IOException("Player 1 specification needs to be like: x, y, sizeX, sizeY, imagePath");
         } else {
-            player1 = new Player("Lavena", Integer.parseInt(parts[3]), Integer.parseInt(parts[4]),
-                    new Position(Integer.parseInt(parts[3]), Integer.parseInt(parts[4])), ImageIO.read(new File(parts[4])));
+            player1 = new Player("Lavena", Integer.parseInt(parts[2]), Integer.parseInt(parts[3]),
+                    new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])));
         }
     }
 
@@ -73,8 +73,8 @@ public class LevelLoader {
         if (parts.length != 5) {
             throw new IOException("Player 2 specification needs to be like: x, y, sizeX, sizeY, imagePath");
         } else {
-            player2 = new Player("Tergon", Integer.parseInt(parts[3]), Integer.parseInt(parts[4]),
-                    new Position(Integer.parseInt(parts[3]), Integer.parseInt(parts[4])), ImageIO.read(new File(parts[4])));
+            player2 = new Player("Tergon", Integer.parseInt(parts[2]), Integer.parseInt(parts[3]),
+                    new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])));
         }
     }
 
@@ -100,7 +100,7 @@ public class LevelLoader {
         if (parts.length != 3) {
             throw new IOException("Trap specification needs to be like: x,y, target");
         }
-        this.traps.add(new Trap(parts[2], "Black", new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]))));
+        this.traps.add(new Trap(parts[2], new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File("src/main/resources/images/trap.png"))));
     }
 
     private void readWall(String line) throws IOException {
@@ -108,14 +108,25 @@ public class LevelLoader {
         if (parts.length != 2) {
             throw new IOException("Wall specification needs to be like: x,y");
         }
-        this.walls.add(new Wall(new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), null));
+        this.walls.add(new Wall(new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File("src/main/resources/images/wall.png"))));
     }
 
     public Level loadLevel(String levelName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(levelName))) {
+        try {
+            FileReader f = new FileReader(levelName);
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(levelName));
             readLevelSize(br);
+            String empty = br.readLine();
             readPlayer1(br);
+            empty = br.readLine();
             readPlayer2(br);
+            empty = br.readLine();
 
             while (true) {
                 String line = br.readLine();
@@ -155,7 +166,7 @@ public class LevelLoader {
                 readWall(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error while trying to load level");
         }
         return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary);
     }

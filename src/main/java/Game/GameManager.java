@@ -44,10 +44,14 @@ public class GameManager {
         }
     }
 
-    public void step(GUI gui, long currentTime) throws IOException {
+    public boolean step(GUI gui, long currentTime) throws IOException {
+        if (currentScene == null) {
+            return false;
+        }
         if (controller!=null) controller.update(this, gui.getNextAction(), currentTime);
         if (sceneVisualizer != null) {
             sceneVisualizer.draw(gui);
         }
+        return true;
     }
 }
