@@ -24,6 +24,12 @@ public interface GUI {
 
     void drawTrap(Trap trap);
 
+    void drawImage(Position position, BufferedImage image);
+
+    int getGUIWidth();
+
+    int getGUIHeight();
+
     void clear();
 
     void refresh() throws IOException;
