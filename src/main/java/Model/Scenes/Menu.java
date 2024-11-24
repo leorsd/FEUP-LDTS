@@ -21,4 +21,12 @@ public class Menu implements Scene{
     public String getHighlightedEntry() {
         return entries.get(highlightedEntryIndex);
     }
+
+    public int getEntriesSize() {
+        return entries.size();
+    }
+
+    public int getHighlightedEntryIndex() {
+        return highlightedEntryIndex;
+    }
 }
