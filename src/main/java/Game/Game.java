@@ -14,7 +14,7 @@ public class Game {
     private GameManager gameManager;
 
     private Game() throws FontFormatException, IOException, URISyntaxException {
-        this.gui = new LanternaGUI(300, 300);
+        this.gui = new LanternaGUI(200, 200);
         this.gameManager = new GameManager(new Menu());
     }
 
@@ -39,13 +39,14 @@ public class Game {
     }
 
     private void start() throws IOException {
-        int FPS = 10;
+        int FPS = 20;
         int frameTime = 1000 / FPS;
+        boolean running = true;
 
-        while (this.gameManager != null) {
+        while (running) {
             long startTime = System.currentTimeMillis();
 
-            gameManager.step(gui, startTime);
+            running = gameManager.step(gui, startTime);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = frameTime - elapsedTime;

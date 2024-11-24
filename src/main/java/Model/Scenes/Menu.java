@@ -1,6 +1,7 @@
 package Model.Scenes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Menu implements Scene{
@@ -12,7 +13,7 @@ public class Menu implements Scene{
     }
 
     public Menu() {
-        this.entries = new ArrayList<>();
+        this.entries = Arrays.asList("src/main/resources/Levels/level1", "EXIT");
         // TODO: read default entries from file
     }
 
@@ -23,7 +24,11 @@ public class Menu implements Scene{
 
     public void selectPreviousEntry() {
         if (entries.isEmpty()) return;
-        highlightedEntryIndex = (highlightedEntryIndex - 1) % entries.size();
+        if (highlightedEntryIndex == 0) {
+            highlightedEntryIndex = entries.size() - 1;
+        } else {
+            highlightedEntryIndex = (highlightedEntryIndex - 1) % entries.size();
+        }
     }
 
     public String getHighlightedEntry() {
