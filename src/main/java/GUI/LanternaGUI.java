@@ -86,6 +86,16 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
+    public int getGUIWidth() {
+        return screen.getTerminalSize().getColumns();
+    }
+
+    @Override
+    public int getGUIHeight() {
+        return screen.getTerminalSize().getRows();
+    }
+
+    @Override
     public void drawPlayer(Player player) {
         drawImage(player.getPosition(),player.getImage());
     }

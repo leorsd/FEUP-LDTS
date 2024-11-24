@@ -31,4 +31,12 @@ public class Menu implements Scene{
             return null;
         return entries.get(highlightedEntryIndex);
     }
+
+    public int getEntriesSize() {
+        return entries.size();
+    }
+
+    public int getHighlightedEntryIndex() {
+        return highlightedEntryIndex;
+    }
 }

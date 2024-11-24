@@ -157,6 +157,6 @@ public class LevelLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Level(walls, this.monsters, this.traps, this.player1, this.player2, this.xBoundary, this.yBoundary);
+        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary);
     }
 }
