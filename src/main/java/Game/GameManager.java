@@ -4,6 +4,9 @@ import Model.Scenes.Level;
 import Model.Scenes.Menu;
 import Model.Scenes.Scene;
 import GUI.GUI;
+import Visualizer.Level.LevelVisualizer;
+import Visualizer.Menu.MenuVisualizer;
+import Visualizer.SceneVisualizer;
 import controller.Controller;
 import controller.game.LevelController;
 import controller.menu.MenuController;
@@ -13,17 +16,17 @@ import java.io.IOException;
 public class GameManager {
     Scene currentScene;
     Controller<? extends Scene> controller; // Java requires keyword "extends" even though Scene is an interface
-    // TODO: add scene viewer
-
+    SceneVisualizer<? extends Scene> sceneVisualizer;
 
     public GameManager(Scene currentScene) {
         this.currentScene = currentScene;
         if (currentScene instanceof Menu) {
             controller = new MenuController((Menu) currentScene);
+            sceneVisualizer = new MenuVisualizer((Menu) currentScene);
         } else if (currentScene instanceof Level) {
             controller = new LevelController((Level) currentScene);
+            sceneVisualizer = new LevelVisualizer((Level) currentScene);
         }
-        // TODO: initialize scene viewer as well
     }
 
     public Scene getCurrentScene() {
@@ -34,14 +37,17 @@ public class GameManager {
         this.currentScene = currentScene;
         if (currentScene instanceof Menu) {
             controller = new MenuController((Menu) currentScene);
+            sceneVisualizer = new MenuVisualizer((Menu) currentScene);
         } else if (currentScene instanceof Level) {
             controller = new LevelController((Level) currentScene);
+            sceneVisualizer = new LevelVisualizer((Level) currentScene);
         }
-        // TODO: scene viewer as well
     }
 
     public void step(GUI gui, long currentTime) throws IOException {
-        // TODO: implement call to viewer
         if (controller!=null) controller.update(this, gui.getNextAction(), currentTime);
+        if (sceneVisualizer != null) {
+            sceneVisualizer.draw(gui);
+        }
     }
 }
