@@ -1,5 +1,6 @@
 package Model.Scenes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menu implements Scene{
@@ -8,6 +9,11 @@ public class Menu implements Scene{
 
     public Menu(List<String> entries) {
         this.entries = entries;
+    }
+
+    public Menu() {
+        this.entries = new ArrayList<>();
+        // TODO: read default entries from file
     }
 
     public void selectNextEntry() {

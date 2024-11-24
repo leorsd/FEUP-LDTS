@@ -62,7 +62,7 @@ public class Level implements Scene{
         return yBoundary;
     }
 
-    boolean isPositionFree(Position position) {
+    public boolean isPositionFree(Position position) {
         if (position.getX() < 0 || position.getX() >= xBoundary) {
             return false;
         }
