@@ -6,9 +6,9 @@
 
 0,0,src/main/resources/images/key.png
 
-100,190,9,9,src/main/resources/images/player1.png
-140,190,9,9,src/main/resources/images/player1.png
-170,190,9,9,src/main/resources/images/player1.png
+100,191,9,9,src/main/resources/images/monster.png
+140,191,9,9,src/main/resources/images/monster.png
+170,191,9,9,src/main/resources/images/monster.png
 
 150,150,Lavena
 

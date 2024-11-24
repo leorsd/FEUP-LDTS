@@ -41,9 +41,6 @@ public class LevelController extends Controller<Level> {
             gameManager.setCurrentScene(new Menu());
             return;
         }
-        System.out.println("Bounds: " + getModel().getxBoundary() + " " + getModel().getyBoundary());
-        System.out.println("player1 position: " + getModel().getPlayer1().getPosition().getX() + " " + getModel().getPlayer1().getPosition().getY());
-        System.out.println("player2 position: " + getModel().getPlayer2().getPosition().getX() + " " + getModel().getPlayer2().getPosition().getY());
         if (!(actions.contains(GUI.ACTION.UP) || actions.contains(GUI.ACTION.DOWN) || actions.contains(GUI.ACTION.LEFT) || actions.contains(GUI.ACTION.RIGHT))) {
             player1Controller.update(gameManager, Set.of(GUI.ACTION.DOWN), updateTime);
         }

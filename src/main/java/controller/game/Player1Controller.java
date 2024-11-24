@@ -14,26 +14,22 @@ public class Player1Controller extends Controller<Level> {
     }
 
     public void movePlayer1Left() {
-        Position desiredPosition = getModel().getPlayer1().getPosition();
-        desiredPosition.setX(desiredPosition.getX() - 1);
+        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX() - 1, getModel().getPlayer1().getPosition().getY());
         movePlayer(desiredPosition);
     }
 
     public void movePlayer1Right() {
-        Position desiredPosition = getModel().getPlayer1().getPosition();
-        desiredPosition.setX(desiredPosition.getX() + 1);
+        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX() + 1, getModel().getPlayer1().getPosition().getY());
         movePlayer(desiredPosition);
     }
 
     public void movePlayer1Up() {
-        Position desiredPosition = getModel().getPlayer1().getPosition();
-        desiredPosition.setY(desiredPosition.getY() - 1);
+        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() - 1);
         movePlayer(desiredPosition);
     }
 
     public void movePlayer1Down() {
-        Position desiredPosition = getModel().getPlayer1().getPosition();
-        desiredPosition.setY(desiredPosition.getY() + 1);
+        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() + 1);
         movePlayer(desiredPosition);
     }
 
@@ -42,8 +38,7 @@ public class Player1Controller extends Controller<Level> {
         int playerSizeY = getModel().getPlayer1().getSizeY();
         for (int i = 0; i < playerSizeX; i++) {
             for (int j = 0; j < playerSizeY; j++) {
-                if (!getModel().isPositionFree(new Position(getModel().getPlayer1().getPosition().getX() + i,
-                        getModel().getPlayer1().getPosition().getY() + j))) return;
+                if (!(getModel().isPositionFree(new Position(position.getX() + i, position.getY() + j)))) return;
             }
         }
         getModel().getPlayer1().setPosition(position);
