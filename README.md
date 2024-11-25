@@ -138,10 +138,10 @@ This pattern can be broken down into five steps that repeat continuously. First,
 
 ## 🤝 Development
 
-To further improve and guarantee the quality of the software, we use additional tools, namely branch protection, [Github Actions](.github/workflows/test.yml), and peer reviews.
+To further improve and guarantee the quality of the software, we use additional tools, namely branch protection, [Github Actions](https://github.com/features/actions), and peer reviews.
 
 To protect the master branch and ensure no code breaks it, we enforce a set of rules that, among other things requires pull requests with 2 approving reviews to be merged.
-All pull requests must pass a [Github Action](.github/workflows/test.yml) that compiles the code and tuns the unit tests. Furthermore, all pull requests must be approved by the other group members before being merged.  
+All pull requests to the branch `master` must pass a [Github Action](.github/workflows/test.yml) that compiles the code and tuns the unit tests. Those pull requests must be approved by the other group members before being merged.  
 
 We use feature and fix branches, and commonly used naming conventions on branches and commits.
 
@@ -151,7 +151,7 @@ We use feature and fix branches, and commonly used naming conventions on branche
 * Additional collectibles for replayability (e.g., coins or artifacts).
 * Power-Ups
 * Check collisions with traps and keys, and act upon them
-* Detect collisions with monsters when any of the character's pixels coincide and not only when the base position is equal
+* Detect collisions with monsters when any of the characters' pixels coincide and not only when the base position is equal
 * Include size in keys, traps, and walls
 * Have better images for elements and background
 * Add level-ending logics
