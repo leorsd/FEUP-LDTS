@@ -47,7 +47,10 @@ public class Player1Controller extends Controller<Level> {
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
         for (GUI.ACTION action : actions) {
-            if (action == GUI.ACTION.UP) movePlayer1Up();
+            if (action == GUI.ACTION.UP) {
+                movePlayer1Up();
+                movePlayer1Up();
+            }
             if (action == GUI.ACTION.RIGHT) movePlayer1Right();
             if (action == GUI.ACTION.DOWN) movePlayer1Down();
             if (action == GUI.ACTION.LEFT) movePlayer1Left();
