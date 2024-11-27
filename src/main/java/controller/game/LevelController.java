@@ -2,7 +2,8 @@ package controller.game;
 
 import Game.GameManager;
 import Model.Elements.Characters.Monster;
-import Model.Position;
+import Model.Elements.Characters.Player;
+import Model.Elements.Trap;
 import Model.Scenes.Level;
 import Model.Scenes.Menu;
 import controller.Controller;
@@ -25,14 +26,16 @@ public class LevelController extends Controller<Level> {
     }
 
     private boolean checkDeadPlayers(GameManager gameManager) {
-        Position player1Position = getModel().getPlayer1().getPosition();
-        Position player2Position = getModel().getPlayer2().getPosition();
+        Player player1 = getModel().getPlayer1();
+        Player player2 = getModel().getPlayer2();
+        boolean result = false;
         for (Monster monster : getModel().getMonsters()) {
-            if (monster.getPosition().equals(player1Position) || monster.getPosition().equals(player2Position)) {
-                return true;
-            }
+            result |= player1.hasCollidedWith(monster) || player2.hasCollidedWith(monster);
         }
-        return false;
+        for (Trap trap : getModel().getTraps()) {
+            result |= (player1.hasCollidedWith(trap) && player1.getName().equals(trap.getTarget())) || (player2.hasCollidedWith(trap) && player2.getName().equals(trap.getTarget()));
+        }
+        return result;
     }
 
     @Override

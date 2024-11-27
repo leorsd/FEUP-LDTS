@@ -4,11 +4,11 @@ import Model.Position;
 
 import java.awt.image.BufferedImage;
 
-public class Player extends Character{
+public class Player extends Character {
     private String name;
 
     public Player(String name, int sizeX, int sizeY, Position position, BufferedImage image) {
-        super(sizeX, sizeY, position, image);
+        super(position, image, sizeX, sizeY);
         this.name = name;
     }
 
