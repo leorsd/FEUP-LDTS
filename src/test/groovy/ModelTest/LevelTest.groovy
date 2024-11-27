@@ -27,7 +27,7 @@ class LevelTest extends Specification {
         given: "a level with one wall"
         def player1 = Mock(Player)
         def player2 = Mock(Player)
-        def wall = new Wall(null, new Position(5, 5))
+        def wall = new Wall(new Position(5, 5), null, 0, 0)
         def walls = [wall]
         def monsters = []
         def traps = []

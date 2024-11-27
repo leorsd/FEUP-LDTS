@@ -6,18 +6,11 @@ import java.awt.image.BufferedImage;
 
 public class Trap extends Element{
     private String target;
-    private String color;
 
-    public Trap(String target, String color, Position position) {
-        super(position, null);
-        this.target = target;
-        this.color = color;
-    }
 
-    public Trap(String target, Position position, BufferedImage image) {
-        super(position, image);
+    public Trap(String target, Position position, BufferedImage image, int sizeX, int sizeY) {
+        super(position, image, sizeX, sizeY);
         this.target = target;
-        this.color = null;
     }
 
     public String getTarget() {
@@ -26,15 +19,5 @@ public class Trap extends Element{
 
     public void setTarget(String target) {
         this.target = target;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        if (color!=null) {
-            this.color = color;
-        }
     }
 }

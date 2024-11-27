@@ -4,11 +4,11 @@ import Model.Position;
 
 import java.awt.image.BufferedImage;
 
-public class Monster extends Character{
+public class Monster extends Character {
     private int health;
 
-    public Monster(int health, int sizeX, int sizeY, Position position, BufferedImage image) {
-        super(sizeX, sizeY, position, image);
+    public Monster(int health, Position position, BufferedImage image, int sizeX, int sizeY) {
+        super(position, image, sizeX, sizeY);
         this.health = health;
     }
 
