@@ -30,10 +30,10 @@ public class LevelController extends Controller<Level> {
         Player player2 = getModel().getPlayer2();
         boolean result = false;
         for (Monster monster : getModel().getMonsters()) {
-            result |= player1.hasCollidedWith(monster) || player2.hasCollidedWith(monster);
+            result |= player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY()) || player2.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
         }
         for (Trap trap : getModel().getTraps()) {
-            result |= (player1.hasCollidedWith(trap) && player1.getName().equals(trap.getTarget())) || (player2.hasCollidedWith(trap) && player2.getName().equals(trap.getTarget()));
+            result |= (player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player1.getName().equals(trap.getTarget())) || (player2.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player2.getName().equals(trap.getTarget()));
         }
         return result;
     }
