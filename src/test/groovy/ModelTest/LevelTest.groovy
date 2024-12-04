@@ -21,7 +21,7 @@ class LevelTest extends Specification {
         def player2 = new Player("Tergon",1,1, new Position(6, 6), null)
 
         when:"a Level is created"
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10, null)
 
         then:"all elements should be initialized correctly"
         level.getWalls() == walls
@@ -94,7 +94,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0,null)
 
         expect: "no position should be free"
         !level.isPositionFree(new Position(0, 0))
