@@ -8,6 +8,7 @@ import Model.Elements.Wall;
 import Model.Position;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ import java.util.List;
 public class LevelLoader {
     Integer xBoundary = null;
     Integer yBoundary = null;
-    BufferedImage bi = null;
+    BufferedImage wallBackground = null;
+    BufferedImage background = null;
 
     Player player1;
     Player player2;
@@ -25,6 +27,18 @@ public class LevelLoader {
     List<Key> keys = new ArrayList<>();
     List<Monster> monsters = new ArrayList<>();
     List<Trap> traps = new ArrayList<>();
+
+    private BufferedImage cropImage(int xPos, int yPos, int width, int height) {
+        return wallBackground.getSubimage(xPos, yPos, width, height);
+    }
+
+    public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
+        BufferedImage resizedImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, width, height, null);
+        g.dispose();
+        return resizedImage;
+    }
 
     private void readLevelSize(BufferedReader br) throws IOException {
         String line = br.readLine();
@@ -35,12 +49,15 @@ public class LevelLoader {
 
         String[] parts = line.split(",");
 
-        if (parts.length != 3) {
+        if (parts.length != 4) {
             throw new IOException("Level size needs to be like: x,y,imagePath");
         } else {
             xBoundary = Integer.parseInt(parts[0]);
             yBoundary = Integer.parseInt(parts[1]);
-            bi = ImageIO.read(new File(parts[2]));
+            wallBackground = ImageIO.read(new File(parts[2]));
+            background = ImageIO.read(new File(parts[3]));
+            wallBackground = resizeImage(wallBackground,xBoundary,yBoundary);
+            background = resizeImage(background,xBoundary,yBoundary);
         }
     }
 
@@ -104,10 +121,14 @@ public class LevelLoader {
 
     private void readWall(String line) throws IOException {
         String[] parts = line.split(",");
-        if (parts.length != 5) {
-            throw new IOException("Wall specification needs to be like: x,y,sizeX,sizeY,imagePath");
+        if (parts.length != 4) {
+            throw new IOException("Wall specification needs to be like: x,y,sizeX,sizeY");
         }
-        this.walls.add(new Wall(new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
+        int xPos = Integer.parseInt(parts[0]);
+        int yPos = Integer.parseInt(parts[1]);
+        int width = Integer.parseInt(parts[2]);
+        int height = Integer.parseInt(parts[3]);
+        this.walls.add(new Wall(new Position(xPos,yPos), cropImage(xPos,yPos,width,height), width, height));
     }
 
     public Level loadLevel(String levelName) {
@@ -167,6 +188,6 @@ public class LevelLoader {
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary);
+        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background);
     }
 }
