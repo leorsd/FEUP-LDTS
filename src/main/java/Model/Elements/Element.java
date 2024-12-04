@@ -58,18 +58,12 @@ public abstract class Element {
         this.sizeY = sizeY;
     }
 
-    public boolean hasCollidedWith(Element otherElement) {
+    public boolean hasCollided(Position position, int otherSizeX, int otherSizeY) {
         int thisX = this.getPosition().getX();
         int thisY = this.getPosition().getY();
         int thisSizeX = this.getSizeX();
         int thisSizeY = this.getSizeY();
-
-        int otherX = otherElement.getPosition().getX();
-        int otherY = otherElement.getPosition().getY();
-        int otherSizeX = otherElement.getSizeX();
-        int otherSizeY = otherElement.getSizeY();
-
-        return thisX < otherX + otherSizeX && thisX + thisSizeX > otherX &&
-                thisY < otherY + otherSizeY && thisY + thisSizeY > otherY;
+        return thisX < position.getX() + otherSizeX && thisX + thisSizeX > position.getX() &&
+                thisY < position.getY() + otherSizeY && thisY + thisSizeY > position.getY();
     }
 }

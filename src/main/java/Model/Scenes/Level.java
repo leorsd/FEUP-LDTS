@@ -70,7 +70,7 @@ public class Level implements Scene{
             return false;
         }
         for (Wall wall : walls) {
-            if (wall.getPosition().equals(position)) {
+            if (wall.hasCollided(position, 1, 1)) {
                 return false;
             }
         }
