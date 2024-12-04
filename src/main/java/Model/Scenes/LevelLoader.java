@@ -33,7 +33,7 @@ public class LevelLoader {
     List<Monster> monsters = new ArrayList<>();
     List<Trap> traps = new ArrayList<>();
 
-    private BufferedImage cropImage(int xPos, int yPos, int width, int height) {
+    private BufferedImage cropFromWallBackgroundImage(int xPos, int yPos, int width, int height) {
         return wallBackground.getSubimage(xPos, yPos, width, height);
     }
 
@@ -133,7 +133,7 @@ public class LevelLoader {
         int yPos = Integer.parseInt(parts.get(1));
         int width = Integer.parseInt(parts.get(2));
         int height = Integer.parseInt(parts.get(3));
-        this.walls.add(new Wall(new Position(xPos,yPos), cropImage(xPos,yPos,width,height), width, height));
+        this.walls.add(new Wall(new Position(xPos,yPos), cropFromWallBackgroundImage(xPos,yPos,width,height), width, height));
     }
 
     public Level loadLevel(String levelName) {
