@@ -1,21 +1,24 @@
 package ControllerTest
 
+import GUI.GUI
+import Game.GameManager
 import Model.Position
-import controller.game.LevelController;
-import spock.lang.Specification;
-import Game.GameManager;
-import Model.Elements.Characters.Monster;
-import Model.Elements.Characters.Player;
-import Model.Elements.Trap;
-import Model.Scenes.Level;
-import Model.Scenes.Menu;
-import controller.Controller;
-import GUI.GUI;
+import Model.Scenes.Menu
+import controller.game.LevelController
+import controller.game.MonsterController
+import controller.game.Player1Controller
+import controller.game.Player2Controller
+import spock.lang.Specification
+import Model.Elements.MovingElements.Monster
+import Model.Elements.MovingElements.Player
+import Model.Elements.Trap
+import Model.Scenes.Level
 
 
-public class LevelControllerTest extends Specification {
+class LevelControllerTest extends Specification {
     def level = Mock(Level)
     def levelController = new LevelController(level)
+    def gameManager = Mock(GameManager)
 
     def "checkDeadPlayers should return true if a player collides with a monster"() {
         given: "a game with players and a monster"
@@ -33,12 +36,12 @@ public class LevelControllerTest extends Specification {
         monster.getSizeX() >> 1
         monster.getSizeY() >> 1
         player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY()) >> true
-        player2.hasCollided(_,_,_) >> false;
+        player2.hasCollided(_,_,_) >> false
 
-        when: "The method is invoked"
-        def result = levelController.checkDeadPlayers(null)
+        when: "the method is invoked"
+        def result = levelController.checkDeadPlayers()
 
-        then: "A collision is detected, and result is true"
+        then: "a collision is detected, and result is true"
         result
     }
 
@@ -59,17 +62,27 @@ public class LevelControllerTest extends Specification {
         trap.getSizeY() >> 1
         trap.getTarget() >> "Lavena"
         player1.getName() >> "Lavena"
-        player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) >> true;
-        player1.getName().equals(trap.getTarget()) >> true;
-        player2.hasCollided(_,_,_) >> false;
+        player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) >> true
+        player1.getName().equals(trap.getTarget()) >> true
+        player2.hasCollided(_,_,_) >> false
 
-        when: "The method is invoked"
-        def result = levelController.checkDeadPlayers(null)
+        when: "the method is invoked"
+        def result = levelController.checkDeadPlayers()
 
-        then: "A collision is detected, and result is true"
+        then: "a collision is detected, and result is true"
         result
     }
 
+    def "game should transition to Menu when QUIT action is received"() {
+        given: "a QUIT action"
+        def actions = [GUI.ACTION.QUIT] as Set
 
+        when: "the game updates"
+        levelController.update(gameManager, actions, 0)
 
+        then: "game transitions to menu"
+        1 * gameManager.setCurrentScene(_ as Menu)
+        0 * _
+    }
+    // to be continued
 }

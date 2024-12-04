@@ -1,6 +1,6 @@
 package ModelTest
 
-import Model.Elements.Characters.Monster
+import Model.Elements.MovingElements.Monster
 import Model.Elements.Key
 import Model.Elements.Trap
 import Model.Scenes.Level
