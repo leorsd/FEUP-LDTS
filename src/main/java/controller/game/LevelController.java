@@ -1,8 +1,8 @@
 package controller.game;
 
 import Game.GameManager;
-import Model.Elements.Characters.Monster;
-import Model.Elements.Characters.Player;
+import Model.Elements.MovingElements.Monster;
+import Model.Elements.MovingElements.Player;
 import Model.Elements.Trap;
 import Model.Scenes.Level;
 import Model.Scenes.Menu;
@@ -25,7 +25,7 @@ public class LevelController extends Controller<Level> {
         this.monsterController = new MonsterController(level);
     }
 
-    private boolean checkDeadPlayers(GameManager gameManager) {
+    private boolean checkDeadPlayers() {
         Player player1 = getModel().getPlayer1();
         Player player2 = getModel().getPlayer2();
         boolean result = false;
@@ -54,13 +54,13 @@ public class LevelController extends Controller<Level> {
                 player2Controller.update(gameManager, Set.of(action), updateTime);
             }
         }
-        if (checkDeadPlayers(gameManager)) {
+        if (checkDeadPlayers()) {
             // TODO: restart level instead of going to menu
             gameManager.setCurrentScene(new Menu());
             return;
         }
         monsterController.update(gameManager, actions, updateTime);
-        if (checkDeadPlayers(gameManager)) {
+        if (checkDeadPlayers()) {
             // Also check for dead players after moving them and monsters
             gameManager.setCurrentScene(new Menu());
         }

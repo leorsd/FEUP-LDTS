@@ -1,7 +1,7 @@
 package Model.Scenes;
 
-import Model.Elements.Characters.Monster;
-import Model.Elements.Characters.Player;
+import Model.Elements.MovingElements.Monster;
+import Model.Elements.MovingElements.Player;
 import Model.Elements.Key;
 import Model.Elements.Trap;
 import Model.Elements.Wall;
@@ -10,8 +10,13 @@ import Model.Position;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.common.base.Splitter;
+
+import static com.google.common.base.Charsets.UTF_8;
 
 public class LevelLoader {
     Integer xBoundary = null;
@@ -33,14 +38,14 @@ public class LevelLoader {
             throw new IOException("Error while trying to read level size");
         }
 
-        String[] parts = line.split(",");
+        List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.length != 3) {
+        if (parts.size() != 3) {
             throw new IOException("Level size needs to be like: x,y,imagePath");
         } else {
-            xBoundary = Integer.parseInt(parts[0]);
-            yBoundary = Integer.parseInt(parts[1]);
-            bi = ImageIO.read(new File(parts[2]));
+            xBoundary = Integer.parseInt(parts.getFirst());
+            yBoundary = Integer.parseInt(parts.get(1));
+            bi = ImageIO.read(new File(parts.get(2)));
         }
     }
 
@@ -51,13 +56,13 @@ public class LevelLoader {
             throw new IOException("Error trying to read player1's information");
         }
 
-        String[] parts = line.split(",");
+        List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.length != 5) {
+        if (parts.size() != 5) {
             throw new IOException("Player 1 specification needs to be like: x,y,sizeX,sizeY,imagePath");
         } else {
-            player1 = new Player("Lavena", Integer.parseInt(parts[2]), Integer.parseInt(parts[3]),
-                    new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])));
+            player1 = new Player("Lavena", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
+                    new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))));
         }
     }
 
@@ -68,64 +73,58 @@ public class LevelLoader {
             throw new IOException("Error trying to read player2's information");
         }
 
-        String[] parts = line.split(",");
+        List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.length != 5) {
+        if (parts.size() != 5) {
             throw new IOException("Player 2 specification needs to be like: x,y,sizeX,sizeY,imagePath");
         } else {
-            player2 = new Player("Tergon", Integer.parseInt(parts[2]), Integer.parseInt(parts[3]),
-                    new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])));
+            player2 = new Player("Tergon", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
+                    new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))));
         }
     }
 
     private void readKey(String line) throws IOException {
-        String[] parts = line.split(",");
-        if (parts.length != 5) {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 5) {
             throw new IOException("Key specification needs to be like: x,y,sizeX,sizeY,imagePath");
         }
-        this.keys.add(new Key(new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
+        this.keys.add(new Key(new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3))));
     }
 
     private void readMonster(String line) throws IOException {
-        String[] parts = line.split(",");
-        if (parts.length != 6) {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 6) {
             throw new IOException("Monster specification needs to be like: health,x,y,sizeX,sizeY,imagePath");
         }
-        this.monsters.add(new Monster(Integer.parseInt(parts[0]), new Position(Integer.parseInt(parts[1]), Integer.parseInt(parts[2])), ImageIO.read(new File(parts[5])),   Integer.parseInt(parts[3]), Integer.parseInt(parts[4])));
+        this.monsters.add(new Monster(Integer.parseInt(parts.get(0)), new Position(Integer.parseInt(parts.get(1)), Integer.parseInt(parts.get(2))), ImageIO.read(new File(parts.get(5))),   Integer.parseInt(parts.get(3)), Integer.parseInt(parts.get(4))));
     }
 
     private void readTrap(String line) throws IOException {
-        String[] parts = line.split(",");
-        if (parts.length != 6) {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 6) {
             throw new IOException("Trap specification needs to be like: target,x,y,sizeX,sizeY,imagePath");
         }
-        this.traps.add(new Trap(parts[0], new Position(Integer.parseInt(parts[1]), Integer.parseInt(parts[2])), ImageIO.read(new File(parts[5])), Integer.parseInt(parts[3]), Integer.parseInt(parts[4])));
+        this.traps.add(new Trap(parts.get(0), new Position(Integer.parseInt(parts.get(1)), Integer.parseInt(parts.get(2))), ImageIO.read(new File(parts.get(5))), Integer.parseInt(parts.get(3)), Integer.parseInt(parts.get(4))));
     }
 
     private void readWall(String line) throws IOException {
-        String[] parts = line.split(",");
-        if (parts.length != 5) {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 5) {
             throw new IOException("Wall specification needs to be like: x,y,sizeX,sizeY,imagePath");
         }
-        this.walls.add(new Wall(new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])), ImageIO.read(new File(parts[4])), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
+        this.walls.add(new Wall(new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3))));
     }
 
     public Level loadLevel(String levelName) {
+        BufferedReader br;
         try {
-            FileReader f = new FileReader(levelName);
-        } catch (IOException e) {
-            System.out.println("File not found");
-        }
-
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(levelName));
+            br  = Files.newBufferedReader(Paths.get(levelName), UTF_8);
             readLevelSize(br);
-            String empty = br.readLine();
+            br.readLine(); // Read empty line
             readPlayer1(br);
-            empty = br.readLine();
+            br.readLine(); // Read empty line
             readPlayer2(br);
-            empty = br.readLine();
+            br.readLine(); // Read empty line
 
             while (true) {
                 String line = br.readLine();

@@ -5,7 +5,7 @@ import Model.Elements.Key
 import Model.Elements.Trap
 import Model.Scenes.Level
 import spock.lang.Specification
-import Model.Elements.Characters.Player
+import Model.Elements.MovingElements.Player
 import Model.Elements.Wall
 import Model.Position
 

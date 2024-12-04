@@ -1,7 +1,7 @@
 package Model.Scenes;
 
-import Model.Elements.Characters.Monster;
-import Model.Elements.Characters.Player;
+import Model.Elements.MovingElements.Monster;
+import Model.Elements.MovingElements.Player;
 import Model.Elements.Key;
 import Model.Elements.Trap;
 import Model.Elements.Wall;
