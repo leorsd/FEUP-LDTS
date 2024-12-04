@@ -1,10 +1,10 @@
-package Model.Elements.Characters;
+package Model.Elements.MovingElements;
 
 import Model.Position;
 
 import java.awt.image.BufferedImage;
 
-public class Monster extends Character {
+public class Monster extends MovingElement {
     private int health;
 
     public Monster(int health, Position position, BufferedImage image, int sizeX, int sizeY) {

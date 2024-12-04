@@ -27,7 +27,7 @@ public class MenuController extends Controller<Menu> {
                 gameManager.setCurrentScene(null);
             } else {
                 String level = getModel().getHighlightedEntry();
-                gameManager.setCurrentScene((new LevelLoader()).loadLevel(level));
+                gameManager.setCurrentScene( new LevelLoader().loadLevel(level));
             }
         }else {
             if (updateTime - lastUpdateTime > 200) {
@@ -37,6 +37,8 @@ public class MenuController extends Controller<Menu> {
                         break;
                     case DOWN:
                         getModel().selectNextEntry();
+                        break;
+                    default:
                         break;
                 }
                 lastUpdateTime = updateTime;
