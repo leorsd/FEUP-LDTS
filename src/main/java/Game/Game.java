@@ -30,7 +30,7 @@ public class Game {
             Game game = Game.getInstance(); // Use the singleton instance
             game.start();
         } catch (IOException | FontFormatException | URISyntaxException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -53,7 +53,8 @@ public class Game {
 
             try {
                 if (sleepTime > 0) Thread.sleep(sleepTime);
-            } catch (InterruptedException ignored) {
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
             }
         }
 

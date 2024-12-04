@@ -21,9 +21,14 @@ public abstract class Element {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Element)) return false;
         Element element = (Element) o;
-        return Objects.equals(position, element.position) && Objects.equals(image, element.image);
+        return Objects.equals(position, element.position) && Objects.equals(image, element.image) && sizeX==element.sizeX && sizeY==element.sizeY;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, image, sizeX, sizeY);
     }
 
     public Position getPosition() {

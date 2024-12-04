@@ -1,7 +1,7 @@
 package GUI;
 
-import Model.Elements.Characters.Monster;
-import Model.Elements.Characters.Player;
+import Model.Elements.MovingElements.Monster;
+import Model.Elements.MovingElements.Player;
 import Model.Elements.Key;
 import Model.Elements.Trap;
 import Model.Elements.Wall;
@@ -9,10 +9,10 @@ import Model.Position;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Set;
 
 public interface GUI {
-    HashSet<ACTION> getNextAction() throws IOException;
+    Set<ACTION> getNextAction() throws IOException;
 
     void drawPlayer(Player player);
 
