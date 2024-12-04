@@ -1,10 +1,10 @@
-package Model.Elements.Characters;
+package Model.Elements.MovingElements;
 
 import Model.Position;
 
 import java.awt.image.BufferedImage;
 
-public class Player extends Character {
+public class Player extends MovingElement {
     private String name;
 
     public Player(String name, int sizeX, int sizeY, Position position, BufferedImage image) {

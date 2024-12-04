@@ -1,7 +1,7 @@
 package controller.game;
 
 import Game.GameManager;
-import Model.Elements.Characters.Monster;
+import Model.Elements.MovingElements.Monster;
 import Model.Position;
 import Model.Scenes.Level;
 import controller.Controller;

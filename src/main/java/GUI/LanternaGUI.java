@@ -1,7 +1,7 @@
 package GUI;
 
-import Model.Elements.Characters.Monster;
-import Model.Elements.Characters.Player;
+import Model.Elements.MovingElements.Monster;
+import Model.Elements.MovingElements.Player;
 import Model.Elements.Key;
 import Model.Elements.Trap;
 import Model.Elements.Wall;
@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Set;
 
 import static GUI.GUI.ACTION.*;
 
@@ -140,7 +141,8 @@ public class LanternaGUI implements GUI {
         screen.refresh();
     }
 
-    public HashSet<ACTION> getNextAction() throws IOException {
+    @Override
+    public Set<ACTION> getNextAction() throws IOException {
         return new HashSet<>(inputs);
     }
 
@@ -218,6 +220,7 @@ public class LanternaGUI implements GUI {
         }
     }
 
+    @Override
     public void drawImage(Position position, BufferedImage image){
         TextGraphics graphics = screen.newTextGraphics();
         for (int x = 0; x < image.getWidth(); x++) {

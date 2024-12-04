@@ -1,7 +1,7 @@
 package Visualizer.Level.Element.Character;
 
 import GUI.GUI;
-import Model.Elements.Characters.Player;
+import Model.Elements.MovingElements.Player;
 
 public class PlayerVisualizer implements CharacterVisualizer<Player> {
     @Override
