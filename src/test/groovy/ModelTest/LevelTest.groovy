@@ -14,7 +14,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null)
 
         and: "a free position inside the boundaries"
         def position = new Position(5, 5)
@@ -32,7 +32,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null)
 
         and: "a position where a wall is present"
         def position = new Position(5, 5)
@@ -49,7 +49,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5,null)
 
         and: "a position outside the boundaries"
         def position = new Position(6, 6)
