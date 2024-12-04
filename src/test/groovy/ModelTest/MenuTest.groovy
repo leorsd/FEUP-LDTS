@@ -65,6 +65,14 @@ class MenuTest extends Specification {
         menu.getHighlightedEntry() == null
     }
 
+    def "should return 0 when trying to get the size of a menu with no entries"() {
+        given:"a Menu with no entries"
+        def menu = new Menu([])
+
+        expect: "getEntriesSize should return 0"
+        menu.getEntriesSize() == 0
+    }
+
     def "should correctly return the number of entries"() {
         given:"a Menu with specific entries"
         def entries = ["Entry1", "Entry2", "Entry3"]

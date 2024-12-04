@@ -20,6 +20,10 @@ public class MonsterController extends Controller<Level> {
         this.lastUpdateTime = 0;
     }
 
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
     private void moveMonster(Monster monster, Position position) {
         if (getModel().isPositionFree(position)) {
             monster.setPosition(position);
