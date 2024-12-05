@@ -1,4 +1,4 @@
-package visualizer.level.element.Character;
+package visualizer.level.element.movingelements;
 
 import gui.GUI;
 import model.elements.movingelements.Player;

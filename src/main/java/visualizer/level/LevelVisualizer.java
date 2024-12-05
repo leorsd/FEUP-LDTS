@@ -4,8 +4,8 @@ import model.elements.Element;
 import model.Position;
 import model.scenes.Level;
 import visualizer.level.element.*;
-import visualizer.level.element.Character.MonsterVisualizer;
-import visualizer.level.element.Character.PlayerVisualizer;
+import visualizer.level.element.movingelements.MonsterVisualizer;
+import visualizer.level.element.movingelements.PlayerVisualizer;
 import visualizer.SceneVisualizer;
 import gui.GUI;
 
