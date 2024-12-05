@@ -7,6 +7,7 @@ import Model.Elements.Trap;
 import Model.Elements.Wall;
 import Model.Position;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Level implements Scene{
@@ -18,8 +19,9 @@ public class Level implements Scene{
     private Player player2;
     private int xBoundary;
     private int yBoundary;
+    private BufferedImage background;
 
-    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary) {
+    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background) {
         this.walls = walls;
         this.monsters = monsters;
         this.traps = traps;
@@ -28,6 +30,7 @@ public class Level implements Scene{
         this.player2 = player2;
         this.xBoundary = xBoundary;
         this.yBoundary = yBoundary;
+        this.background = background;
     }
 
     public List<Wall> getWalls() {
@@ -60,6 +63,10 @@ public class Level implements Scene{
 
     public int getyBoundary() {
         return yBoundary;
+    }
+
+    public BufferedImage getBackground() {
+        return background;
     }
 
     public boolean isPositionFree(Position position) {
