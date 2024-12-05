@@ -21,7 +21,7 @@ class LevelTest extends Specification {
         def player2 = new Player("Tergon",1,1, new Position(6, 6), null)
 
         when:"a Level is created"
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10, null)
 
         then:"all elements should be initialized correctly"
         level.getWalls() == walls
@@ -42,7 +42,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null)
 
         and: "a free position inside the boundaries"
         def position = new Position(5, 5)
@@ -60,7 +60,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null)
 
         and: "a position where a wall is present"
         def position = new Position(5, 5)
@@ -77,7 +77,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5,null)
 
         expect: "positions outside the boundaries should be marked as occupied"
         !level.isPositionFree(new Position(-1, 0))
@@ -94,7 +94,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0,null)
 
         expect: "no position should be free"
         !level.isPositionFree(new Position(0, 0))
