@@ -1,10 +1,10 @@
 package controller.game;
 
-import Game.GameManager;
-import Model.Position;
-import Model.Scenes.Level;
+import game.GameManager;
+import model.Position;
+import model.scenes.Level;
 import controller.Controller;
-import GUI.GUI;
+import gui.GUI;
 
 import java.util.Set;
 

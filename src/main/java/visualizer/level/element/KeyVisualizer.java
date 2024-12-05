@@ -1,7 +1,7 @@
-package Visualizer.Level.Element;
+package visualizer.level.element;
 
-import Model.Elements.Key;
-import GUI.GUI;
+import model.elements.Key;
+import gui.GUI;
 
 public class KeyVisualizer implements ElementVisualizer<Key> {
     @Override

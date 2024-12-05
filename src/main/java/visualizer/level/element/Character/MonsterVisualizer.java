@@ -1,7 +1,7 @@
-package Visualizer.Level.Element.Character;
+package visualizer.level.element.Character;
 
-import Model.Elements.MovingElements.Monster;
-import GUI.GUI;
+import model.elements.movingelements.Monster;
+import gui.GUI;
 
 public class MonsterVisualizer implements CharacterVisualizer<Monster> {
     @Override

@@ -1,13 +1,13 @@
 package controller.game;
 
-import Game.GameManager;
-import Model.Elements.MovingElements.Monster;
-import Model.Elements.MovingElements.Player;
-import Model.Elements.Trap;
-import Model.Scenes.Level;
-import Model.Scenes.Menu;
+import game.GameManager;
+import model.elements.movingelements.Monster;
+import model.elements.movingelements.Player;
+import model.elements.Trap;
+import model.scenes.Level;
+import model.scenes.Menu;
 import controller.Controller;
-import GUI.GUI;
+import gui.GUI;
 
 import java.io.IOException;
 import java.util.Set;

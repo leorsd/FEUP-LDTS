@@ -1,7 +1,7 @@
-package Visualizer.Level.Element;
+package visualizer.level.element;
 
-import Model.Elements.Trap;
-import GUI.GUI;
+import model.elements.Trap;
+import gui.GUI;
 
 public class TrapVisualizer implements ElementVisualizer<Trap> {
     @Override

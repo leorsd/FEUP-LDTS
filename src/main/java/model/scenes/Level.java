@@ -1,11 +1,11 @@
-package Model.Scenes;
+package model.scenes;
 
-import Model.Elements.MovingElements.Monster;
-import Model.Elements.MovingElements.Player;
-import Model.Elements.Key;
-import Model.Elements.Trap;
-import Model.Elements.Wall;
-import Model.Position;
+import model.elements.movingelements.Monster;
+import model.elements.movingelements.Player;
+import model.elements.Key;
+import model.elements.Trap;
+import model.elements.Wall;
+import model.Position;
 
 import java.awt.image.BufferedImage;
 import java.util.List;

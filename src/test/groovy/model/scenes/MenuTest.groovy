@@ -1,4 +1,4 @@
-package Model.Scenes
+package model.scenes
 
 import spock.lang.Specification
 

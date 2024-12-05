@@ -1,10 +1,10 @@
 package controller.menu;
 
-import Game.GameManager;
-import Model.Scenes.LevelLoader;
-import Model.Scenes.Menu;
+import game.GameManager;
+import model.scenes.LevelLoader;
+import model.scenes.Menu;
 import controller.Controller;
-import GUI.GUI;
+import gui.GUI;
 
 import java.io.IOException;
 import java.util.Set;

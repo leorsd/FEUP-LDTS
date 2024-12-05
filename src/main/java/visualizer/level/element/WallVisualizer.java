@@ -1,7 +1,7 @@
-package Visualizer.Level.Element;
+package visualizer.level.element;
 
-import GUI.GUI;
-import Model.Elements.Wall;
+import gui.GUI;
+import model.elements.Wall;
 
 public class WallVisualizer implements ElementVisualizer<Wall> {
     @Override

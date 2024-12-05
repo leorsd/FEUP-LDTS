@@ -1,12 +1,12 @@
-package Game;
+package game;
 
-import Model.Scenes.Level;
-import Model.Scenes.Menu;
-import Model.Scenes.Scene;
-import GUI.GUI;
-import Visualizer.Level.LevelVisualizer;
-import Visualizer.Menu.MenuVisualizer;
-import Visualizer.SceneVisualizer;
+import model.scenes.Level;
+import model.scenes.Menu;
+import model.scenes.Scene;
+import gui.GUI;
+import visualizer.level.LevelVisualizer;
+import visualizer.menu.MenuVisualizer;
+import visualizer.SceneVisualizer;
 import controller.Controller;
 import controller.game.LevelController;
 import controller.menu.MenuController;

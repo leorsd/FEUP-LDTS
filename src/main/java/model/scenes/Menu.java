@@ -1,6 +1,5 @@
-package Model.Scenes;
+package model.scenes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

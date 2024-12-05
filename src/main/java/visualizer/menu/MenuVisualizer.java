@@ -1,14 +1,13 @@
-package Visualizer.Menu;
+package visualizer.menu;
 
-import Model.Position;
-import Model.Scenes.Menu;
-import GUI.GUI;
-import Visualizer.SceneVisualizer;
+import model.Position;
+import model.scenes.Menu;
+import gui.GUI;
+import visualizer.SceneVisualizer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MenuVisualizer extends SceneVisualizer<Menu> {

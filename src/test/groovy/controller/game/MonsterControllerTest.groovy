@@ -1,10 +1,9 @@
-package ControllerTest
+package controller.game
 
-import Game.GameManager
-import Model.Scenes.Level
-import Model.Elements.MovingElements.Monster
-import Model.Position
-import controller.game.MonsterController
+import game.GameManager
+import model.scenes.Level
+import model.elements.movingelements.Monster
+import model.Position
 import spock.lang.Specification
 
 class MonsterControllerTest extends Specification {

@@ -1,11 +1,11 @@
 package controller.game;
 
-import Game.GameManager;
-import Model.Elements.MovingElements.Monster;
-import Model.Position;
-import Model.Scenes.Level;
+import game.GameManager;
+import model.elements.movingelements.Monster;
+import model.Position;
+import model.scenes.Level;
 import controller.Controller;
-import GUI.GUI;
+import gui.GUI;
 
 import java.io.IOException;
 import java.util.Random;

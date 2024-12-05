@@ -1,7 +1,7 @@
-package Visualizer;
+package visualizer;
 
 import java.io.IOException;
-import GUI.GUI;
+import gui.GUI;
 
 public abstract class SceneVisualizer<T> {
     private final T scene;

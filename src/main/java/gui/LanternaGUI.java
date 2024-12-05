@@ -1,11 +1,11 @@
-package GUI;
+package gui;
 
-import Model.Elements.MovingElements.Monster;
-import Model.Elements.MovingElements.Player;
-import Model.Elements.Key;
-import Model.Elements.Trap;
-import Model.Elements.Wall;
-import Model.Position;
+import model.elements.movingelements.Monster;
+import model.elements.movingelements.Player;
+import model.elements.Key;
+import model.elements.Trap;
+import model.elements.Wall;
+import model.Position;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-import static GUI.GUI.ACTION.*;
+import static gui.GUI.ACTION.*;
 
 public class LanternaGUI implements GUI {
     private final AWTTerminalFrame terminalFrame;

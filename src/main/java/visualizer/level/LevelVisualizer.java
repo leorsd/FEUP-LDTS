@@ -1,15 +1,14 @@
-package Visualizer.Level;
+package visualizer.level;
 
-import Model.Elements.Element;
-import Model.Position;
-import Model.Scenes.Level;
-import Visualizer.Level.Element.*;
-import Visualizer.Level.Element.Character.MonsterVisualizer;
-import Visualizer.Level.Element.Character.PlayerVisualizer;
-import Visualizer.SceneVisualizer;
-import GUI.GUI;
+import model.elements.Element;
+import model.Position;
+import model.scenes.Level;
+import visualizer.level.element.*;
+import visualizer.level.element.Character.MonsterVisualizer;
+import visualizer.level.element.Character.PlayerVisualizer;
+import visualizer.SceneVisualizer;
+import gui.GUI;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 

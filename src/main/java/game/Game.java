@@ -1,7 +1,7 @@
-package Game;
+package game;
 
-import GUI.LanternaGUI;
-import Model.Scenes.Menu;
+import gui.LanternaGUI;
+import model.scenes.Menu;
 
 import java.awt.*;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package Visualizer.Level.Element.Character;
+package visualizer.level.element.Character;
 
-import GUI.GUI;
-import Model.Elements.MovingElements.MovingElement;
-import Visualizer.Level.Element.ElementVisualizer;
+import gui.GUI;
+import model.elements.movingelements.MovingElement;
+import visualizer.level.element.ElementVisualizer;
 
 public interface CharacterVisualizer<T extends MovingElement> extends ElementVisualizer<T> {
     @Override

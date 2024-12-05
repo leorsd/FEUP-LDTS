@@ -1,6 +1,6 @@
-package Model.Elements;
+package model.elements;
 
-import Model.Position;
+import model.Position;
 
 import java.awt.image.BufferedImage;
 import java.util.Objects;

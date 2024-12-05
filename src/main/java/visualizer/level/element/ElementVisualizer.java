@@ -1,7 +1,7 @@
-package Visualizer.Level.Element;
+package visualizer.level.element;
 
-import Model.Elements.Element;
-import GUI.GUI;
+import model.elements.Element;
+import gui.GUI;
 
 public interface ElementVisualizer<T extends Element> {
     void draw(T element, GUI gui);

@@ -1,12 +1,12 @@
-package Model.Scenes
+package model.scenes
 
-import Model.Elements.MovingElements.Monster
-import Model.Elements.Key
-import Model.Elements.Trap
-import Model.Position
+import model.elements.movingelements.Monster
+import model.elements.Key
+import model.elements.Trap
+import model.Position
 import spock.lang.Specification
-import Model.Elements.MovingElements.Player
-import Model.Elements.Wall
+import model.elements.movingelements.Player
+import model.elements.Wall
 
 class LevelTest extends Specification {
 

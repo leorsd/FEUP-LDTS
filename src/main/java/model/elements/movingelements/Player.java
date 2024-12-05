@@ -1,6 +1,6 @@
-package Model.Elements.MovingElements;
+package model.elements.movingelements;
 
-import Model.Position;
+import model.Position;
 
 import java.awt.image.BufferedImage;
 

@@ -1,18 +1,14 @@
-package ControllerTest
+package controller.game
 
-import GUI.GUI
-import Game.GameManager
-import Model.Position
-import Model.Scenes.Menu
-import controller.game.LevelController
-import controller.game.MonsterController
-import controller.game.Player1Controller
-import controller.game.Player2Controller
+import gui.GUI
+import game.GameManager
+import model.Position
+import model.scenes.Menu
 import spock.lang.Specification
-import Model.Elements.MovingElements.Monster
-import Model.Elements.MovingElements.Player
-import Model.Elements.Trap
-import Model.Scenes.Level
+import model.elements.movingelements.Monster
+import model.elements.movingelements.Player
+import model.elements.Trap
+import model.scenes.Level
 
 
 class LevelControllerTest extends Specification {
