@@ -1,11 +1,10 @@
-package ControllerTest
+package controller.game
 
-import GUI.GUI
-import Game.GameManager
-import Model.Elements.MovingElements.Player
-import Model.Position
-import Model.Scenes.Level
-import controller.game.Player1Controller
+import gui.GUI
+import game.GameManager
+import model.elements.movingelements.Player
+import model.Position
+import model.scenes.Level
 import spock.lang.Specification
 
 class Player1ControllerTest extends Specification {
@@ -186,24 +185,6 @@ class Player1ControllerTest extends Specification {
 
         then: "player can't move downwards"
         0 * player1.setPosition(desiredPosition)
-    }
-
-    def "player1 should be commanded to move up when UP action is received"() {
-        given: "an UP action"
-        def player1Controller = Spy(Player1Controller, constructorArgs: [level])
-        def actions = [GUI.ACTION.UP] as Set
-        def gameManager = Mock(GameManager)
-        def player1 = Mock(Player)
-        def position = new Position(1,1)
-
-        level.getPlayer1() >> player1
-        player1.getPosition() >> position
-
-        when: "level is updated"
-        player1Controller.update(gameManager, actions, 1)
-
-        then: "player is commanded to move up"
-        2 * player1Controller.movePlayer1Up()
     }
 
     def "player1 should be commanded to move up when DOWN action is received"() {

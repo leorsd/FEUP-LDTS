@@ -1,13 +1,12 @@
-package ModelTest
+package Model.Scenes
 
 import Model.Elements.MovingElements.Monster
 import Model.Elements.Key
 import Model.Elements.Trap
-import Model.Scenes.Level
+import Model.Position
 import spock.lang.Specification
 import Model.Elements.MovingElements.Player
 import Model.Elements.Wall
-import Model.Position
 
 class LevelTest extends Specification {
 

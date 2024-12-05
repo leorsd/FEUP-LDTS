@@ -1,5 +1,6 @@
+package Model.Scenes
+
 import spock.lang.Specification
-import Model.Scenes.Menu
 
 class MenuTest extends Specification {
 
