@@ -27,7 +27,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         } catch (IOException e) {
             System.out.println("Menu failed to load");
         }
-        gui.drawImage(new Position((guiWidth-menuimage.getWidth())/2, (int)(guiHeight*0.20)), menuimage);
+        gui.drawImage(new Position(0,0), menuimage);
 
         if (getScene().getEntriesSize() != 2) {
             throw new IOException("Not enough images for the entries of the menu");
@@ -48,10 +48,10 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
                 System.out.println("Failed option");
             }
             if (i == getScene().getHighlightedEntryIndex()) {
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.40+0.10*i))), image);
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2-50, (int)(guiHeight*(0.40+0.10*i))), arrow);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.30+0.15*i))), image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2-50, (int)(guiHeight*(0.30+0.15*i))), arrow);
             }else{
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.40+0.10*i))),image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.30+0.15*i))),image);
             }
         }
     }
