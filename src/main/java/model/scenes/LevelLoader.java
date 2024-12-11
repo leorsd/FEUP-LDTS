@@ -75,11 +75,11 @@ public class LevelLoader {
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.size() != 5) {
-            throw new IOException("Player 1 specification needs to be like: x,y,sizeX,sizeY,imagePath");
+        if (parts.size() != 7) {
+            throw new IOException("Player 1 specification needs to be like: x,y,sizeX,sizeY,imagePath,maxJumpHeight,speed");
         } else {
             player1 = new Player("Lavena", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
-                    new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))));
+                    new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(6)), Integer.parseInt(parts.get(5)));
         }
     }
 
@@ -92,11 +92,11 @@ public class LevelLoader {
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.size() != 5) {
-            throw new IOException("Player 2 specification needs to be like: x,y,sizeX,sizeY,imagePath");
+        if (parts.size() != 7) {
+            throw new IOException("Player 2 specification needs to be like: x,y,sizeX,sizeY,imagePath,maxJumpHeight,speed");
         } else {
             player2 = new Player("Tergon", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
-                    new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))));
+                    new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(6)), Integer.parseInt(parts.get(5)));
         }
     }
 

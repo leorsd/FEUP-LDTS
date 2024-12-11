@@ -8,24 +8,24 @@ Player1, Player2, Keys, Monsters, Traps, Walls.
 Example:
 
 "
-levelSize.x, levelSize.y, backgroundImage
+levelSize.x,levelSize.y,backgroundImage
 
-player1.x, player1.y, size.x, size.y, image
+player1.x,player1.y,size.x,size.y,image,maxJumpHeight,speed
 
-player2.x, player2.y, size.x, size.y, image
+player2.x,player2.y,size.x,size.y,image,maxJumpHeight,speed
 
-key1.x, key1.y, size.x, size.y, image
-key2.x, key2.y, size.x, size.y, image
+key1.x,key1.y,size.x,size.y,image
+key2.x,key2.y,size.x,size.y,image
 
-health,monster1.x, monster1.y, size.x, size.y, image
-health,monster2.x, monster2.y, size.x, size.y, image
-health,monster3.x, monster3.y, size.x, size.y, image
-health,monster4.x, monster4.y, size.x, size.y, image
+health,monster1.x,monster1.y,size.x,size.y,image
+health,monster2.x,monster2.y,size.x,size.y,image
+health,monster3.x,monster3.y,size.x,size.y,image
+health,monster4.x,monster4.y,size.x,size.y,image
 
-target, trap1.x, trap1.y, size.x, size.y, image
+target,trap1.x,trap1.y,size.x,size.y,image
 
-wall1.x, wall1.y, size.x, size.y, image
-wall2.x, wall2.y, size.x, size.y, image
-wall3.x, wall3.y, size.x, size.y, image
-wall4.x, wall4.y, size.x, size.y, image
+wall1.x,wall1.y,size.x,size.y,image
+wall2.x,wall2.y,size.x,size.y,image
+wall3.x,wall3.y,size.x,size.y,image
+wall4.x,wall4.y,size.x,size.y,image
 "

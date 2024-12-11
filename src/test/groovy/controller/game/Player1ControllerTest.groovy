@@ -197,6 +197,7 @@ class Player1ControllerTest extends Specification {
 
         level.getPlayer1() >> player1
         player1.getPosition() >> position
+        player1.getSpeed() >> 2
 
         when: "level is updated"
         player1Controller.update(gameManager, actions, 1)
@@ -215,6 +216,7 @@ class Player1ControllerTest extends Specification {
 
         level.getPlayer1() >> player1
         player1.getPosition() >> position
+        player1.getSpeed() >> 2
 
         when: "level is updated"
         player1Controller.update(gameManager, actions, 1)
@@ -231,8 +233,10 @@ class Player1ControllerTest extends Specification {
         def player1 = Mock(Player)
         def position = new Position(1,1)
 
+
         level.getPlayer1() >> player1
         player1.getPosition() >> position
+        player1.getSpeed() >> 2
 
         when: "level is updated"
         player1Controller.update(gameManager, actions, 1)
