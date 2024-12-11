@@ -39,6 +39,10 @@ public class LevelController extends Controller<Level> {
         return result;
     }
 
+    private boolean checkLevelTransition() {
+        return getModel().getPlayer1().isInside(getModel().getLevelEndingWall()) && getModel().getPlayer2().isInside(getModel().getLevelEndingWall()) && getModel().getKeys().isEmpty();
+    }
+
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) throws IOException {
         if (actions.contains(GUI.ACTION.QUIT)) {
@@ -62,6 +66,10 @@ public class LevelController extends Controller<Level> {
         player2Controller.update(gameManager, player2Actions, updateTime);
         if (checkDeadPlayers()) {
             // TODO: restart level instead of going to menu
+            gameManager.setCurrentScene(new Menu());
+            return;
+        }
+        if (checkLevelTransition()) {
             gameManager.setCurrentScene(new Menu());
             return;
         }

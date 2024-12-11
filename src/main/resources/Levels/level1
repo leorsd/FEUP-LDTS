@@ -1,10 +1,9 @@
 200,200,src/main/resources/images/wallBackground.png,src/main/resources/images/background.png
 
-5,190,9,9,src/main/resources/images/player1.png,20,2
+5,190,9,9,src/main/resources/images/player1.png,150,2
 
-14,190,9,9,src/main/resources/images/player2.png,20,2
+14,190,9,9,src/main/resources/images/player2.png,150,2
 
-0,0,20,20,src/main/resources/images/key.png
 
 0,140,141,9,9,src/main/resources/images/monster.png
 0,20,161,9,9,src/main/resources/images/monster.png
