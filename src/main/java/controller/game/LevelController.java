@@ -10,6 +10,7 @@ import controller.Controller;
 import gui.GUI;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public class LevelController extends Controller<Level> {
@@ -44,16 +45,21 @@ public class LevelController extends Controller<Level> {
             gameManager.setCurrentScene(new Menu());
             return;
         }
-        player1Controller.update(gameManager, Set.of(GUI.ACTION.DOWN), updateTime);
-        player2Controller.update(gameManager, Set.of(GUI.ACTION.S), updateTime);
+        Set<GUI.ACTION> player1Actions = new HashSet<>();
+        Set<GUI.ACTION> player2Actions = new HashSet<>();
+
+        player1Actions.add(GUI.ACTION.DOWN);
+        player2Actions.add(GUI.ACTION.S);
         for (GUI.ACTION action : actions) {
             if (action == GUI.ACTION.UP || action == GUI.ACTION.RIGHT || action == GUI.ACTION.LEFT) {
-                player1Controller.update(gameManager, Set.of(action), updateTime);
+                player1Actions.add(action);
             }
             if (action == GUI.ACTION.W || action == GUI.ACTION.D || action == GUI.ACTION.A) {
-                player2Controller.update(gameManager, Set.of(action), updateTime);
+                player2Actions.add(action);
             }
         }
+        player1Controller.update(gameManager, player1Actions, updateTime);
+        player2Controller.update(gameManager, player2Actions, updateTime);
         if (checkDeadPlayers()) {
             // TODO: restart level instead of going to menu
             gameManager.setCurrentScene(new Menu());
@@ -61,7 +67,6 @@ public class LevelController extends Controller<Level> {
         }
         monsterController.update(gameManager, actions, updateTime);
         if (checkDeadPlayers()) {
-            // Also check for dead players after moving them and monsters
             gameManager.setCurrentScene(new Menu());
         }
     }

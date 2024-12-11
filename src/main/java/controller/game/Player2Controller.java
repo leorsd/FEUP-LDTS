@@ -10,7 +10,6 @@ import java.util.Set;
 
 public class Player2Controller extends Controller<Level> {
     private boolean isJumping = false;
-    private int jumpHeight = 21;
     private int currentJumpHeight = 0;
 
     public Player2Controller(Level level) {
@@ -36,8 +35,6 @@ public class Player2Controller extends Controller<Level> {
         if(!isOnGround() && !isJumping) {
             Position desiredPosition = new Position(getModel().getPlayer2().getPosition().getX(), getModel().getPlayer2().getPosition().getY() + 1);
             movePlayer(desiredPosition);
-        }else if(isOnGround()) {
-            isJumping = false;
         }
     }
 
@@ -82,14 +79,25 @@ public class Player2Controller extends Controller<Level> {
 
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
+        if (actions.contains(GUI.ACTION.W)) jump();
         for (GUI.ACTION action : actions) {
-            if (action == GUI.ACTION.W) jump();
-            if (action == GUI.ACTION.D) movePlayer2Right();
-            if (action == GUI.ACTION.S) movePlayer2Down();
-            if (action == GUI.ACTION.A) movePlayer2Left();
+            if (action == GUI.ACTION.D){
+                movePlayer2Right();
+                movePlayer2Right();
+            }
+            if (action == GUI.ACTION.S){
+                movePlayer2Down();
+                movePlayer2Down();
+            }
+            if (action == GUI.ACTION.A){
+                movePlayer2Left();
+                movePlayer2Left();
+            }
         }
         if(isJumping){
-            if(currentJumpHeight < jumpHeight && canJump()) {
+            int maxJumpHeight=10;
+            if(currentJumpHeight < maxJumpHeight && canJump()) {
+                movePlayer2Up();
                 movePlayer2Up();
                 currentJumpHeight++;
             }else{

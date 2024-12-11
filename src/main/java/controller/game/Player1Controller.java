@@ -10,7 +10,6 @@ import java.util.Set;
 
 public class Player1Controller extends Controller<Level> {
     private boolean isJumping = false;
-    private int jumpHeight = 21;
     private int currentJumpHeight = 0;
 
     public Player1Controller(Level level) {
@@ -36,8 +35,6 @@ public class Player1Controller extends Controller<Level> {
         if(!isOnGround() && !isJumping) {
             Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() + 1);
             movePlayer(desiredPosition);
-        }else if(isOnGround()) {
-            isJumping = false;
         }
     }
 
@@ -74,7 +71,7 @@ public class Player1Controller extends Controller<Level> {
     }
 
     private void jump() {
-        if(!isJumping && isOnGround()) {
+        if(isOnGround()) {
             isJumping = true;
             currentJumpHeight = 0;
         }
@@ -82,14 +79,25 @@ public class Player1Controller extends Controller<Level> {
 
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
+        if (actions.contains(GUI.ACTION.UP)) jump();
         for (GUI.ACTION action : actions) {
-            if (action == GUI.ACTION.UP) jump();
-            if (action == GUI.ACTION.RIGHT) movePlayer1Right();
-            if (action == GUI.ACTION.DOWN) movePlayer1Down();
-            if (action == GUI.ACTION.LEFT) movePlayer1Left();
+            if (action == GUI.ACTION.RIGHT){
+                movePlayer1Right();
+                movePlayer1Right();
+            }
+            if (action == GUI.ACTION.DOWN){
+                movePlayer1Down();
+                movePlayer1Down();
+            }
+            if (action == GUI.ACTION.LEFT){
+                movePlayer1Left();
+                movePlayer1Left();
+            }
         }
         if(isJumping){
-            if(currentJumpHeight < jumpHeight && canJump()) {
+            int maxJumpHeight=10;
+            if(currentJumpHeight < maxJumpHeight && canJump()) {
+                movePlayer1Up();
                 movePlayer1Up();
                 currentJumpHeight++;
             }else{

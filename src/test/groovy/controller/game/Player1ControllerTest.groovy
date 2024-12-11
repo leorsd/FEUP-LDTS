@@ -187,7 +187,7 @@ class Player1ControllerTest extends Specification {
         0 * player1.setPosition(desiredPosition)
     }
 
-    def "player1 should be commanded to move up when DOWN action is received"() {
+    def "player1 should be commanded to move down when DOWN action is received"() {
         given: "an DOWN action"
         def player1Controller = Spy(Player1Controller, constructorArgs: [level])
         def actions = [GUI.ACTION.DOWN] as Set
@@ -202,7 +202,7 @@ class Player1ControllerTest extends Specification {
         player1Controller.update(gameManager, actions, 1)
 
         then: "player is commanded to move up"
-        1 * player1Controller.movePlayer1Down()
+        2 * player1Controller.movePlayer1Down()
     }
 
     def "player1 should be commanded to move to the right when RIGHT action is received"() {
@@ -220,7 +220,7 @@ class Player1ControllerTest extends Specification {
         player1Controller.update(gameManager, actions, 1)
 
         then: "player is commanded to move to the right"
-        1 * player1Controller.movePlayer1Right()
+        2 * player1Controller.movePlayer1Right()
     }
 
     def "player1 should be commanded to move to the left when LEFT action is received"() {
@@ -238,7 +238,7 @@ class Player1ControllerTest extends Specification {
         player1Controller.update(gameManager, actions, 1)
 
         then: "player is commanded to move to the left"
-        1 * player1Controller.movePlayer1Left()
+        2 * player1Controller.movePlayer1Left()
     }
 
 
