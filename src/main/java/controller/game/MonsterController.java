@@ -35,7 +35,7 @@ public class MonsterController extends Controller<Level> {
         if (updateTime - lastUpdateTime > 200) {
             Random rand = new Random();
             for (Monster monster : getModel().getMonsters()) {
-                Position position = monster.getPosition();
+                Position position = new Position(monster.getPosition().getX(),monster.getPosition().getY());
                 int dx = rand.nextInt(-1,2);
                 position.setX(position.getX() + dx);
                 moveMonster(monster, position);

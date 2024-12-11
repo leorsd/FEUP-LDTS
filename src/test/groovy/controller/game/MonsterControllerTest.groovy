@@ -49,9 +49,9 @@ class MonsterControllerTest extends Specification {
 
         level.getMonsters() >> [monster]
         monster.getPosition() >> position
-        position.getX() >> 5
-
-        level.isPositionFree(position) >> true
+        position.getX() >> 10
+        position.getY() >> 10
+        level.isPositionFree(_ as Position) >> true
         monsterController.getLastUpdateTime() >> 1000
 
         when: "update is called with sufficient time passed"
