@@ -28,6 +28,7 @@ public class LevelLoader {
     Player player1;
     Player player2;
 
+    Wall levelTransitionWall;
     List<Wall> walls = new ArrayList<>();
     List<Key> keys = new ArrayList<>();
     List<Monster> monsters = new ArrayList<>();
@@ -49,13 +50,13 @@ public class LevelLoader {
         String line = br.readLine();
 
         if (line == null) {
-            throw new IOException("Error while trying to read level size");
+            throw new IOException("Error while trying to read level configuration");
         }
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
         if (parts.size() != 4) {
-            throw new IOException("Level size needs to be like: x,y,imagePath");
+            throw new IOException("Level specification needs to be like: x,y,regularWallsImage,imagePath");
         } else {
             xBoundary = Integer.parseInt(parts.getFirst());
             yBoundary = Integer.parseInt(parts.get(1));
@@ -127,13 +128,26 @@ public class LevelLoader {
     private void readWall(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
         if (parts.size() != 4) {
-            throw new IOException("Wall specification needs to be like: x,y,sizeX,sizeY,imagePath");
+            throw new IOException("Wall specification needs to be like: x,y,sizeX,sizeY");
         }
         int xPos = Integer.parseInt(parts.getFirst());
         int yPos = Integer.parseInt(parts.get(1));
         int width = Integer.parseInt(parts.get(2));
         int height = Integer.parseInt(parts.get(3));
         this.walls.add(new Wall(new Position(xPos,yPos), cropFromWallBackgroundImage(xPos,yPos,width,height), width, height));
+    }
+
+    private void readLevelTransitionWall(String line) throws IOException {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 5) {
+            throw new IOException("Level Transition Wall specification needs to be like: x,y,sizeX,sizeY,imagePath");
+        }
+        int xPos = Integer.parseInt(parts.get(0));
+        int yPos = Integer.parseInt(parts.get(1));
+        int width = Integer.parseInt(parts.get(2));
+        int height = Integer.parseInt(parts.get(3));
+        BufferedImage image = ImageIO.read(new File(parts.get(4)));
+        this.levelTransitionWall = new Wall(new Position(xPos,yPos), image, width, height);
     }
 
     public Level loadLevel(String levelName) {
@@ -184,9 +198,16 @@ public class LevelLoader {
                 }
                 readWall(line);
             }
+
+            String line = br.readLine();
+            if (line == null || line.isEmpty()) {
+                throw new IOException("Level lacks level transition wall: going to next levels won't be possible");
+            } else {
+                readLevelTransitionWall(line);
+            }
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background);
+        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall);
     }
 }
