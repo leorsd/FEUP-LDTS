@@ -146,7 +146,7 @@ public class LevelLoader {
         int yPos = Integer.parseInt(parts.get(1));
         int width = Integer.parseInt(parts.get(2));
         int height = Integer.parseInt(parts.get(3));
-        BufferedImage image = ImageIO.read(new File(parts.get(4)));
+        BufferedImage image = ImageIO.read(new File(parts.get(4))).getSubimage(0,0, width, height);
         this.levelTransitionWall = new Wall(new Position(xPos,yPos), image, width, height);
     }
 
