@@ -1,11 +1,11 @@
 package controller.game;
 
-import Game.GameManager;
-import Model.Elements.MovingElements.Monster;
-import Model.Position;
-import Model.Scenes.Level;
+import game.GameManager;
+import model.elements.movingelements.Monster;
+import model.Position;
+import model.scenes.Level;
 import controller.Controller;
-import GUI.GUI;
+import gui.GUI;
 
 import java.io.IOException;
 import java.util.Random;
@@ -35,7 +35,7 @@ public class MonsterController extends Controller<Level> {
         if (updateTime - lastUpdateTime > 200) {
             Random rand = new Random();
             for (Monster monster : getModel().getMonsters()) {
-                Position position = monster.getPosition();
+                Position position = new Position(monster.getPosition().getX(),monster.getPosition().getY());
                 int dx = rand.nextInt(-1,2);
                 position.setX(position.getX() + dx);
                 moveMonster(monster, position);

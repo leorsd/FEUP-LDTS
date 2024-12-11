@@ -12,7 +12,7 @@ repositories {
 }
 
 application {
-    mainClass.set("Game.Game")
+    mainClass.set("game.Game")
 }
 
 dependencies {

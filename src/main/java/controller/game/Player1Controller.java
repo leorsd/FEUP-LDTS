@@ -1,14 +1,17 @@
 package controller.game;
 
-import Game.GameManager;
-import Model.Position;
-import Model.Scenes.Level;
+import game.GameManager;
+import model.Position;
+import model.scenes.Level;
 import controller.Controller;
-import GUI.GUI;
+import gui.GUI;
 
 import java.util.Set;
 
 public class Player1Controller extends Controller<Level> {
+    private boolean isJumping = false;
+    private int currentJumpHeight = 0;
+
     public Player1Controller(Level level) {
         super(level);
     }
@@ -29,8 +32,10 @@ public class Player1Controller extends Controller<Level> {
     }
 
     public void movePlayer1Down() {
-        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() + 1);
-        movePlayer(desiredPosition);
+        if(!isOnGround() && !isJumping) {
+            Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() + 1);
+            movePlayer(desiredPosition);
+        }
     }
 
     private void movePlayer(Position position) {
@@ -44,16 +49,60 @@ public class Player1Controller extends Controller<Level> {
         getModel().getPlayer1().setPosition(position);
     }
 
+    private boolean isOnGround() {
+        int playerSizeX = getModel().getPlayer1().getSizeX();
+        int playerSizeY = getModel().getPlayer1().getSizeY();
+        boolean isOnGround = false;
+        for(int i = 0; i < playerSizeX; i++) {
+            Position belowPosition = new Position(getModel().getPlayer1().getPosition().getX()+i, getModel().getPlayer1().getPosition().getY() + playerSizeY);
+            isOnGround |= !getModel().isPositionFree(belowPosition);
+        }
+        return isOnGround;
+    }
+
+    private boolean canJump() {
+        int playerSizeX = getModel().getPlayer1().getSizeX();
+        boolean canJump = true;
+        for(int i = 0; i < playerSizeX; i++) {
+            Position upPosition = new Position(getModel().getPlayer1().getPosition().getX() + i, getModel().getPlayer1().getPosition().getY() - 1);
+            canJump &= getModel().isPositionFree(upPosition);
+        }
+        return canJump;
+    }
+
+    private void jump() {
+        if(isOnGround()) {
+            isJumping = true;
+            currentJumpHeight = 0;
+        }
+    }
+
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
+        if (actions.contains(GUI.ACTION.UP)) jump();
         for (GUI.ACTION action : actions) {
-            if (action == GUI.ACTION.UP) {
-                movePlayer1Up();
-                movePlayer1Up();
+            if (action == GUI.ACTION.RIGHT){
+                movePlayer1Right();
+                movePlayer1Right();
             }
-            if (action == GUI.ACTION.RIGHT) movePlayer1Right();
-            if (action == GUI.ACTION.DOWN) movePlayer1Down();
-            if (action == GUI.ACTION.LEFT) movePlayer1Left();
+            if (action == GUI.ACTION.DOWN){
+                movePlayer1Down();
+                movePlayer1Down();
+            }
+            if (action == GUI.ACTION.LEFT){
+                movePlayer1Left();
+                movePlayer1Left();
+            }
+        }
+        if(isJumping){
+            int maxJumpHeight=10;
+            if(currentJumpHeight < maxJumpHeight && canJump()) {
+                movePlayer1Up();
+                movePlayer1Up();
+                currentJumpHeight++;
+            }else{
+                isJumping = false;
+            }
         }
     }
 }

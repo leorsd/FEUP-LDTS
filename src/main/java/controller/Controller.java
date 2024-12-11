@@ -1,10 +1,10 @@
 package controller;
 
-import Game.GameManager;
+import game.GameManager;
 
 import java.io.IOException;
 import java.util.Set;
-import GUI.GUI;
+import gui.GUI;
 
 public abstract class Controller<T> {
     private final T model;
