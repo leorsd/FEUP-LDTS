@@ -15,12 +15,13 @@ class LevelTest extends Specification {
         def walls = [new Wall(new Position(1, 1), null, 1,1)]
         def monsters = [new Monster(10, new Position(2, 2), null, 1, 1)]
         def traps = [new Trap("Lavena", new Position(3, 3), null, 1,1)]
-        def keys = [new Key(new Position(4, 4), null, 1,1)]
+        def keys = [new Key(new Position(4, 4), null, 1,1,"Lavena")]
         def player1 = new Player("Lavena",1,1, new Position(5, 5), null, 2, 10)
         def player2 = new Player("Tergon",1,1, new Position(6, 6), null, 2, 10)
+        def levelTransitionWall = new Wall(new Position(1, 1), null, 1,1);
 
         when:"a Level is created"
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10, null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10, null, levelTransitionWall)
 
         then:"all elements should be initialized correctly"
         level.getWalls() == walls
@@ -31,6 +32,7 @@ class LevelTest extends Specification {
         level.getPlayer2() == player2
         level.getxBoundary() == 10
         level.getyBoundary() == 10
+        level.getLevelEndingWall() == levelTransitionWall
     }
 
     def "test isPositionFree with no walls or obstacles"() {
@@ -41,7 +43,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null,null)
 
         and: "a free position inside the boundaries"
         def position = new Position(5, 5)
@@ -59,7 +61,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null, null)
 
         and: "a position where a wall is present"
         def position = new Position(5, 5)
@@ -76,7 +78,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5,null,null)
 
         expect: "positions outside the boundaries should be marked as occupied"
         !level.isPositionFree(new Position(-1, 0))
@@ -93,7 +95,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0,null,null)
 
         expect: "no position should be free"
         !level.isPositionFree(new Position(0, 0))
