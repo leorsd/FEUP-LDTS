@@ -14,8 +14,8 @@ player1.x,player1.y,size.x,size.y,image,maxJumpHeight,speed
 
 player2.x,player2.y,size.x,size.y,image,maxJumpHeight,speed
 
-key1.x,key1.y,size.x,size.y,image
-key2.x,key2.y,size.x,size.y,image
+targetPlayerName,key1.x,key1.y,size.x,size.y,image
+targetPlayerName,key2.x,key2.y,size.x,size.y,image
 
 health,monster1.x,monster1.y,size.x,size.y,image
 health,monster2.x,monster2.y,size.x,size.y,image

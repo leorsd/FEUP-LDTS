@@ -103,10 +103,10 @@ public class LevelLoader {
 
     private void readKey(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
-        if (parts.size() != 5) {
-            throw new IOException("Key specification needs to be like: x,y,sizeX,sizeY,imagePath");
+        if (parts.size() != 6) {
+            throw new IOException("Key specification needs to be like: target,x,y,sizeX,sizeY,imagePath");
         }
-        this.keys.add(new Key(new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3))));
+        this.keys.add(new Key(new Position(Integer.parseInt(parts.get(1)), Integer.parseInt(parts.get(2))), ImageIO.read(new File(parts.get(5))), Integer.parseInt(parts.get(3)), Integer.parseInt(parts.get(4)), parts.get(0)));
     }
 
     private void readMonster(String line) throws IOException {
