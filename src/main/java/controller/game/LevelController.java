@@ -1,6 +1,8 @@
 package controller.game;
 
 import game.GameManager;
+import model.Position;
+import model.elements.Key;
 import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
 import model.elements.Trap;
@@ -39,6 +41,19 @@ public class LevelController extends Controller<Level> {
         return result;
     }
 
+    private void collectKeys() {
+        String player1Name = getModel().getPlayer1().getName();
+        Position player1Position = getModel().getPlayer1().getPosition();
+        int player1SizeX = getModel().getPlayer1().getSizeX();
+        int player1SizeY = getModel().getPlayer1().getSizeY();
+        String player2Name = getModel().getPlayer2().getName();
+        Position player2Position = getModel().getPlayer2().getPosition();
+        int player2SizeX = getModel().getPlayer2().getSizeX();
+        int player2SizeY = getModel().getPlayer2().getSizeY();
+        getModel().getKeys().removeIf(key -> key.getTarget().equals(player1Name) && key.hasCollided(player1Position, player1SizeX, player1SizeY));
+        getModel().getKeys().removeIf(key -> key.getTarget().equals(player2Name) && key.hasCollided(player2Position, player2SizeX, player2SizeY));
+    }
+
     private boolean checkLevelTransition() {
         return getModel().getPlayer1().isInside(getModel().getLevelEndingWall()) && getModel().getPlayer2().isInside(getModel().getLevelEndingWall()) && getModel().getKeys().isEmpty();
     }
@@ -64,6 +79,7 @@ public class LevelController extends Controller<Level> {
         }
         player1Controller.update(gameManager, player1Actions, updateTime);
         player2Controller.update(gameManager, player2Actions, updateTime);
+        collectKeys();
         if (checkDeadPlayers()) {
             // TODO: restart level instead of going to menu
             gameManager.setCurrentScene(new Menu());
