@@ -16,8 +16,8 @@ class LevelTest extends Specification {
         def monsters = [new Monster(10, new Position(2, 2), null, 1, 1)]
         def traps = [new Trap("Lavena", new Position(3, 3), null, 1,1)]
         def keys = [new Key(new Position(4, 4), null, 1,1)]
-        def player1 = new Player("Lavena",1,1, new Position(5, 5), null)
-        def player2 = new Player("Tergon",1,1, new Position(6, 6), null)
+        def player1 = new Player("Lavena",1,1, new Position(5, 5), null, 2, 10)
+        def player2 = new Player("Tergon",1,1, new Position(6, 6), null, 2, 10)
 
         when:"a Level is created"
         def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10, null)

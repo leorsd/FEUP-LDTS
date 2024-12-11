@@ -80,28 +80,34 @@ public class Player1Controller extends Controller<Level> {
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
         if (actions.contains(GUI.ACTION.UP)) jump();
+        int playerSpeed = getModel().getPlayer1().getSpeed();
         for (GUI.ACTION action : actions) {
             if (action == GUI.ACTION.RIGHT){
-                movePlayer1Right();
-                movePlayer1Right();
+                for (int i = 0; i < playerSpeed; i++) {
+                    movePlayer1Right();
+                }
             }
             if (action == GUI.ACTION.DOWN){
-                movePlayer1Down();
-                movePlayer1Down();
+                for (int i = 0; i < playerSpeed; i++) {
+                    movePlayer1Down();
+                }
             }
             if (action == GUI.ACTION.LEFT){
-                movePlayer1Left();
-                movePlayer1Left();
+                for (int i = 0; i < playerSpeed; i++) {
+                    movePlayer1Left();
+                }
             }
         }
         if(isJumping){
-            int maxJumpHeight=10;
-            if(currentJumpHeight < maxJumpHeight && canJump()) {
-                movePlayer1Up();
-                movePlayer1Up();
-                currentJumpHeight++;
-            }else{
-                isJumping = false;
+            int maxJumpHeight=getModel().getPlayer1().getMaxJumpHeight();
+            for (int i = 0; i<playerSpeed; i++) {
+                if (currentJumpHeight < maxJumpHeight && canJump()) {
+                    movePlayer1Up();
+                    currentJumpHeight++;
+                } else {
+                    isJumping = false;
+                    break;
+                }
             }
         }
     }
