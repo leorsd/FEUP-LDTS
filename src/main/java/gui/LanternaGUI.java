@@ -6,81 +6,43 @@ import model.elements.Key;
 import model.elements.Trap;
 import model.elements.Wall;
 import model.Position;
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
-import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
-
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
 import static gui.GUI.ACTION.*;
 
 public class LanternaGUI implements GUI {
-    private final AWTTerminalFrame terminalFrame;
+    private final ScreenCreator screenCreator;
     private final Screen screen;
+    private final KeyAdapter keyAdapter;
     private final HashSet<ACTION> inputs = new HashSet<>();
 
-    public LanternaGUI(int width, int height) throws IOException, FontFormatException, URISyntaxException {
-        AWTTerminalFontConfiguration fontConfig = loadSquareFont();
-        this.terminalFrame = createAWTTerminalFrame(width, height, fontConfig);
-        this.screen = createScreen(terminalFrame); // Pass the terminalFrame directly
-        initializeKeyListener();
+    public LanternaGUI(ScreenCreator screenCreator) throws IOException, URISyntaxException, FontFormatException {
+        this.screenCreator = screenCreator;
+        this.keyAdapter = createKeyAdapter();
+        this.screen = createScreen();
     }
 
-    private Screen createScreen(Terminal terminal) throws IOException {
-        Screen screen = new TerminalScreen(terminal);
+    private Screen createScreen() throws IOException, URISyntaxException, FontFormatException {
+        Screen screen = screenCreator.createScreen(keyAdapter);
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
         return screen;
     }
 
-    private AWTTerminalFrame createAWTTerminalFrame(int width, int height, AWTTerminalFontConfiguration fontConfig) throws IOException {
-        TerminalSize terminalSize = new TerminalSize(width, height);
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
-                .setForceAWTOverSwing(true)
-                .setInitialTerminalSize(terminalSize)
-                .setTerminalEmulatorFontConfiguration(fontConfig);
-
-        Terminal terminal = terminalFactory.createTerminal();
-        if (terminal instanceof AWTTerminalFrame) {
-            AWTTerminalFrame frame = (AWTTerminalFrame) terminal;
-            frame.setVisible(true);
-            return frame;
-        } else {
-            throw new IllegalStateException("Terminal is not an instance of AWTTerminalFrame");
-        }
-    }
-
-    private AWTTerminalFontConfiguration loadSquareFont() throws URISyntaxException, FontFormatException, IOException {
-        URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
-        File fontFile = new File(resource.toURI());
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(font);
-
-        Font loadedFont = font.deriveFont(Font.PLAIN, 5);
-        return AWTTerminalFontConfiguration.newInstance(loadedFont);
-    }
-
-    private void initializeKeyListener() {
-        terminalFrame.getComponent(0).addKeyListener(new KeyAdapter() {
+    private KeyAdapter createKeyAdapter() {
+        return new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 handleKeyPress(e);
@@ -89,8 +51,9 @@ public class LanternaGUI implements GUI {
             public void keyReleased(KeyEvent e) {
                 handleKeyRelease(e);
             }
-        });
+        };
     }
+
     @Override
     public int getGUIWidth() {
         return screen.getTerminalSize().getColumns();
@@ -142,7 +105,7 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
-    public Set<ACTION> getNextAction() throws IOException {
+    public Set<ACTION> getNextAction(){
         return new HashSet<>(inputs);
     }
 
