@@ -27,7 +27,7 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
         drawElements(gui, getScene().getKeys(), new KeyVisualizer());
         drawElement(gui, getScene().getPlayer1(), new PlayerVisualizer());
         drawElement(gui, getScene().getPlayer2(), new PlayerVisualizer());
-
+        drawElement(gui, getScene().getLevelEndingWall(), new WallVisualizer());
     }
 
     private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementVisualizer<T> viewer) {

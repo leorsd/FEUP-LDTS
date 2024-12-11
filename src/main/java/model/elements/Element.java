@@ -71,4 +71,13 @@ public abstract class Element {
         return thisX < position.getX() + otherSizeX && thisX + thisSizeX > position.getX() &&
                 thisY < position.getY() + otherSizeY && thisY + thisSizeY > position.getY();
     }
+
+    public boolean isInside(Element otherElement) {
+        int thisX = this.getPosition().getX();
+        int thisY = this.getPosition().getY();
+        int otherX = otherElement.getPosition().getX();
+        int otherY = otherElement.getPosition().getY();
+        if (thisX < otherX || thisY < otherY) return false;
+        return thisX + this.getSizeX() <= otherX + otherElement.getSizeX() && thisY + this.getSizeY() <= otherY + otherElement.getSizeY();
+    }
 }

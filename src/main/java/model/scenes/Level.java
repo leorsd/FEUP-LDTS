@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Level implements Scene{
+    private Wall levelEndingWall;
     private List<Wall> walls;
     private List<Monster> monsters;
     private List<Trap> traps;
@@ -21,7 +22,7 @@ public class Level implements Scene{
     private int yBoundary;
     private BufferedImage background;
 
-    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background) {
+    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall) {
         this.walls = walls;
         this.monsters = monsters;
         this.traps = traps;
@@ -31,6 +32,7 @@ public class Level implements Scene{
         this.xBoundary = xBoundary;
         this.yBoundary = yBoundary;
         this.background = background;
+        this.levelEndingWall = levelEndingWall;
     }
 
     public List<Wall> getWalls() {
@@ -67,6 +69,14 @@ public class Level implements Scene{
 
     public BufferedImage getBackground() {
         return background;
+    }
+
+    public Wall getLevelEndingWall() {
+        return levelEndingWall;
+    }
+
+    public void setLevelEndingWall(Wall levelEndingWall) {
+        this.levelEndingWall = levelEndingWall;
     }
 
     public boolean isPositionFree(Position position) {
