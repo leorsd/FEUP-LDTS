@@ -28,18 +28,30 @@ public class LevelController extends Controller<Level> {
         this.monsterController = new MonsterController(level);
     }
 
-    private boolean checkDeadPlayers() {
+    private boolean checkPlayer1Dead() {
         Player player1 = getModel().getPlayer1();
-        Player player2 = getModel().getPlayer2();
         boolean result = false;
         for (Monster monster : getModel().getMonsters()) {
-            result |= player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY()) || player2.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
+            result |= player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
         }
         for (Trap trap : getModel().getTraps()) {
-            result |= (player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player1.getName().equals(trap.getTarget())) || (player2.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player2.getName().equals(trap.getTarget()));
+            result |= (player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player1.getName().equals(trap.getTarget()));
         }
         return result;
     }
+
+    private boolean checkPlayer2Dead() {
+        Player player2 = getModel().getPlayer2();
+        boolean result = false;
+        for (Monster monster : getModel().getMonsters()) {
+            result |= player2.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
+        }
+        for (Trap trap : getModel().getTraps()) {
+            result |= (player2.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player2.getName().equals(trap.getTarget()));
+        }
+        return result;
+    }
+
 
     private void collectKeys() {
         String player1Name = getModel().getPlayer1().getName();
@@ -80,18 +92,28 @@ public class LevelController extends Controller<Level> {
         player1Controller.update(gameManager, player1Actions, updateTime);
         player2Controller.update(gameManager, player2Actions, updateTime);
         collectKeys();
-        if (checkDeadPlayers()) {
-            // TODO: restart level instead of going to menu
-            gameManager.setCurrentScene(new Menu());
-            return;
+
+        if (checkPlayer1Dead()) {
+            Player player1 = getModel().getPlayer1();
+            player1.setPosition(player1.getSpawnPosition());
         }
+        if (checkPlayer2Dead()) {
+            Player player2 = getModel().getPlayer2();
+            player2.setPosition(player2.getSpawnPosition());
+        }
+
         if (checkLevelTransition()) {
             gameManager.setCurrentScene(new Menu());
             return;
         }
         monsterController.update(gameManager, actions, updateTime);
-        if (checkDeadPlayers()) {
-            gameManager.setCurrentScene(new Menu());
+        if (checkPlayer1Dead()) {
+            Player player1 = getModel().getPlayer1();
+            player1.setPosition(player1.getSpawnPosition());
+        }
+        if (checkPlayer2Dead()) {
+            Player player2 = getModel().getPlayer1();
+            player2.setPosition(player2.getSpawnPosition());
         }
     }
 }

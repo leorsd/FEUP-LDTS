@@ -8,12 +8,14 @@ public class Player extends MovingElement {
     private String name;
     private int speed;
     private int maxJumpHeight;
+    private Position spawnPosition;
 
     public Player(String name, int sizeX, int sizeY, Position position, BufferedImage image, int speed,  int maxJumpHeight) {
         super(position, image, sizeX, sizeY);
         this.name = name;
         this.speed = speed;
         this.maxJumpHeight = maxJumpHeight;
+        this.spawnPosition = position;
     }
 
     public int getSpeed() {
@@ -39,4 +41,8 @@ public class Player extends MovingElement {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Position getSpawnPosition() { return this.spawnPosition; }
+
+    public void setSpawnPosition(Position spawnPosition) { this.spawnPosition = spawnPosition; }
 }
