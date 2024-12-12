@@ -21,6 +21,8 @@ public class Level implements Scene{
     private int xBoundary;
     private int yBoundary;
     private BufferedImage background;
+    private Position player1SpawnPosition;
+    private Position player2SpawnPosition;
 
     public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall) {
         this.walls = walls;
@@ -33,6 +35,8 @@ public class Level implements Scene{
         this.yBoundary = yBoundary;
         this.background = background;
         this.levelEndingWall = levelEndingWall;
+        this.player1SpawnPosition = player1.getPosition();
+        this.player2SpawnPosition = player2.getPosition();
     }
 
     public List<Wall> getWalls() {
@@ -92,5 +96,21 @@ public class Level implements Scene{
             }
         }
         return true;
+    }
+
+    public Position getPlayer1SpawnPosition() {
+        return player1SpawnPosition;
+    }
+
+    public void setPlayer1SpawnPosition(Position player1SpawnPosition) {
+        this.player1SpawnPosition = player1SpawnPosition;
+    }
+
+    public Position getPlayer2SpawnPosition() {
+        return player2SpawnPosition;
+    }
+
+    public void setPlayer2SpawnPosition(Position player2SpawnPosition) {
+        this.player2SpawnPosition = player2SpawnPosition;
     }
 }

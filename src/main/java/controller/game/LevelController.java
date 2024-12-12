@@ -28,15 +28,14 @@ public class LevelController extends Controller<Level> {
         this.monsterController = new MonsterController(level);
     }
 
-    private boolean checkDeadPlayers() {
-        Player player1 = getModel().getPlayer1();
-        Player player2 = getModel().getPlayer2();
+    private boolean checkPlayerDead(Player player) {
+
         boolean result = false;
         for (Monster monster : getModel().getMonsters()) {
-            result |= player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY()) || player2.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
+            result |= player.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
         }
         for (Trap trap : getModel().getTraps()) {
-            result |= (player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player1.getName().equals(trap.getTarget())) || (player2.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player2.getName().equals(trap.getTarget()));
+            result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player.getName().equals(trap.getTarget()));
         }
         return result;
     }
@@ -80,18 +79,24 @@ public class LevelController extends Controller<Level> {
         player1Controller.update(gameManager, player1Actions, updateTime);
         player2Controller.update(gameManager, player2Actions, updateTime);
         collectKeys();
-        if (checkDeadPlayers()) {
-            // TODO: restart level instead of going to menu
-            gameManager.setCurrentScene(new Menu());
-            return;
+
+        if (checkPlayerDead(getModel().getPlayer1())) {
+            getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());
         }
+        if (checkPlayerDead(getModel().getPlayer2())) {
+            getModel().getPlayer2().setPosition(getModel().getPlayer2SpawnPosition());
+        }
+
         if (checkLevelTransition()) {
             gameManager.setCurrentScene(new Menu());
             return;
         }
         monsterController.update(gameManager, actions, updateTime);
-        if (checkDeadPlayers()) {
-            gameManager.setCurrentScene(new Menu());
+        if (checkPlayerDead(getModel().getPlayer1())) {
+            getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());
+        }
+        if (checkPlayerDead(getModel().getPlayer2())) {
+            getModel().getPlayer2().setPosition(getModel().getPlayer2SpawnPosition());
         }
     }
 }

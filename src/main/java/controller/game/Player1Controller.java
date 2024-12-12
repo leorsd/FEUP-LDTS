@@ -77,6 +77,7 @@ public class Player1Controller extends Controller<Level> {
         }
     }
 
+
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
         if (actions.contains(GUI.ACTION.UP)) jump();
