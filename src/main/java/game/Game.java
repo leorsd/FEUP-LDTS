@@ -20,8 +20,8 @@ public class Game {
     private Game() throws FontFormatException, IOException, URISyntaxException {
         ScreenCreator screenCreator = new LanternaScreenCreator(
                 new DefaultTerminalFactory(),
-                new TerminalSize(240, 135),
-                GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
+                new TerminalSize(320, 180),
+                Toolkit.getDefaultToolkit().getScreenSize()
         );
         this.gui = new LanternaGUI(screenCreator);
         this.gameManager = new GameManager(new Menu());

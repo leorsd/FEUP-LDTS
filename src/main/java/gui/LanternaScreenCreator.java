@@ -18,9 +18,9 @@ import java.util.Objects;
 public class LanternaScreenCreator implements ScreenCreator {
     private final DefaultTerminalFactory terminalFactory;
     private final TerminalSize terminalSize;
-    private final Rectangle defaultBounds;
+    private final Dimension defaultBounds;
 
-    public LanternaScreenCreator(DefaultTerminalFactory terminalFactory, TerminalSize terminalSize, Rectangle defaultBounds) {
+    public LanternaScreenCreator(DefaultTerminalFactory terminalFactory, TerminalSize terminalSize, Dimension defaultBounds) {
         this.terminalFactory = terminalFactory;
         this.terminalSize = terminalSize;
         this.defaultBounds = defaultBounds;
@@ -34,9 +34,22 @@ public class LanternaScreenCreator implements ScreenCreator {
         AWTTerminalFontConfiguration fontConfig = loadFont(fontSize);
         terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
         TerminalScreen screen = terminalFactory.createScreen();
-        AWTTerminalFrame terminal = (AWTTerminalFrame) screen.getTerminal();
+        AWTTerminalFrame terminal = getAwtTerminalFrame(screen);
         terminal.getComponent(0).addKeyListener(keyListener);
         return screen;
+    }
+
+    private AWTTerminalFrame getAwtTerminalFrame(TerminalScreen screen) {
+        AWTTerminalFrame terminal = (AWTTerminalFrame) screen.getTerminal();
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        if (gd.isFullScreenSupported()) {
+            gd.setFullScreenWindow(terminal);
+        }else {
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            terminal.setSize(screenSize);
+            terminal.setLocation(0, 0);
+        }
+        return terminal;
     }
 
     private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
@@ -46,7 +59,9 @@ public class LanternaScreenCreator implements ScreenCreator {
         return AWTTerminalFontConfiguration.newInstance(font);
     }
 
-    private int getBestFontSize(Rectangle terminalBounds) {
+    private int getBestFontSize(Dimension terminalBounds) {
+        System.out.println(terminalBounds);
+        System.out.println(terminalSize);
         double maxFontWidth = terminalBounds.getWidth() / terminalSize.getColumns();
         double maxFontHeight = terminalBounds.getHeight() / terminalSize.getRows();
         return (int) Math.min(maxFontWidth, maxFontHeight);
