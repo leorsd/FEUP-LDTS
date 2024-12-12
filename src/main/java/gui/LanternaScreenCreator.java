@@ -60,8 +60,6 @@ public class LanternaScreenCreator implements ScreenCreator {
     }
 
     private int getBestFontSize(Dimension terminalBounds) {
-        System.out.println(terminalBounds);
-        System.out.println(terminalSize);
         double maxFontWidth = terminalBounds.getWidth() / terminalSize.getColumns();
         double maxFontHeight = terminalBounds.getHeight() / terminalSize.getRows();
         return (int) Math.min(maxFontWidth, maxFontHeight);
