@@ -95,11 +95,11 @@ public class LevelController extends Controller<Level> {
 
         if (checkPlayer1Dead()) {
             Player player1 = getModel().getPlayer1();
-            player1.setPosition(player1.getSpawnPosition());
+            player1.setPosition(getModel().getPlayer1SpawnPosition());
         }
         if (checkPlayer2Dead()) {
             Player player2 = getModel().getPlayer2();
-            player2.setPosition(player2.getSpawnPosition());
+            player2.setPosition(getModel().getPlayer2SpawnPosition());
         }
 
         if (checkLevelTransition()) {
@@ -109,11 +109,11 @@ public class LevelController extends Controller<Level> {
         monsterController.update(gameManager, actions, updateTime);
         if (checkPlayer1Dead()) {
             Player player1 = getModel().getPlayer1();
-            player1.setPosition(player1.getSpawnPosition());
+            player1.setPosition(getModel().getPlayer1SpawnPosition());
         }
         if (checkPlayer2Dead()) {
             Player player2 = getModel().getPlayer1();
-            player2.setPosition(player2.getSpawnPosition());
+            player2.setPosition(getModel().getPlayer2SpawnPosition());
         }
     }
 }
