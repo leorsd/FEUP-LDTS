@@ -1,6 +1,10 @@
 package game;
 
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import gui.LanternaGUI;
+import gui.LanternaScreenCreator;
+import gui.ScreenCreator;
 import model.scenes.Menu;
 
 import java.awt.*;
@@ -9,12 +13,17 @@ import java.net.URISyntaxException;
 
 
 public class Game {
-    private static Game gameInstance; // Singleton design pattern
+    private static Game gameInstance;
     private final LanternaGUI gui;
     private GameManager gameManager;
 
     private Game() throws FontFormatException, IOException, URISyntaxException {
-        this.gui = new LanternaGUI(200, 200);
+        ScreenCreator screenCreator = new LanternaScreenCreator(
+                new DefaultTerminalFactory(),
+                new TerminalSize(320, 180),
+                Toolkit.getDefaultToolkit().getScreenSize()
+        );
+        this.gui = new LanternaGUI(screenCreator);
         this.gameManager = new GameManager(new Menu());
     }
 
