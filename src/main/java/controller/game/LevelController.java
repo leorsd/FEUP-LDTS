@@ -28,30 +28,17 @@ public class LevelController extends Controller<Level> {
         this.monsterController = new MonsterController(level);
     }
 
-    private boolean checkPlayer1Dead() {
-        Player player1 = getModel().getPlayer1();
+    private boolean checkPlayerDead(Player player) {
+
         boolean result = false;
         for (Monster monster : getModel().getMonsters()) {
-            result |= player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
+            result |= player.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
         }
         for (Trap trap : getModel().getTraps()) {
-            result |= (player1.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player1.getName().equals(trap.getTarget()));
+            result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player.getName().equals(trap.getTarget()));
         }
         return result;
     }
-
-    private boolean checkPlayer2Dead() {
-        Player player2 = getModel().getPlayer2();
-        boolean result = false;
-        for (Monster monster : getModel().getMonsters()) {
-            result |= player2.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
-        }
-        for (Trap trap : getModel().getTraps()) {
-            result |= (player2.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player2.getName().equals(trap.getTarget()));
-        }
-        return result;
-    }
-
 
     private void collectKeys() {
         String player1Name = getModel().getPlayer1().getName();
@@ -93,13 +80,11 @@ public class LevelController extends Controller<Level> {
         player2Controller.update(gameManager, player2Actions, updateTime);
         collectKeys();
 
-        if (checkPlayer1Dead()) {
-            Player player1 = getModel().getPlayer1();
-            player1.setPosition(getModel().getPlayer1SpawnPosition());
+        if (checkPlayerDead(getModel().getPlayer1())) {
+            getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());
         }
-        if (checkPlayer2Dead()) {
-            Player player2 = getModel().getPlayer2();
-            player2.setPosition(getModel().getPlayer2SpawnPosition());
+        if (checkPlayerDead(getModel().getPlayer2())) {
+            getModel().getPlayer2().setPosition(getModel().getPlayer2SpawnPosition());
         }
 
         if (checkLevelTransition()) {
@@ -107,13 +92,11 @@ public class LevelController extends Controller<Level> {
             return;
         }
         monsterController.update(gameManager, actions, updateTime);
-        if (checkPlayer1Dead()) {
-            Player player1 = getModel().getPlayer1();
-            player1.setPosition(getModel().getPlayer1SpawnPosition());
+        if (checkPlayerDead(getModel().getPlayer1())) {
+            getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());
         }
-        if (checkPlayer2Dead()) {
-            Player player2 = getModel().getPlayer1();
-            player2.setPosition(getModel().getPlayer2SpawnPosition());
+        if (checkPlayerDead(getModel().getPlayer2())) {
+            getModel().getPlayer2().setPosition(getModel().getPlayer2SpawnPosition());
         }
     }
 }

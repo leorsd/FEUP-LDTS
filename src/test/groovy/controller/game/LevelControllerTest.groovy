@@ -32,7 +32,7 @@ class LevelControllerTest extends Specification {
         player1.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY()) >> true
 
         when: "the method is invoked"
-        def result = levelController.checkPlayer1Dead()
+        def result = levelController.checkPlayerDead(player1)
 
         then: "a collision is detected, and result is true"
         result
@@ -57,7 +57,7 @@ class LevelControllerTest extends Specification {
         player1.getName().equals(trap.getTarget()) >> true
 
         when: "the method is invoked"
-        def result = levelController.checkPlayer1Dead();
+        def result = levelController.checkPlayerDead(player1);
 
         then: "a collision is detected, and result is true"
         result
@@ -79,7 +79,7 @@ class LevelControllerTest extends Specification {
         player2.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY()) >> true
 
         when: "the method is invoked"
-        def result = levelController.checkPlayer2Dead()
+        def result = levelController.checkPlayerDead(player2)
 
         then: "a collision is detected, and result is true"
         result
@@ -104,7 +104,7 @@ class LevelControllerTest extends Specification {
         player2.getName().equals(trap.getTarget()) >> true
 
         when: "the method is invoked"
-        def result = levelController.checkPlayer2Dead();
+        def result = levelController.checkPlayerDead(player2);
 
         then: "a collision is detected, and result is true"
         result
