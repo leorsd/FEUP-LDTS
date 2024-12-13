@@ -21,11 +21,11 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
     @Override
     public void drawElements(GUI gui) {
         drawBackGround(gui, getScene().getBackground());
-        drawElements(gui, getScene().getTraps(), new TrapVisualizer());
         drawElements(gui, getScene().getWalls(), new WallVisualizer());
         drawElements(gui, getScene().getMonsters(), new MonsterVisualizer());
         drawElements(gui, getScene().getKeys(), new KeyVisualizer());
         drawElement(gui, getScene().getLevelEndingWall(), new WallVisualizer());
+        drawElements(gui, getScene().getTraps(), new TrapVisualizer());
         drawElement(gui, getScene().getPlayer1(), new PlayerVisualizer());
         drawElement(gui, getScene().getPlayer2(), new PlayerVisualizer());
     }
