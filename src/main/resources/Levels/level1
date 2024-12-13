@@ -1,14 +1,14 @@
-240,135,src/main/resources/images/wallBackground.png,src/main/resources/images/background.png
+320,180,src/main/resources/images/wallBackground.png,src/main/resources/images/background.png
 
 10,126,7,9,src/main/resources/images/player1.png,15,2
 
 20,126,7,9,src/main/resources/images/player2.png,15,2
 
-Lavena,120,120,10,10,src/main/resources/images/key.png
+Tergon,100,170,10,10,src/main/resources/images/key.png
 
 0,130,81,9,9,src/main/resources/images/monster.png
 
-Lavena,20,20,1,1,src/main/resources/images/trap.png
+Tergon,200,178,80,2,src/main/resources/images/trapP1Background.png
 
 0,80,10,2
 20,70,10,2

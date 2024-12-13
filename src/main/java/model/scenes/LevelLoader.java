@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import com.google.common.base.Splitter;
 
 import static com.google.common.base.Charsets.UTF_8;
@@ -22,6 +24,7 @@ import static com.google.common.base.Charsets.UTF_8;
 public class LevelLoader {
     Integer xBoundary = null;
     Integer yBoundary = null;
+
     BufferedImage wallBackground = null;
     BufferedImage background = null;
 
@@ -33,10 +36,6 @@ public class LevelLoader {
     List<Key> keys = new ArrayList<>();
     List<Monster> monsters = new ArrayList<>();
     List<Trap> traps = new ArrayList<>();
-
-    private BufferedImage cropFromWallBackgroundImage(int xPos, int yPos, int width, int height) {
-        return wallBackground.getSubimage(xPos, yPos, width, height);
-    }
 
     public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
@@ -56,7 +55,7 @@ public class LevelLoader {
         List<String> parts = Splitter.on(',').splitToList(line);
 
         if (parts.size() != 4) {
-            throw new IOException("Level specification needs to be like: x,y,regularWallsImage,imagePath");
+            throw new IOException("Level specification needs to be like: xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath");
         } else {
             xBoundary = Integer.parseInt(parts.getFirst());
             yBoundary = Integer.parseInt(parts.get(1));
@@ -79,7 +78,7 @@ public class LevelLoader {
         if (parts.size() != 7) {
             throw new IOException("Player 1 specification needs to be like: x,y,sizeX,sizeY,imagePath,maxJumpHeight,speed");
         } else {
-            player1 = new Player("Lavena", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
+            player1 = new Player("Tergon", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(6)), Integer.parseInt(parts.get(5)));
         }
     }
@@ -96,7 +95,7 @@ public class LevelLoader {
         if (parts.size() != 7) {
             throw new IOException("Player 2 specification needs to be like: x,y,sizeX,sizeY,imagePath,maxJumpHeight,speed");
         } else {
-            player2 = new Player("Tergon", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
+            player2 = new Player("Lavena", Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))), Integer.parseInt(parts.get(6)), Integer.parseInt(parts.get(5)));
         }
     }
@@ -120,9 +119,13 @@ public class LevelLoader {
     private void readTrap(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
         if (parts.size() != 6) {
-            throw new IOException("Trap specification needs to be like: target,x,y,sizeX,sizeY,imagePath");
+            throw new IOException("Trap specification needs to be like: target,x,y,sizeX,sizeY,imagPath");
         }
-        this.traps.add(new Trap(parts.get(0), new Position(Integer.parseInt(parts.get(1)), Integer.parseInt(parts.get(2))), ImageIO.read(new File(parts.get(5))), Integer.parseInt(parts.get(3)), Integer.parseInt(parts.get(4))));
+        String target = parts.getFirst();
+        int width = Integer.parseInt(parts.get(3));
+        int height = Integer.parseInt(parts.get(4));
+        BufferedImage trapBackground = ImageIO.read(new File(parts.get(5))).getSubimage(0,0, width, height);
+        this.traps.add(new Trap(target, new Position(Integer.parseInt(parts.get(1)), Integer.parseInt(parts.get(2))), trapBackground , width, height));
     }
 
     private void readWall(String line) throws IOException {
@@ -134,7 +137,8 @@ public class LevelLoader {
         int yPos = Integer.parseInt(parts.get(1));
         int width = Integer.parseInt(parts.get(2));
         int height = Integer.parseInt(parts.get(3));
-        this.walls.add(new Wall(new Position(xPos,yPos), cropFromWallBackgroundImage(xPos,yPos,width,height), width, height));
+        BufferedImage wallBackground2 = wallBackground.getSubimage(xPos, yPos, width, height);
+        this.walls.add(new Wall(new Position(xPos,yPos), wallBackground2, width, height));
     }
 
     private void readLevelTransitionWall(String line) throws IOException {
