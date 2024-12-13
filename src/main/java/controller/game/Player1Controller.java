@@ -77,8 +77,8 @@ public class Player1Controller extends Controller<Level> {
         }
     }
 
-    public void setJumpingFalse () {
-        isJumping = false;
+    public void setJumping (boolean jumping) {
+        isJumping = jumping;
     }
 
     @Override
