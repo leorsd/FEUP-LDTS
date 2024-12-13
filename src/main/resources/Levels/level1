@@ -1,8 +1,8 @@
 320,180,src/main/resources/images/wallBackgroundLevel1.png,src/main/resources/images/backgroundLevel1.png
 
-15,136,11,14,src/main/resources/images/lavena.png,25,2
+15,136,11,14,src/main/resources/images/lavena.png,25,4
 
-15,159,11,14,src/main/resources/images/tergon.png,25,2
+15,159,11,14,src/main/resources/images/tergon.png,25,4
 
 Lavena,150,160,7,9,src/main/resources/images/lavenakey.png
 Tergon,170,160,7,9,src/main/resources/images/tergonkey.png
@@ -22,4 +22,4 @@ Lavena,20,20,1,1,src/main/resources/images/trap.png
 260,151,60,10
 285,140,35,11
 
-150,125,10,10,src/main/resources/images/specialWall.png
+150,158,16,16,src/main/resources/images/specialWall.png

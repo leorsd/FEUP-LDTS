@@ -77,6 +77,9 @@ public class Player1Controller extends Controller<Level> {
         }
     }
 
+    public void setJumpingFalse () {
+        isJumping = false;
+    }
 
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
