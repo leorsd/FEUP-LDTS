@@ -1,17 +1,25 @@
-320,180,src/main/resources/images/wallBackground.png,src/main/resources/images/background.png
+320,180,src/main/resources/images/wallBackgroundLevel1.png,src/main/resources/images/backgroundLevel1.png
 
-10,126,7,9,src/main/resources/images/player1.png,15,2
+15,136,11,14,src/main/resources/images/lavena.png,25,4
 
-20,126,7,9,src/main/resources/images/player2.png,15,2
+15,159,11,14,src/main/resources/images/tergon.png,25,4
 
-Tergon,100,170,10,10,src/main/resources/images/key.png
+Lavena,150,160,7,9,src/main/resources/images/lavenakey.png
+Tergon,170,160,7,9,src/main/resources/images/tergonkey.png
 
-0,130,81,9,9,src/main/resources/images/monster.png
+130,81,9,9,src/main/resources/images/monster.png
 
-Tergon,200,178,80,2,src/main/resources/images/trapP1Background.png
+Tergon,200,170,80,2,src/main/resources/images/trapP1Background.png
 
-0,80,10,2
-20,70,10,2
-50,130,5,5
+0,0,320,7
+0,0,7,180
+313,0,7,180
+0,173,320,7
+0,150,100,4
+0,118,270,12
+180,163,140,13
+220,157,100,6
+260,151,60,10
+285,140,35,11
 
-150,125,10,10,src/main/resources/images/specialWall.png
+150,158,16,16,src/main/resources/images/specialWall.png

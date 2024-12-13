@@ -110,10 +110,10 @@ public class LevelLoader {
 
     private void readMonster(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
-        if (parts.size() != 6) {
-            throw new IOException("Monster specification needs to be like: health,x,y,sizeX,sizeY,imagePath");
+        if (parts.size() != 5) {
+            throw new IOException("Monster specification needs to be like: x,y,sizeX,sizeY,imagePath");
         }
-        this.monsters.add(new Monster(Integer.parseInt(parts.get(0)), new Position(Integer.parseInt(parts.get(1)), Integer.parseInt(parts.get(2))), ImageIO.read(new File(parts.get(5))),   Integer.parseInt(parts.get(3)), Integer.parseInt(parts.get(4))));
+        this.monsters.add(new Monster(new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))), ImageIO.read(new File(parts.get(4))),   Integer.parseInt(parts.get(2)), Integer.parseInt(parts.get(3))));
     }
 
     private void readTrap(String line) throws IOException {
