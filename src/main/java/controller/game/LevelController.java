@@ -7,6 +7,7 @@ import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
 import model.elements.Trap;
 import model.scenes.Level;
+import model.scenes.LevelLoader;
 import model.scenes.Menu;
 import controller.Controller;
 import gui.GUI;
@@ -90,7 +91,13 @@ public class LevelController extends Controller<Level> {
         }
 
         if (checkLevelTransition()) {
-            gameManager.setCurrentScene(new Menu());
+            if (getModel().getLevelNumber()==3) {
+                gameManager.setCurrentScene(new Menu());
+            }
+            else {
+                int nextLevelNumber = getModel().getLevelNumber()+1;
+                gameManager.setCurrentScene(new LevelLoader().loadLevel("src/main/resources/Levels/level" + nextLevelNumber));
+            }
             return;
         }
         monsterController.update(gameManager, actions, updateTime);

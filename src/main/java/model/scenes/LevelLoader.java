@@ -22,6 +22,8 @@ import com.google.common.base.Splitter;
 import static com.google.common.base.Charsets.UTF_8;
 
 public class LevelLoader {
+    Integer levelNumber = null;
+
     Integer xBoundary = null;
     Integer yBoundary = null;
 
@@ -54,13 +56,14 @@ public class LevelLoader {
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.size() != 4) {
-            throw new IOException("Level specification needs to be like: xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath");
+        if (parts.size() != 5) {
+            throw new IOException("Level specification needs to be like: levelNumber,xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath");
         } else {
-            xBoundary = Integer.parseInt(parts.getFirst());
-            yBoundary = Integer.parseInt(parts.get(1));
-            wallBackground = ImageIO.read(new File(parts.get(2)));
-            background = ImageIO.read(new File(parts.get(3)));
+            levelNumber = Integer.valueOf(parts.getFirst());
+            xBoundary = Integer.parseInt(parts.get(1));
+            yBoundary = Integer.parseInt(parts.get(2));
+            wallBackground = ImageIO.read(new File(parts.get(3)));
+            background = ImageIO.read(new File(parts.get(4)));
             wallBackground = resizeImage(wallBackground,xBoundary,yBoundary);
             background = resizeImage(background,xBoundary,yBoundary);
         }
@@ -212,6 +215,6 @@ public class LevelLoader {
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall);
+        return new Level(this.levelNumber, this.walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall);
     }
 }

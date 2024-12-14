@@ -8,7 +8,7 @@ Player1, Player2, Keys, Monsters, Traps, Walls.
 Example:
 
 "
-levelSize.x,levelSize.y,normalWallsImage,backgroundImage
+levelNUmber,levelSize.x,levelSize.y,normalWallsImage,backgroundImage
 
 player1.x,player1.y,size.x,size.y,image,maxJumpHeight,speed
 
