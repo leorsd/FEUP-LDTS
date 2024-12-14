@@ -1,4 +1,4 @@
-320,180,src/main/resources/images/wallBackgroundLevel1.png,src/main/resources/images/backgroundLevel1.png,src/main/resources/Levels/level2
+320,180,src/main/resources/images/wallBackgroundLevel2.png,src/main/resources/images/backgroundLevel2.png,src/main/resources/Levels/level3
 
 15,159,11,14,src/main/resources/images/tergon.png,28,4
 
@@ -18,16 +18,5 @@ Tergon,170,117,30,3,src/main/resources/images/trapP1Background.png
 0,0,7,180
 313,0,7,180
 0,173,320,7
-0,150,100,4
-0,118,270,12
-180,163,140,13
-220,157,100,6
-260,151,60,10
-285,140,35,11
-50,60,270,12
-100,93,110,4
-0,100,50,19
-0,85,29,15
-280,50,40,10
 
 290,31,17,19,src/main/resources/images/door.png

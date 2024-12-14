@@ -7,12 +7,14 @@ import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
 import model.elements.Trap;
 import model.scenes.Level;
+import model.scenes.LevelLoader;
 import model.scenes.Menu;
 import controller.Controller;
 import gui.GUI;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class LevelController extends Controller<Level> {
@@ -90,7 +92,12 @@ public class LevelController extends Controller<Level> {
         }
 
         if (checkLevelTransition()) {
-            gameManager.setCurrentScene(new Menu());
+            if (Objects.equals(getModel().getNextLevel(), "menu")) {
+                gameManager.setCurrentScene(new Menu());
+            }
+            else {
+                gameManager.setCurrentScene(new LevelLoader().loadLevel(getModel().getNextLevel()));
+            }
             return;
         }
         monsterController.update(gameManager, actions, updateTime);

@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import com.google.common.base.Splitter;
 
@@ -37,6 +36,8 @@ public class LevelLoader {
     List<Monster> monsters = new ArrayList<>();
     List<Trap> traps = new ArrayList<>();
 
+    String nextLevel;
+
     public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = resizedImage.createGraphics();
@@ -54,13 +55,14 @@ public class LevelLoader {
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.size() != 4) {
-            throw new IOException("Level specification needs to be like: xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath");
+        if (parts.size() != 5) {
+            throw new IOException("Level specification needs to be like: levelNumber,xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath");
         } else {
             xBoundary = Integer.parseInt(parts.getFirst());
             yBoundary = Integer.parseInt(parts.get(1));
             wallBackground = ImageIO.read(new File(parts.get(2)));
             background = ImageIO.read(new File(parts.get(3)));
+            nextLevel = parts.get(4);
             wallBackground = resizeImage(wallBackground,xBoundary,yBoundary);
             background = resizeImage(background,xBoundary,yBoundary);
         }
@@ -212,6 +214,6 @@ public class LevelLoader {
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall);
+        return new Level(this.walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall,this.nextLevel);
     }
 }

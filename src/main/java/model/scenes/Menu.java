@@ -12,8 +12,7 @@ public class Menu implements Scene{
     }
 
     public Menu() {
-        this.entries = Arrays.asList("src/main/resources/Levels/level1", "EXIT");
-        // TODO: read default entries from file
+        this.entries = MenuEntriesLoader.readFile("src/main/resources/Levels/menu");
     }
 
     public void selectNextEntry() {

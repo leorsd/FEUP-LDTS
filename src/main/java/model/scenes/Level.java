@@ -23,8 +23,9 @@ public class Level implements Scene{
     private BufferedImage background;
     private Position player1SpawnPosition;
     private Position player2SpawnPosition;
+    private String nextLevel;
 
-    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall) {
+    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall, String nextLevel) {
         this.walls = walls;
         this.monsters = monsters;
         this.traps = traps;
@@ -37,6 +38,15 @@ public class Level implements Scene{
         this.levelEndingWall = levelEndingWall;
         this.player1SpawnPosition = player1.getPosition();
         this.player2SpawnPosition = player2.getPosition();
+        this.nextLevel = nextLevel;
+    }
+
+    public String getNextLevel() {
+        return nextLevel;
+    }
+
+    public void setNextLevel(String nextLevel) {
+        this.nextLevel = nextLevel;
     }
 
     public List<Wall> getWalls() {
