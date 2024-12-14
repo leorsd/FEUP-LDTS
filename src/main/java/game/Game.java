@@ -33,7 +33,7 @@ public class Game {
         );
         this.gui = new LanternaGUI(screenCreator);
         this.gameManager = new GameManager(new Menu());
-        this.backgroundSoundPlayer = new BackgroundSoundPlayer(new SoundLoader().loadSound(AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sounds/powerup.wav"))), AudioSystem.getClip()));
+        this.backgroundSoundPlayer = new BackgroundSoundPlayer(new SoundLoader().loadSound(AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sounds/powerup!.wav"))), AudioSystem.getClip()));
 
         FloatControl gainControl = (FloatControl) backgroundSoundPlayer.getSound().getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(-15f);
