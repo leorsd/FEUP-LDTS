@@ -12,35 +12,41 @@ import java.util.Random;
 import java.util.Set;
 
 public class MonsterController extends Controller<Level> {
-    private long lastUpdateTime;
-
     public MonsterController(Level level) {
         super(level);
-
-        this.lastUpdateTime = 0;
-    }
-
-    public long getLastUpdateTime() {
-        return lastUpdateTime;
     }
 
     private void moveMonster(Monster monster, Position position) {
-        if (getModel().isPositionFree(position)) {
-            monster.setPosition(position);
+        int monsterSizeX = monster.getSizeX();
+        int monsterSizeY = monster.getSizeY();
+        for (int i = 0; i < monsterSizeX; i++) {
+            for (int j = 0; j < monsterSizeY; j++) {
+                if (! getModel().isPositionFree(new Position(position.getX() + i, position.getY() + j))) {
+                    monster.setDirection(monster.getDirection() * -1);
+                    return;
+                }
+            }
         }
+        monster.setPosition(position);
     }
 
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) throws IOException {
-        if (updateTime - lastUpdateTime > 200) {
-            Random rand = new Random();
-            for (Monster monster : getModel().getMonsters()) {
-                Position position = new Position(monster.getPosition().getX(),monster.getPosition().getY());
-                int dx = rand.nextInt(-1,2);
-                position.setX(position.getX() + dx);
-                moveMonster(monster, position);
+        for (Monster monster : getModel().getMonsters()) {
+            int posX = monster.getPosition().getX();
+            int posY = monster.getPosition().getY();
+            int desiredX = posX + monster.getDirection();
+            if(desiredX == monster.getMaxX()){
+                monster.setDirection(monster.getDirection() * -1);
+                desiredX = posX + monster.getDirection();
+                moveMonster(monster, new Position(desiredX, posY));
+            }else if(desiredX == monster.getMinX()){
+                monster.setDirection(monster.getDirection() * -1);
+                desiredX = posX + monster.getDirection();
+                moveMonster(monster, new Position(desiredX, posY));
+            }else{
+                moveMonster(monster, new Position(desiredX, posY));
             }
-            this.lastUpdateTime = updateTime;
         }
     }
 }
