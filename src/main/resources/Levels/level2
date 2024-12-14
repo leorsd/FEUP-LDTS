@@ -1,22 +1,34 @@
 320,180,src/main/resources/images/wallBackgroundLevel2.png,src/main/resources/images/backgroundLevel2.png,src/main/resources/Levels/level3
 
-15,159,11,14,src/main/resources/images/tergon.png,28,4
+35,86,11,14,src/main/resources/images/tergon.png,28,4
 
-15,136,11,14,src/main/resources/images/lavena.png,28,4
+275,86,11,14,src/main/resources/images/lavena.png,28,4
 
-Lavena,152,103,7,9,src/main/resources/images/lavenakey.png
-Tergon,152,79,7,9,src/main/resources/images/tergonkey.png
+Lavena,14,159,7,9,src/main/resources/images/lavenakey.png
+Tergon,300,159,7,9,src/main/resources/images/tergonkey.png
 
-130,44,14,16,src/main/resources/images/monster.png
+155,124,14,16,src/main/resources/images/monster.png
+155,64,14,16,src/main/resources/images/monster.png
 
-Lavena,110,92,30,3,src/main/resources/images/trapP2Background.png
-Lavena,170,92,30,3,src/main/resources/images/trapP2Background.png
-Tergon,110,117,30,3,src/main/resources/images/trapP1Background.png
-Tergon,170,117,30,3,src/main/resources/images/trapP1Background.png
+Lavena,110,39,30,3,src/main/resources/images/trapP2Background.png
+Tergon,179,39,30,3,src/main/resources/images/trapP1Background.png
 
 0,0,320,7
 0,0,7,180
 313,0,7,180
 0,173,320,7
+0,100,70,10
+250,100,70,10
+98,80,125,4
+85,120,30,4
+205,120,30,4
+113,140,95,4
+65,155,30,4
+225,155,30,4
+60,40,200,10
+20,75,25,5
+275,75,25,5
+0,50,20,5
+300,50,20,5
 
-290,31,17,19,src/main/resources/images/door.png
+151,21,17,19,src/main/resources/images/door.png
