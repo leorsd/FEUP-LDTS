@@ -6,18 +6,26 @@ import gui.LanternaGUI;
 import gui.LanternaScreenCreator;
 import gui.ScreenCreator;
 import model.scenes.Menu;
+import sound.BackgroundSoundPlayer;
+import sound.SoundLoader;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 
 public class Game {
     private static Game gameInstance;
     private final LanternaGUI gui;
     private GameManager gameManager;
+    private BackgroundSoundPlayer backgroundSoundPlayer;
 
-    private Game() throws FontFormatException, IOException, URISyntaxException {
+    private Game() throws Exception {
         ScreenCreator screenCreator = new LanternaScreenCreator(
                 new DefaultTerminalFactory(),
                 new TerminalSize(320, 180),
@@ -25,9 +33,13 @@ public class Game {
         );
         this.gui = new LanternaGUI(screenCreator);
         this.gameManager = new GameManager(new Menu());
+        this.backgroundSoundPlayer = new BackgroundSoundPlayer(new SoundLoader().loadSound(AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sounds/powerup.wav"))), AudioSystem.getClip()));
+
+        FloatControl gainControl = (FloatControl) backgroundSoundPlayer.getSound().getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-15f);
     }
 
-    public static synchronized Game getInstance() throws FontFormatException, IOException, URISyntaxException {
+    public static synchronized Game getInstance() throws Exception {
         if (gameInstance == null) {
             gameInstance = new Game();
         }
@@ -38,8 +50,10 @@ public class Game {
         try {
             Game game = Game.getInstance(); // Use the singleton instance
             game.start();
-        } catch (IOException | FontFormatException | URISyntaxException e) {
+        } catch (IOException | FontFormatException | URISyntaxException | UnsupportedAudioFileException | LineUnavailableException e) {
             System.out.println(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -52,6 +66,7 @@ public class Game {
         int frameTime = 1000 / FPS;
         boolean running = true;
 
+        backgroundSoundPlayer.start();
         while (running) {
             long startTime = System.currentTimeMillis();
 
@@ -66,7 +81,7 @@ public class Game {
                 System.out.println(e.getMessage());
             }
         }
-
+        backgroundSoundPlayer.stop();
         gui.close();
     }
 }
