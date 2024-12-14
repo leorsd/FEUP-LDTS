@@ -7,8 +7,8 @@
 Lavena,14,159,7,9,src/main/resources/images/lavenakey.png
 Tergon,300,159,7,9,src/main/resources/images/tergonkey.png
 
-155,124,14,16,src/main/resources/images/monster.png
-155,64,14,16,src/main/resources/images/monster.png
+155,124,14,16,140,170,src/main/resources/images/monster.png
+155,64,14,16,140,170,src/main/resources/images/monster.png
 
 Lavena,110,39,30,3,src/main/resources/images/trapP2Background.png
 Tergon,179,39,30,3,src/main/resources/images/trapP1Background.png
