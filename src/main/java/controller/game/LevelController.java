@@ -37,7 +37,7 @@ public class LevelController extends Controller<Level> {
             result |= player.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
         }
         for (Trap trap : getModel().getTraps()) {
-            result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && player.getName().equals(trap.getTarget()));
+            result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && (player.getName().equals(trap.getTarget()) || trap.getTarget().equals("Both")));
         }
         return result;
     }
