@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Level implements Scene{
-    private int levelNumber;
     private Wall levelEndingWall;
     private List<Wall> walls;
     private List<Monster> monsters;
@@ -24,9 +23,9 @@ public class Level implements Scene{
     private BufferedImage background;
     private Position player1SpawnPosition;
     private Position player2SpawnPosition;
+    private String nextLevel;
 
-    public Level(int levelNumber, List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall) {
-        this.levelNumber = levelNumber;
+    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall, String nextLevel) {
         this.walls = walls;
         this.monsters = monsters;
         this.traps = traps;
@@ -39,14 +38,15 @@ public class Level implements Scene{
         this.levelEndingWall = levelEndingWall;
         this.player1SpawnPosition = player1.getPosition();
         this.player2SpawnPosition = player2.getPosition();
+        this.nextLevel = nextLevel;
     }
 
-    public int getLevelNumber() {
-        return levelNumber;
+    public String getNextLevel() {
+        return nextLevel;
     }
 
-    public void setLevelNumber(int levelNumber) {
-        this.levelNumber = levelNumber;
+    public void setNextLevel(String nextLevel) {
+        this.nextLevel = nextLevel;
     }
 
     public List<Wall> getWalls() {

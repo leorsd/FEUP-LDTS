@@ -14,6 +14,7 @@ import gui.GUI;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class LevelController extends Controller<Level> {
@@ -91,12 +92,11 @@ public class LevelController extends Controller<Level> {
         }
 
         if (checkLevelTransition()) {
-            if (getModel().getLevelNumber()==3) {
+            if (Objects.equals(getModel().getNextLevel(), "menu")) {
                 gameManager.setCurrentScene(new Menu());
             }
             else {
-                int nextLevelNumber = getModel().getLevelNumber()+1;
-                gameManager.setCurrentScene(new LevelLoader().loadLevel("src/main/resources/Levels/level" + nextLevelNumber));
+                gameManager.setCurrentScene(new LevelLoader().loadLevel(getModel().getNextLevel()));
             }
             return;
         }

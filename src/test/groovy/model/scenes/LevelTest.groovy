@@ -21,7 +21,7 @@ class LevelTest extends Specification {
         def levelTransitionWall = new Wall(new Position(1, 1), null, 1,1);
 
         when:"a Level is created"
-        def level = new Level(1,walls, monsters, traps, keys, player1, player2, 10, 10, null, levelTransitionWall)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10, null, levelTransitionWall,"src/main/resources/Levels/level2")
 
         then:"all elements should be initialized correctly"
         level.getWalls() == walls
@@ -43,7 +43,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(1,walls, monsters, traps, keys, player1, player2, 10, 10,null,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null,null, "src/main/resources/Levels/level2")
 
         and: "a free position inside the boundaries"
         def position = new Position(5, 5)
@@ -61,7 +61,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(1,walls, monsters, traps, keys, player1, player2, 10, 10,null, null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 10, 10,null, null, "src/main/resources/Levels/level2")
 
         and: "a position where a wall is present"
         def position = new Position(5, 5)
@@ -78,7 +78,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(1,walls, monsters, traps, keys, player1, player2, 5, 5,null,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 5, 5,null,null, "src/main/resources/Levels/level2")
 
         expect: "positions outside the boundaries should be marked as occupied"
         !level.isPositionFree(new Position(-1, 0))
@@ -95,7 +95,7 @@ class LevelTest extends Specification {
         def monsters = []
         def traps = []
         def keys = []
-        def level = new Level(1,walls, monsters, traps, keys, player1, player2, 0, 0,null,null)
+        def level = new Level(walls, monsters, traps, keys, player1, player2, 0, 0,null,null, "src/main/resources/Levels/level2")
 
         expect: "no position should be free"
         !level.isPositionFree(new Position(0, 0))
