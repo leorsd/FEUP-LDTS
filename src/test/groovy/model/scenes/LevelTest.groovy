@@ -15,7 +15,7 @@ class LevelTest extends Specification {
     def "should correctly initialize with provided elements"() {
         given:"lists of walls, monsters, traps, keys, and players"
         def walls = [new Wall(new Position(1, 1), null, 1,1)]
-        def monsters = [new Monster(new Position(2, 2), null, 1, 1)]
+        def monsters = [new Monster(new Position(2, 2), null, 1, 1,1, 1)]
         def toggleableWall = new ToggleableWall(new Position(2,3), null, 10, 10)
         def toggleableWalls = [toggleableWall]
         def buttons = [new Button(new Position(10,10), null, 10, 10, toggleableWall)]
