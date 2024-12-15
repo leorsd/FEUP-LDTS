@@ -89,13 +89,13 @@ class MenuTest extends Specification {
 
         expect:"the Menu should have default entries"
         menu.getEntriesSize() == 5
-        menu.getHighlightedEntry() == "src/main/resources/Levels/level0"
+        menu.getHighlightedEntry() == "src/main/resources/levels/level0"
 
         when:"select the next entry"
         menu.selectNextEntry()
 
         then:"it should highlight the second one"
-        menu.getHighlightedEntry() == "src/main/resources/Levels/level1"
+        menu.getHighlightedEntry() == "src/main/resources/levels/level1"
 
     }
 }
