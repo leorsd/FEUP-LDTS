@@ -30,4 +30,9 @@ wall3.x,wall3.y,size.x,size.y
 wall4.x,wall4.y,size.x,size.y
 
 levelEndingWall.x,levelEndingWall.y,size.x,size.y,image
+
+toggleableWallID1,wall1.x,wall1.y,size.x,size.y,image
+toggleableWallID2,wall2.x,wall2.y,size.x,size.y,image
+
+toggleableWallID,button.x,button.y,size.x,size.y,image
 "

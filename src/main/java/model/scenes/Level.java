@@ -1,10 +1,8 @@
 package model.scenes;
 
+import model.elements.*;
 import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
-import model.elements.Key;
-import model.elements.Trap;
-import model.elements.Wall;
 import model.Position;
 
 import java.awt.image.BufferedImage;
@@ -13,6 +11,8 @@ import java.util.List;
 public class Level implements Scene{
     private Wall levelEndingWall;
     private List<Wall> walls;
+    private List<ToggleableWall> toggleableWalls;
+    private List<Button> buttons;
     private List<Monster> monsters;
     private List<Trap> traps;
     private List<Key> keys;
@@ -25,8 +25,10 @@ public class Level implements Scene{
     private Position player2SpawnPosition;
     private String nextLevel;
 
-    public Level(List<Wall> walls, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall, String nextLevel) {
+    public Level(List<Wall> walls, List<ToggleableWall> toggleableWalls, List<Button> buttons, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall, String nextLevel) {
         this.walls = walls;
+        this.toggleableWalls = toggleableWalls;
+        this.buttons = buttons;
         this.monsters = monsters;
         this.traps = traps;
         this.keys = keys;
@@ -73,6 +75,14 @@ public class Level implements Scene{
         return player2;
     }
 
+    public List<ToggleableWall> getToggleableWalls() {
+        return toggleableWalls;
+    }
+
+    public List<Button> getButtons() {
+        return buttons;
+    }
+
     public int getxBoundary() {
         return xBoundary;
     }
@@ -102,6 +112,11 @@ public class Level implements Scene{
         }
         for (Wall wall : walls) {
             if (wall.hasCollided(position, 1, 1)) {
+                return false;
+            }
+        }
+        for (ToggleableWall wall : toggleableWalls) {
+            if (wall.isActive() && wall.hasCollided(position, 1, 1)) {
                 return false;
             }
         }

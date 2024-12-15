@@ -22,6 +22,8 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
     public void drawElements(GUI gui) {
         drawBackGround(gui, getScene().getBackground());
         drawElements(gui, getScene().getWalls(), new WallVisualizer());
+        drawElements(gui, getScene().getToggleableWalls(), new ToggleableWallVisualizer());
+        drawElements(gui, getScene().getButtons(), new ButtonVisualizer());
         drawElements(gui, getScene().getMonsters(), new MonsterVisualizer());
         drawElements(gui, getScene().getKeys(), new KeyVisualizer());
         drawElement(gui, getScene().getLevelEndingWall(), new WallVisualizer());

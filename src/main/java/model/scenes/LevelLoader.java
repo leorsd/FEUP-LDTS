@@ -1,8 +1,10 @@
 package model.scenes;
 
+import model.elements.ToggleableWall;
 import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
 import model.elements.Key;
+import model.elements.Button;
 import model.elements.Trap;
 import model.elements.Wall;
 import model.Position;
@@ -14,7 +16,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Splitter;
 
@@ -32,6 +36,9 @@ public class LevelLoader {
 
     Wall levelTransitionWall;
     List<Wall> walls = new ArrayList<>();
+    List<ToggleableWall> toggleableWalls = new ArrayList<>();
+    List<Button> buttons = new ArrayList<>();
+    Map<Integer, ToggleableWall> toggleableWallsMap = new HashMap<>();
     List<Key> keys = new ArrayList<>();
     List<Monster> monsters = new ArrayList<>();
     List<Trap> traps = new ArrayList<>();
@@ -181,6 +188,38 @@ public class LevelLoader {
         ));
     }
 
+    private void readToggleableWall(String line) throws IOException {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 6) {
+            throw new IOException("ToggleableWall specification needs to be like: id,x,y,sizeX,sizeY,image");
+        }
+        Integer id = Integer.parseInt(parts.getFirst());
+        int xPos = Integer.parseInt(parts.get(1));
+        int yPos = Integer.parseInt(parts.get(2));
+        int width = Integer.parseInt(parts.get(3));
+        int height = Integer.parseInt(parts.get(4));
+        BufferedImage wallBackground = ImageIO.read(new File(parts.get(5))).getSubimage(0,0, width, height);
+        ToggleableWall toggleableWall = new ToggleableWall(new Position(xPos,yPos), wallBackground, width, height);
+        toggleableWallsMap.put(id, toggleableWall);
+        toggleableWalls.add(toggleableWall);
+    }
+
+    private void readButtons(String line) throws IOException {
+        List<String> parts = Splitter.on(',').splitToList(line);
+        if (parts.size() != 6) {
+            throw new IOException("Button specification needs to be like: idToggleableWall,x,y,sizeX,sizeY,image");
+        }
+        Integer id = Integer.parseInt(parts.get(0));
+        int xPos = Integer.parseInt(parts.get(1));
+        int yPos = Integer.parseInt(parts.get(2));
+        int width = Integer.parseInt(parts.get(3));
+        int height = Integer.parseInt(parts.get(4));
+        BufferedImage wallBackground = ImageIO.read(new File(parts.get(5))).getSubimage(0,0, width, height);
+        Button button = new Button(new Position(xPos, yPos), wallBackground, width, height, toggleableWallsMap.get(id));
+        buttons.add(button);
+    }
+
+
     private void readLevelTransitionWall(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
         if (parts.size() != 5) {
@@ -254,9 +293,25 @@ public class LevelLoader {
             } else {
                 readLevelTransitionWall(line);
             }
+            line = br.readLine();
+            while (true) {
+                line = br.readLine();
+                if (line == null || line.isEmpty()) {
+                    break;
+                }
+                readToggleableWall(line);
+            }
+
+            while (true) {
+                line = br.readLine();
+                if (line == null || line.isEmpty()) {
+                    break;
+                }
+                readButtons(line);
+            }
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(this.walls, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall,this.nextLevel);
+        return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall,this.nextLevel);
     }
 }
