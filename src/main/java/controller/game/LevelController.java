@@ -2,7 +2,9 @@ package controller.game;
 
 import game.GameManager;
 import model.Position;
+import model.elements.Button;
 import model.elements.Key;
+import model.elements.ToggleableWall;
 import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
 import model.elements.Trap;
@@ -13,6 +15,7 @@ import controller.Controller;
 import gui.GUI;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -22,12 +25,17 @@ public class LevelController extends Controller<Level> {
     private final Player2Controller player2Controller;
     private final MonsterController monsterController;
 
+    private final HashMap<Button, Boolean> buttonPressed = new HashMap<>();
+
     public LevelController(Level level) {
         super(level);
 
         this.player1Controller = new Player1Controller(level);
         this.player2Controller = new Player2Controller(level);
         this.monsterController = new MonsterController(level);
+        for (Button button : getModel().getButtons()) {
+            buttonPressed.put(button, false);
+        }
     }
 
     private boolean checkPlayerDead(Player player) {
@@ -40,6 +48,28 @@ public class LevelController extends Controller<Level> {
             result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && (player.getName().equals(trap.getTarget()) || trap.getTarget().equals("Both")));
         }
         return result;
+    }
+
+    private void checkButtonsClicked() {
+        HashMap<ToggleableWall, Boolean> activeWallsTemp = new HashMap<>();
+        for (ToggleableWall wall : getModel().getToggleableWalls()) {
+            activeWallsTemp.put(wall, true);
+        }
+        for (Button button : getModel().getButtons()) {
+            if (button.hasCollided(getModel().getPlayer1().getPosition(), getModel().getPlayer1().getSizeX(), getModel().getPlayer1().getSizeY()) || button.hasCollided(getModel().getPlayer2().getPosition(), getModel().getPlayer2().getSizeX(), getModel().getPlayer2().getSizeY())) {
+                button.setPressed(true);
+                activeWallsTemp.put(button.getToggleableWall(), false);
+            } else {
+                button.setPressed(false);
+            }
+        }
+        for (ToggleableWall wall : getModel().getToggleableWalls()) {
+            if (activeWallsTemp.get(wall)) {
+                wall.setActive(true);
+            } else {
+                wall.setActive(false);
+            }
+        }
     }
 
     private void collectKeys() {
@@ -81,6 +111,8 @@ public class LevelController extends Controller<Level> {
         player1Controller.update(gameManager, player1Actions, updateTime);
         player2Controller.update(gameManager, player2Actions, updateTime);
         collectKeys();
+
+        checkButtonsClicked();
 
         if (checkPlayerDead(getModel().getPlayer1())) {
             getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());

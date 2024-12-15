@@ -7,6 +7,6 @@ import model.elements.Wall;
 public class ToggleableWallVisualizer implements ElementVisualizer<ToggleableWall> {
     @Override
     public void draw(ToggleableWall wall, GUI gui) {
-        gui.drawWall(wall);
+        if (wall.isActive()) gui.drawWall(wall);
     }
 }

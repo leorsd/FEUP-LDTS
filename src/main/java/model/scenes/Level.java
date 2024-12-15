@@ -115,6 +115,11 @@ public class Level implements Scene{
                 return false;
             }
         }
+        for (ToggleableWall wall : toggleableWalls) {
+            if (wall.isActive() && wall.hasCollided(position, 1, 1)) {
+                return false;
+            }
+        }
         return true;
     }
 
