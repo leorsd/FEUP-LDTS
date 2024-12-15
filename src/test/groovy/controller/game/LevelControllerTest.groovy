@@ -24,6 +24,7 @@ class LevelControllerTest extends Specification {
         level.getPlayer1() >> player1
         level.getMonsters() >> [monster]
         level.getTraps() >> []
+        level.getToggleableWalls() >> []
 
         and: "player1 collides with the monster"
         monster.getPosition() >> new Position (1,1)
@@ -46,6 +47,7 @@ class LevelControllerTest extends Specification {
         level.getPlayer1() >> player1
         level.getTraps() >> [trap]
         level.getMonsters() >> []
+        level.getToggleableWalls() >> []
 
         and: "player1 collides with the trap"
         trap.getPosition() >> new Position (1,1)
@@ -71,6 +73,7 @@ class LevelControllerTest extends Specification {
         level.getPlayer2() >> player2
         level.getMonsters() >> [monster]
         level.getTraps() >> []
+        level.getToggleableWalls() >> []
 
         and: "player2 collides with the monster"
         monster.getPosition() >> new Position (1,1)
@@ -93,6 +96,7 @@ class LevelControllerTest extends Specification {
         level.getPlayer2() >> player2
         level.getTraps() >> [trap]
         level.getMonsters() >> []
+        level.getToggleableWalls() >> []
 
         and: "player2 collides with the trap"
         trap.getPosition() >> new Position (1,1)
