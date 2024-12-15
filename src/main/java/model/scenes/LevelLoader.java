@@ -250,7 +250,7 @@ public class LevelLoader {
             } else {
                 readLevelTransitionWall(line);
             }
-
+            line = br.readLine();
             while (true) {
                 line = br.readLine();
                 if (line == null || line.isEmpty()) {

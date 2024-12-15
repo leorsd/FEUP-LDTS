@@ -75,6 +75,14 @@ public class Level implements Scene{
         return player2;
     }
 
+    public List<ToggleableWall> getToggleableWalls() {
+        return toggleableWalls;
+    }
+
+    public List<Button> getButtons() {
+        return buttons;
+    }
+
     public int getxBoundary() {
         return xBoundary;
     }

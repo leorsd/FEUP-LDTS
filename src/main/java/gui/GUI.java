@@ -1,5 +1,6 @@
 package gui;
 
+import model.elements.Button;
 import model.elements.movingelements.Monster;
 import model.elements.movingelements.Player;
 import model.elements.Key;
@@ -21,6 +22,8 @@ public interface GUI {
     void drawMonster(Monster monster);
 
     void drawKey(Key key);
+
+    void drawButton(Button button);
 
     void drawTrap(Trap trap);
 

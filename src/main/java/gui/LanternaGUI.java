@@ -5,6 +5,7 @@ import model.elements.movingelements.Player;
 import model.elements.Key;
 import model.elements.Trap;
 import model.elements.Wall;
+import model.elements.Button;
 import model.Position;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
@@ -73,6 +74,9 @@ public class LanternaGUI implements GUI {
     public void drawKey(Key key) {
         drawImage(key.getPosition(),key.getImage());
     }
+
+    @Override
+    public void drawButton(Button button) {drawImage(button.getPosition(), button.getImage());}
 
     @Override
     public void drawMonster(Monster monster) {
