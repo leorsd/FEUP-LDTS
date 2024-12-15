@@ -78,12 +78,33 @@ public class LevelController extends Controller<Level> {
         Position player2Position = getModel().getPlayer2().getPosition();
         int player2SizeX = getModel().getPlayer2().getSizeX();
         int player2SizeY = getModel().getPlayer2().getSizeY();
-        getModel().getKeys().removeIf(key -> key.getTarget().equals(player1Name) && key.hasCollided(player1Position, player1SizeX, player1SizeY));
-        getModel().getKeys().removeIf(key -> key.getTarget().equals(player2Name) && key.hasCollided(player2Position, player2SizeX, player2SizeY));
+        for (Key key : getModel().getKeys()) {
+            if ((key.getTarget().equals(player1Name) && key.hasCollided(player1Position, player1SizeX, player1SizeY)) || (key.getTarget().equals(player2Name) && key.hasCollided(player2Position, player2SizeX, player2SizeY))) {
+                key.setCollected(true);
+            }
+        }
+    }
+
+    private boolean allKeysCollected () {
+        for (Key key : getModel().getKeys()) {
+            if (!key.isCollected()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void playerDied(Player player) {
+        player.setPosition(getModel().getPlayerSpawnPosition(player));
+        for (Key key : getModel().getKeys()) {
+            if (key.getTarget().equals(player.getName()) && key.isCollected()) {
+                key.setCollected(false);
+            }
+        }
     }
 
     private boolean checkLevelTransition() {
-        return getModel().getPlayer1().isInside(getModel().getLevelEndingWall()) && getModel().getPlayer2().isInside(getModel().getLevelEndingWall()) && getModel().getKeys().isEmpty();
+        return getModel().getPlayer1().isInside(getModel().getLevelEndingWall()) && getModel().getPlayer2().isInside(getModel().getLevelEndingWall()) && allKeysCollected();
     }
 
     @Override
@@ -112,11 +133,11 @@ public class LevelController extends Controller<Level> {
         checkButtonsClicked();
 
         if (checkPlayerDead(getModel().getPlayer1())) {
-            getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());
+            playerDied(getModel().getPlayer1());
             player1Controller.setJumping(false);
         }
         if (checkPlayerDead(getModel().getPlayer2())) {
-            getModel().getPlayer2().setPosition(getModel().getPlayer2SpawnPosition());
+            playerDied(getModel().getPlayer2());
             player2Controller.setJumping(false);
         }
 
@@ -131,11 +152,11 @@ public class LevelController extends Controller<Level> {
         }
         monsterController.update(gameManager, actions, updateTime);
         if (checkPlayerDead(getModel().getPlayer1())) {
-            getModel().getPlayer1().setPosition(getModel().getPlayer1SpawnPosition());
+            playerDied(getModel().getPlayer1());
             player1Controller.setJumping(false);
         }
         if (checkPlayerDead(getModel().getPlayer2())) {
-            getModel().getPlayer2().setPosition(getModel().getPlayer2SpawnPosition());
+            playerDied(getModel().getPlayer2());
             player2Controller.setJumping(false);
         }
     }
