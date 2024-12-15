@@ -3,6 +3,7 @@ package model.elements;
 import model.Position;
 
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class ToggleableWall extends Wall {
     boolean isActive;
@@ -22,5 +23,18 @@ public class ToggleableWall extends Wall {
 
     public void toggle(){
         isActive = !isActive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ToggleableWall that)) return false;
+        if (!super.equals(o)) return false;
+        return isActive == that.isActive;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isActive);
     }
 }
