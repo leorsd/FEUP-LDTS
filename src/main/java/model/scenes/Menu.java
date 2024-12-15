@@ -12,7 +12,7 @@ public class Menu implements Scene{
     }
 
     public Menu() {
-        this.entries = MenuEntriesLoader.readFile("src/main/resources/Levels/menu");
+        this.entries = MenuEntriesLoader.readFile("src/main/resources/levels/menu");
     }
 
     public void selectNextEntry() {

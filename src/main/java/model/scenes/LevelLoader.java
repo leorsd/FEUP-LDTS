@@ -155,7 +155,7 @@ public class LevelLoader {
     private void readTrap(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
         if (parts.size() != 6) {
-            throw new IOException("Trap specification needs to be like: target,x,y,sizeX,sizeY,imagPath");
+            throw new IOException("Trap specification needs to be like: target,x,y,sizeX,sizeY,imagePath");
         }
         String target = parts.getFirst();
         int width = Integer.parseInt(parts.get(3));
@@ -191,7 +191,7 @@ public class LevelLoader {
     private void readToggleableWall(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
         if (parts.size() != 6) {
-            throw new IOException("ToggleableWall specification needs to be like: id,x,y,sizeX,sizeY,image");
+            throw new IOException("ToggleableWall specification needs to be like: id,x,y,sizeX,sizeY,imagePath");
         }
         Integer id = Integer.parseInt(parts.getFirst());
         int xPos = Integer.parseInt(parts.get(1));
@@ -207,7 +207,7 @@ public class LevelLoader {
     private void readButtons(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
         if (parts.size() != 6) {
-            throw new IOException("Button specification needs to be like: idToggleableWall,x,y,sizeX,sizeY,image");
+            throw new IOException("Button specification needs to be like: idToggleableWall,x,y,sizeX,sizeY,imagePath");
         }
         Integer id = Integer.parseInt(parts.get(0));
         int xPos = Integer.parseInt(parts.get(1));
