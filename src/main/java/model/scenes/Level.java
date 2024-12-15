@@ -132,4 +132,11 @@ public class Level implements Scene{
         }
     }
 
+    public void setPlayerSpawnPosition(Player player, Position playerSpawnPosition) {
+        if (player.equals(player1)) {
+            this.player1SpawnPosition = playerSpawnPosition;
+        } else {
+            this.player2SpawnPosition = playerSpawnPosition;
+        }
+    }
 }
