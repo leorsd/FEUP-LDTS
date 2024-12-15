@@ -123,19 +123,20 @@ public class Level implements Scene{
         return true;
     }
 
-    public Position getPlayer1SpawnPosition() {
-        return player1SpawnPosition;
+    public Position getPlayerSpawnPosition(Player player) {
+        if (player.equals(player1)) {
+            return player1SpawnPosition;
+        }
+        else {
+            return player2SpawnPosition;
+        }
     }
 
-    public void setPlayer1SpawnPosition(Position player1SpawnPosition) {
-        this.player1SpawnPosition = player1SpawnPosition;
-    }
-
-    public Position getPlayer2SpawnPosition() {
-        return player2SpawnPosition;
-    }
-
-    public void setPlayer2SpawnPosition(Position player2SpawnPosition) {
-        this.player2SpawnPosition = player2SpawnPosition;
+    public void setPlayerSpawnPosition(Player player, Position playerSpawnPosition) {
+        if (player.equals(player1)) {
+            this.player1SpawnPosition = playerSpawnPosition;
+        } else {
+            this.player2SpawnPosition = playerSpawnPosition;
+        }
     }
 }
