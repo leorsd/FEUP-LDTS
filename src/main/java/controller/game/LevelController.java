@@ -25,27 +25,24 @@ public class LevelController extends Controller<Level> {
     private final Player2Controller player2Controller;
     private final MonsterController monsterController;
 
-    private final HashMap<Button, Boolean> buttonPressed = new HashMap<>();
-
     public LevelController(Level level) {
         super(level);
 
         this.player1Controller = new Player1Controller(level);
         this.player2Controller = new Player2Controller(level);
         this.monsterController = new MonsterController(level);
-        for (Button button : getModel().getButtons()) {
-            buttonPressed.put(button, false);
-        }
     }
 
     private boolean checkPlayerDead(Player player) {
-
         boolean result = false;
         for (Monster monster : getModel().getMonsters()) {
             result |= player.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());
         }
         for (Trap trap : getModel().getTraps()) {
             result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) && (player.getName().equals(trap.getTarget()) || trap.getTarget().equals("Both")));
+        }
+        for (ToggleableWall wall : getModel().getToggleableWalls()) {
+            result |= player.hasCollided(wall.getPosition(), wall.getSizeX(), wall.getSizeY()) && wall.isActive();
         }
         return result;
     }

@@ -32,6 +32,7 @@ Tergon,170,117,30,3,src/main/resources/images/trapP1Background.png
 
 290,31,17,19,src/main/resources/images/door.png
 
-1,250,100,10,30,src/main/resources/images/toggleableWall.png
+1,250,72,5,46,src/main/resources/images/toggleableWall.png
 
-1,200,50,14,4,src/main/resources/images/button.png
+1,200,57,14,3,src/main/resources/images/button.png
+1,190,160,14,3,src/main/resources/images/button.png
