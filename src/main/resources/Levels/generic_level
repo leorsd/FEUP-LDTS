@@ -17,10 +17,10 @@ player2.x,player2.y,size.x,size.y,image,maxJumpHeight,speed
 targetPlayerName,key1.x,key1.y,size.x,size.y,image
 targetPlayerName,key2.x,key2.y,size.x,size.y,image
 
-monster1.x,monster1.y,size.x,size.y,image
-monster2.x,monster2.y,size.x,size.y,image
-monster3.x,monster3.y,size.x,size.y,image
-monster4.x,monster4.y,size.x,size.y,image
+monster1.x,monster1.y,size.x,size.y,minX,maxX,image
+monster2.x,monster2.y,size.x,size.y,minX,maxX,image
+monster3.x,monster3.y,size.x,size.y,minX,maxX,image
+monster4.x,monster4.y,size.x,size.y,minX,maxX,image
 
 target,trap1.x,trap1.y,size.x,size.y,image
 
