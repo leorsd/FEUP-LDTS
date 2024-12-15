@@ -29,7 +29,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         }
         gui.drawImage(new Position(0,0), menuimage);
 
-        if (getScene().getEntriesSize() != 4) {
+        if (getScene().getEntriesSize() != 5) {
             throw new IOException("Not enough images for the entries of the menu");
         }
 
@@ -49,7 +49,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
             }
             if (i == getScene().getHighlightedEntryIndex()) {
                 gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.30+0.15*i))), image);
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2-50, (int)(guiHeight*(0.30+0.15*i))), arrow);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2-30, (int)(guiHeight*(0.30+0.15*i))), arrow);
             }else{
                 gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.30+0.15*i))),image);
             }
