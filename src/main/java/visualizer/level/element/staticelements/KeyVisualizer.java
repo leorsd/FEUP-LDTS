@@ -8,7 +8,7 @@ public class KeyVisualizer implements ElementVisualizer<Key> {
     @Override
     public void draw(Key key, GUI gui) {
         if (!key.isCollected()) {
-            gui.drawKey(key);
+            gui.drawImage(key.getPosition(), key.getImage());
         };
     }
 }
