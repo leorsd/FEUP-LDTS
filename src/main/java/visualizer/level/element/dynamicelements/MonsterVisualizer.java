@@ -1,4 +1,4 @@
-package visualizer.level.element.movingelements;
+package visualizer.level.element.dynamicelements;
 
 import model.elements.movingelements.Monster;
 import gui.GUI;
