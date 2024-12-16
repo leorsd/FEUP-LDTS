@@ -10,13 +10,14 @@ public class Player extends DynamicElement {
     private int speed;
     private int maxJumpHeight;
     private GUI.ACTION lastAction;
-    private int lastActionCount;
+    private int lastActionCount = 0;
 
-    public Player(String name, int sizeX, int sizeY, Position position, int speed,  int maxJumpHeight) {
+    public Player(String name, int sizeX, int sizeY, Position position, int speed,  int maxJumpHeight, GUI.ACTION firstAction) {
         super(position, sizeX, sizeY);
         this.name = name;
         this.speed = speed;
         this.maxJumpHeight = maxJumpHeight;
+        this.lastAction = firstAction;
     }
 
     public GUI.ACTION getLastAction() { return lastAction; }

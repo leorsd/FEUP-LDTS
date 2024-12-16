@@ -1,5 +1,6 @@
 package model.scenes;
 
+import gui.GUI;
 import model.elements.dynamicelements.Door;
 import model.elements.staticelements.ToggleableWall;
 import model.elements.dynamicelements.Monster;
@@ -94,7 +95,8 @@ public class LevelLoader {
                     Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
                     Integer.parseInt(parts.get(5)),
-                    Integer.parseInt(parts.get(4))
+                    Integer.parseInt(parts.get(4)),
+                    GUI.ACTION.DOWN
             );
         }
     }
@@ -117,7 +119,8 @@ public class LevelLoader {
                     Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
                     Integer.parseInt(parts.get(5)),
-                    Integer.parseInt(parts.get(4))
+                    Integer.parseInt(parts.get(4)),
+                    GUI.ACTION.S
             );
         }
     }
@@ -146,7 +149,8 @@ public class LevelLoader {
                 Integer.parseInt(parts.get(2)),
                 Integer.parseInt(parts.get(3)),
                 Integer.parseInt(parts.get(4)),
-                Integer.parseInt(parts.get(5))
+                Integer.parseInt(parts.get(5)),
+                GUI.ACTION.RIGHT
         ));
     }
 

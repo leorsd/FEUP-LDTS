@@ -16,20 +16,20 @@ import static javax.imageio.ImageIO.read;
 public class Player2Visualizer implements DynamicElementVisualizer<Player> {
     private final Map<GUI.ACTION, List<String>> spriteMap;
 
-    public Player2Visualizer(Player player) throws IOException {
+    public Player2Visualizer() {
         spriteMap = new HashMap<>();
-        spriteMap.put(GUI.ACTION.UP, List.of("src/main/resources/images/players/tergon-jumping.png"));
-        spriteMap.put(GUI.ACTION.LEFT, List.of(
-                "src/main/resources/images/players/tergon-left-1.png",
-                "src/main/resources/images/players/tergon-left-2.png",
-                "src/main/resources/images/players/tergon-left-3.png"));
-        spriteMap.put(GUI.ACTION.RIGHT, List.of(
-                "src/main/resources/images/players/tergon-right-1.png",
-                "src/main/resources/images/players/tergon-right-2.png",
-                "src/main/resources/images/players/tergon-right-3.png"));
+        spriteMap.put(GUI.ACTION.W, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(GUI.ACTION.A, List.of(
+                "src/main/resources/images/players/lavena.png",
+                "src/main/resources/images/players/lavena.png",
+                "src/main/resources/images/players/lavena.png"));
+        spriteMap.put(GUI.ACTION.D, List.of(
+                "src/main/resources/images/players/lavena.png",
+                "src/main/resources/images/players/lavena.png",
+                "src/main/resources/images/players/lavena.png"));
 
-        spriteMap.put(GUI.ACTION.DOWN, List.of(
-                "src/main/resources/images/players/tergon-standing.png"));
+        spriteMap.put(GUI.ACTION.S, List.of(
+                "src/main/resources/images/players/lavena.png"));
     }
 
     @Override

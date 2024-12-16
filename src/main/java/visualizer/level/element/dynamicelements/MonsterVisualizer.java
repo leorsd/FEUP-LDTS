@@ -15,10 +15,10 @@ import java.util.Map;
 public class MonsterVisualizer implements DynamicElementVisualizer<Monster> {
     private final Map<GUI.ACTION, List<String>> spriteMap;
 
-    public MonsterVisualizer(Player player) throws IOException {
+    public MonsterVisualizer() {
         spriteMap = new HashMap<>();
-        spriteMap.put(GUI.ACTION.LEFT, List.of("src/main/resources/images/players/monster-left.png"));
-        spriteMap.put(GUI.ACTION.RIGHT, List.of("src/main/resources/images/players/tergon-right-1.png"));
+        spriteMap.put(GUI.ACTION.LEFT, List.of("src/main/resources/images/elements/monster.png"));
+        spriteMap.put(GUI.ACTION.RIGHT, List.of("src/main/resources/images/elements/monster.png"));
     }
     @Override
     public void draw(Monster monster, GUI gui) throws IOException {

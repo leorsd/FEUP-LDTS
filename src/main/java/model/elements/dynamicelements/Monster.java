@@ -10,10 +10,11 @@ public class Monster extends DynamicElement {
     private GUI.ACTION lastAction;
     private int lastControlCount;
 
-    public Monster(Position position, int sizeX, int sizeY, int minX, int maxX) {
+    public Monster(Position position, int sizeX, int sizeY, int minX, int maxX, GUI.ACTION firstAction) {
         super(position, sizeX, sizeY);
         this.minX = minX;
         this.maxX = maxX;
+        this.lastAction = firstAction;
     }
 
     public GUI.ACTION getLastAction() { return lastAction; }

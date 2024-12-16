@@ -37,14 +37,19 @@ public class MonsterController extends Controller<Level> {
             int desiredX = posX + monster.getDirection();
             if(desiredX == monster.getMaxX()){
                 monster.setDirection(monster.getDirection() * -1);
+                monster.setLastAction(GUI.ACTION.LEFT);
+                monster.setLastControlCount(0);
                 desiredX = posX + monster.getDirection();
                 moveMonster(monster, new Position(desiredX, posY));
             }else if(desiredX == monster.getMinX()){
                 monster.setDirection(monster.getDirection() * -1);
+                monster.setLastAction(GUI.ACTION.RIGHT);
+                monster.setLastControlCount(0);
                 desiredX = posX + monster.getDirection();
                 moveMonster(monster, new Position(desiredX, posY));
             }else{
                 moveMonster(monster, new Position(desiredX, posY));
+                monster.setLastControlCount(monster.getLastControlCount() + 1);
             }
         }
     }
