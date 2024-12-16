@@ -15,18 +15,6 @@ import java.util.Set;
 public interface GUI {
     Set<ACTION> getNextAction() throws IOException;
 
-    void drawPlayer(Player player);
-
-    void drawWall(Wall wall);
-
-    void drawMonster(Monster monster);
-
-    void drawKey(Key key);
-
-    void drawButton(Button button);
-
-    void drawTrap(Trap trap);
-
     void drawImage(Position position, BufferedImage image);
 
     int getGUIWidth();

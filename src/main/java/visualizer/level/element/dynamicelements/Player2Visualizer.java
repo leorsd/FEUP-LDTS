@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static javax.imageio.ImageIO.read;
 
-public class Player2Visualizer implements CharacterVisualizer<Player> {
+public class Player2Visualizer implements DynamicElementVisualizer<Player> {
     private final Map<GUI.ACTION, List<String>> spriteMap;
 
     public Player2Visualizer(Player player) throws IOException {

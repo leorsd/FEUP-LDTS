@@ -13,10 +13,10 @@ import java.util.Map;
 
 import static javax.imageio.ImageIO.read;
 
-public class Player2Vizualizer implements CharacterVisualizer<Player> {
+public class Player1Visualizer implements DynamicElementVisualizer<Player> {
     private final Map<GUI.ACTION, List<String>> spriteMap;
 
-    public Player2Vizualizer(Player player) throws IOException {
+    public Player1Visualizer(Player player) throws IOException {
         spriteMap = new HashMap<>();
         spriteMap.put(GUI.ACTION.UP, List.of("src/main/resources/images/players/lavena-jumping.png"));
         spriteMap.put(GUI.ACTION.LEFT, List.of(
