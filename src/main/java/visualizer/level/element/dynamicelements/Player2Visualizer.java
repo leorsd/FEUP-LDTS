@@ -14,22 +14,19 @@ import java.util.Map;
 import static javax.imageio.ImageIO.read;
 
 public class Player2Visualizer implements DynamicElementVisualizer<Player> {
-    private final Map<GUI.ACTION, List<String>> spriteMap;
+    private final Map<Player.ORIENTATION, List<String>> spriteMap;
 
     public Player2Visualizer() {
         spriteMap = new HashMap<>();
-        spriteMap.put(GUI.ACTION.W, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(GUI.ACTION.A, List.of(
-                "src/main/resources/images/players/lavena.png",
-                "src/main/resources/images/players/lavena.png",
-                "src/main/resources/images/players/lavena.png"));
-        spriteMap.put(GUI.ACTION.D, List.of(
-                "src/main/resources/images/players/lavena.png",
-                "src/main/resources/images/players/lavena.png",
-                "src/main/resources/images/players/lavena.png"));
-
-        spriteMap.put(GUI.ACTION.S, List.of(
-                "src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.UP, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.LEFT, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.DOWN, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.RIGHT, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.UPLEFT, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.UPRIGHT, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.DOWNLEFT, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.DOWNRIGHT, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.STANDING, List.of("src/main/resources/images/players/lavena.png"));
     }
 
     @Override
@@ -41,7 +38,7 @@ public class Player2Visualizer implements DynamicElementVisualizer<Player> {
     }
 
     private String getSprite(Player player) {
-        List<String> spriteActionList = spriteMap.get(player.getLastAction());
+        List<String> spriteActionList = spriteMap.get(player.getOrientation());
         return spriteActionList.get((int) (player.getLastActionCount() % spriteActionList.size()));
     }
 }

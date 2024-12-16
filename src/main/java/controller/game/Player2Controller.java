@@ -2,6 +2,7 @@ package controller.game;
 
 import game.GameManager;
 import model.Position;
+import model.elements.dynamicelements.Player;
 import model.scenes.Level;
 import controller.Controller;
 import gui.GUI;
@@ -78,26 +79,89 @@ public class Player2Controller extends Controller<Level> {
     }
 
     private void updatePlayerLastAction(Set<GUI.ACTION> actions) {
-        if (actions.contains(GUI.ACTION.W)) {
-            if (getModel().getPlayer2().getLastAction() == GUI.ACTION.W) {
-                getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
+        if (isJumping && actions.contains(GUI.ACTION.D)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPRIGHT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
             } else {
-                getModel().getPlayer2().setLastAction(GUI.ACTION.W);
-                getModel().getPlayer2().setLastActionCount(0);
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPRIGHT);
+                getModel().getPlayer1().setLastActionCount(0);
             }
-        }  else if (actions.contains(GUI.ACTION.D)) {
-            if (getModel().getPlayer2().getLastAction() == GUI.ACTION.D) {
-                getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
+        } else if (isJumping && actions.contains(GUI.ACTION.A)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPLEFT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
             } else {
-                getModel().getPlayer2().setLastAction(GUI.ACTION.D);
-                getModel().getPlayer2().setLastActionCount(0);
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPLEFT);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (isJumping) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UP) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UP);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.W) && actions.contains(GUI.ACTION.D)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPRIGHT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPRIGHT);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.W) && actions.contains(GUI.ACTION.A)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPLEFT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPLEFT);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        }  else if (actions.contains(GUI.ACTION.W)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UP) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UP);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.D) && actions.contains(GUI.ACTION.S)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.DOWNRIGHT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.RIGHT);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.A) && actions.contains(GUI.ACTION.S)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.DOWNLEFT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.DOWNLEFT);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.S)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.DOWN) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.DOWN);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.D)) {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.RIGHT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.RIGHT);
+                getModel().getPlayer1().setLastActionCount(0);
             }
         } else if (actions.contains(GUI.ACTION.A)) {
-            if (getModel().getPlayer2().getLastAction() == GUI.ACTION.A) {
-                getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.LEFT) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
             } else {
-                getModel().getPlayer2().setLastAction(GUI.ACTION.A);
-                getModel().getPlayer2().setLastActionCount(0);
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.LEFT);
+                getModel().getPlayer1().setLastActionCount(0);
+            }
+        } else {
+            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.STANDING) {
+                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer1().setOrientation(Player.ORIENTATION.STANDING);
+                getModel().getPlayer1().setLastActionCount(0);
             }
         }
     }

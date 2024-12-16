@@ -95,8 +95,7 @@ public class LevelLoader {
                     Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
                     Integer.parseInt(parts.get(5)),
-                    Integer.parseInt(parts.get(4)),
-                    GUI.ACTION.DOWN
+                    Integer.parseInt(parts.get(4))
             );
         }
     }
@@ -119,8 +118,7 @@ public class LevelLoader {
                     Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
                     Integer.parseInt(parts.get(5)),
-                    Integer.parseInt(parts.get(4)),
-                    GUI.ACTION.S
+                    Integer.parseInt(parts.get(4))
             );
         }
     }
@@ -149,8 +147,7 @@ public class LevelLoader {
                 Integer.parseInt(parts.get(2)),
                 Integer.parseInt(parts.get(3)),
                 Integer.parseInt(parts.get(4)),
-                Integer.parseInt(parts.get(5)),
-                GUI.ACTION.RIGHT
+                Integer.parseInt(parts.get(5))
         ));
     }
 

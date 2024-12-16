@@ -1,28 +1,29 @@
 package model.elements.dynamicelements;
 
-import gui.GUI;
 import model.Position;
 
-import java.awt.image.BufferedImage;
-
 public class Player extends DynamicElement {
+    public enum ORIENTATION {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT, STANDING}
     private String name;
     private int speed;
     private int maxJumpHeight;
-    private GUI.ACTION lastAction;
+    private Player.ORIENTATION orientation = ORIENTATION.STANDING;
     private int lastActionCount = 0;
 
-    public Player(String name, int sizeX, int sizeY, Position position, int speed,  int maxJumpHeight, GUI.ACTION firstAction) {
+    public Player(String name, int sizeX, int sizeY, Position position, int speed,  int maxJumpHeight) {
         super(position, sizeX, sizeY);
         this.name = name;
         this.speed = speed;
         this.maxJumpHeight = maxJumpHeight;
-        this.lastAction = firstAction;
     }
 
-    public GUI.ACTION getLastAction() { return lastAction; }
+    public ORIENTATION getOrientation() {
+        return orientation;
+    }
 
-    public void setLastAction(GUI.ACTION lastAction) { this.lastAction = lastAction; }
+    public void setOrientation(ORIENTATION orientation) {
+        this.orientation = orientation;
+    }
 
     public int getLastActionCount() { return lastActionCount; }
 

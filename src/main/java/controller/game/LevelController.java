@@ -2,6 +2,7 @@ package controller.game;
 
 import game.GameManager;
 import model.Position;
+import model.elements.dynamicelements.Door;
 import model.elements.staticelements.Button;
 import model.elements.staticelements.Key;
 import model.elements.staticelements.ToggleableWall;
@@ -91,6 +92,7 @@ public class LevelController extends Controller<Level> {
                 return false;
             }
         }
+        getModel().getLevelEndingDoor().setState(Door.STATE.OPEN);
         return true;
     }
 
@@ -101,10 +103,11 @@ public class LevelController extends Controller<Level> {
                 key.setCollected(false);
             }
         }
+        getModel().getLevelEndingDoor().setState(Door.STATE.CLOSED);
     }
 
     private boolean checkLevelTransition() {
-        return getModel().getPlayer1().isInside(getModel().getLevelEndingDoor()) && getModel().getPlayer2().isInside(getModel().getLevelEndingDoor()) && allKeysCollected();
+        return allKeysCollected() && getModel().getPlayer1().isInside(getModel().getLevelEndingDoor()) && getModel().getPlayer2().isInside(getModel().getLevelEndingDoor());
     }
 
     @Override
