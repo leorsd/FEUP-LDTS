@@ -7,13 +7,11 @@ import java.util.Objects;
 
 public abstract class Element {
     private Position position;
-    private BufferedImage image;
     private int sizeX;
     private int sizeY;
 
-    public Element(Position position, BufferedImage image, int sizeX, int sizeY) {
+    public Element(Position position, int sizeX, int sizeY) {
         this.position = position;
-        this.image = image;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
     }
@@ -23,12 +21,12 @@ public abstract class Element {
         if (this == o) return true;
         if (!(o instanceof Element)) return false;
         Element element = (Element) o;
-        return Objects.equals(position, element.position) && Objects.equals(image, element.image) && sizeX==element.sizeX && sizeY==element.sizeY;
+        return Objects.equals(position, element.position) && sizeX==element.sizeX && sizeY==element.sizeY;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, image, sizeX, sizeY);
+        return Objects.hash(position, sizeX, sizeY);
     }
 
     public Position getPosition() {
@@ -37,14 +35,6 @@ public abstract class Element {
 
     public void setPosition(Position position) {
         this.position = position;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
     }
 
     public int getSizeX() {

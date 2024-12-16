@@ -1,20 +1,23 @@
 package gui;
 
-import model.elements.movingelements.Monster;
-import model.elements.movingelements.Player;
-import model.elements.Key;
-import model.elements.Trap;
-import model.elements.Wall;
-import model.elements.Button;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.elements.staticelements.Key;
+import model.elements.staticelements.Trap;
+import model.elements.staticelements.Wall;
+import model.elements.staticelements.Button;
 import model.Position;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -63,34 +66,6 @@ public class LanternaGUI implements GUI {
     @Override
     public int getGUIHeight() {
         return screen.getTerminalSize().getRows();
-    }
-
-    @Override
-    public void drawPlayer(Player player) {
-        drawImage(player.getPosition(),player.getImage());
-    }
-
-    @Override
-    public void drawKey(Key key) {
-        drawImage(key.getPosition(),key.getImage());
-    }
-
-    @Override
-    public void drawButton(Button button) {drawImage(button.getPosition(), button.getImage());}
-
-    @Override
-    public void drawMonster(Monster monster) {
-        drawImage(monster.getPosition(),monster.getImage());
-    }
-
-    @Override
-    public void drawWall(Wall wall) {
-        drawImage(wall.getPosition(),wall.getImage());
-    }
-
-    @Override
-    public void drawTrap(Trap trap) {
-        drawImage(trap.getPosition(),trap.getImage());
     }
 
     @Override

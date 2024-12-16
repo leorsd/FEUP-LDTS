@@ -4,10 +4,10 @@ import model.elements.Element;
 import model.Position;
 import model.scenes.Level;
 import visualizer.level.element.*;
-import visualizer.level.element.movingelements.MonsterVisualizer;
-import visualizer.level.element.movingelements.PlayerVisualizer;
+import visualizer.level.element.dynamicelements.*;
 import visualizer.SceneVisualizer;
 import gui.GUI;
+import visualizer.level.element.staticelements.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -26,10 +26,10 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
         drawElements(gui, getScene().getButtons(), new ButtonVisualizer());
         drawElements(gui, getScene().getMonsters(), new MonsterVisualizer());
         drawElements(gui, getScene().getKeys(), new KeyVisualizer());
-        drawElement(gui, getScene().getLevelEndingWall(), new WallVisualizer());
+        drawElement(gui, getScene().getLevelEndingDoor(), new DoorVisualizer());
         drawElements(gui, getScene().getTraps(), new TrapVisualizer());
-        drawElement(gui, getScene().getPlayer1(), new PlayerVisualizer());
-        drawElement(gui, getScene().getPlayer2(), new PlayerVisualizer());
+        drawElement(gui, getScene().getPlayer1(), new Player1Visualizer());
+        drawElement(gui, getScene().getPlayer2(), new Player2Visualizer());
     }
 
     private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementVisualizer<T> viewer) {
@@ -38,7 +38,9 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
     }
 
     private <T extends Element> void drawElement(GUI gui, T element, ElementVisualizer<T> viewer) {
-        viewer.draw(element, gui);
+        try {
+            viewer.draw(element, gui);
+        } catch (Exception e) {}
     }
 
     private void drawBackGround(GUI gui, BufferedImage image) {

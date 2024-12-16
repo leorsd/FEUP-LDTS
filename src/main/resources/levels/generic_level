@@ -10,17 +10,17 @@ Example:
 "
 levelSize.x,levelSize.y,normalWallsImage,backgroundImage,nextLevel
 
-player1.x,player1.y,size.x,size.y,image,maxJumpHeight,speed
+player1.x,player1.y,size.x,size.y,maxJumpHeight,speed
 
-player2.x,player2.y,size.x,size.y,image,maxJumpHeight,speed
+player2.x,player2.y,size.x,size.y,maxJumpHeight,speed
 
-targetPlayerName,key1.x,key1.y,size.x,size.y,image
-targetPlayerName,key2.x,key2.y,size.x,size.y,image
+targetPlayerName,key1.x,key1.y,size.x,size.y
+targetPlayerName,key2.x,key2.y,size.x,size.y
 
-monster1.x,monster1.y,size.x,size.y,minX,maxX,image
-monster2.x,monster2.y,size.x,size.y,minX,maxX,image
-monster3.x,monster3.y,size.x,size.y,minX,maxX,image
-monster4.x,monster4.y,size.x,size.y,minX,maxX,image
+monster1.x,monster1.y,size.x,size.y,minX,maxX
+monster2.x,monster2.y,size.x,size.y,minX,maxX
+monster3.x,monster3.y,size.x,size.y,minX,maxX
+monster4.x,monster4.y,size.x,size.y,minX,maxX
 
 target,trap1.x,trap1.y,size.x,size.y,image
 
@@ -29,7 +29,7 @@ wall2.x,wall2.y,size.x,size.y
 wall3.x,wall3.y,size.x,size.y
 wall4.x,wall4.y,size.x,size.y
 
-levelEndingWall.x,levelEndingWall.y,size.x,size.y,image
+levelEndingDoor.x,levelEndingDoor.y,size.x,size.y
 
 toggleableWallID1,wall1.x,wall1.y,size.x,size.y,image
 toggleableWallID2,wall2.x,wall2.y,size.x,size.y,image

@@ -1,29 +1,30 @@
 package model.scenes
 
-import model.elements.Button
-import model.elements.ToggleableWall
-import model.elements.movingelements.Monster
-import model.elements.Key
-import model.elements.Trap
+import model.elements.dynamicelements.Door
+import model.elements.staticelements.Button
+import model.elements.staticelements.ToggleableWall
+import model.elements.dynamicelements.Monster
+import model.elements.staticelements.Key
+import model.elements.staticelements.Trap
 import model.Position
 import spock.lang.Specification
-import model.elements.movingelements.Player
-import model.elements.Wall
+import model.elements.dynamicelements.Player
+import model.elements.staticelements.Wall
 
 class LevelTest extends Specification {
 
     def "should correctly initialize with provided elements"() {
         given:"lists of walls, monsters, traps, keys, and players"
         def walls = [new Wall(new Position(1, 1), null, 1,1)]
-        def monsters = [new Monster(new Position(2, 2), null, 1, 1,1, 1)]
+        def monsters = [new Monster(new Position(2, 2), 1, 1, 1,1, null)]
         def toggleableWall = new ToggleableWall(new Position(2,3), null, 10, 10)
         def toggleableWalls = [toggleableWall]
         def buttons = [new Button(new Position(10,10), null, 10, 10, toggleableWall)]
         def traps = [new Trap("Lavena", new Position(3, 3), null, 1,1)]
         def keys = [new Key(new Position(4, 4), null, 1,1,"Lavena")]
-        def player1 = new Player("Lavena",1,1, new Position(5, 5), null, 2, 10)
-        def player2 = new Player("Tergon",1,1, new Position(6, 6), null, 2, 10)
-        def levelTransitionWall = new Wall(new Position(1, 1), null, 1,1);
+        def player1 = new Player("Lavena",1,1, new Position(5, 5),  2, 10, null)
+        def player2 = new Player("Tergon",1,1, new Position(6, 6), 2, 10, null)
+        def levelTransitionWall = new Door(new Position(1, 1), 1,1);
 
         when:"a Level is created"
         def level = new Level(walls,toggleableWalls, buttons, monsters, traps, keys, player1, player2, 10, 10, null, levelTransitionWall,"src/main/resources/Levels/level2")
@@ -37,7 +38,7 @@ class LevelTest extends Specification {
         level.getPlayer2() == player2
         level.getxBoundary() == 10
         level.getyBoundary() == 10
-        level.getLevelEndingWall() == levelTransitionWall
+        level.getLevelEndingDoor() == levelTransitionWall
         level.getToggleableWalls() == toggleableWalls
         level.getButtons() == buttons
     }

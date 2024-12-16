@@ -1,15 +1,16 @@
-package model.elements;
+package model.elements.staticelements;
 
 import model.Position;
+import model.elements.Element;
 
 import java.awt.image.BufferedImage;
 
-public class Button extends Element {
+public class Button extends StaticElement {
     ToggleableWall toggleableWall;
     boolean isPressed = false;
 
     public Button(Position position, BufferedImage image, int sizeX, int sizeY, ToggleableWall toggleableWall) {
-        super(position, image, sizeX, sizeY);
+        super(position, sizeX, sizeY, image);
         this.toggleableWall = toggleableWall;
     }
 

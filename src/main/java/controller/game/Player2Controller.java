@@ -77,6 +77,31 @@ public class Player2Controller extends Controller<Level> {
         }
     }
 
+    private void updatePlayerLastAction(Set<GUI.ACTION> actions) {
+        if (actions.contains(GUI.ACTION.W)) {
+            if (getModel().getPlayer2().getLastAction() == GUI.ACTION.W) {
+                getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer2().setLastAction(GUI.ACTION.W);
+                getModel().getPlayer2().setLastActionCount(0);
+            }
+        }  else if (actions.contains(GUI.ACTION.D)) {
+            if (getModel().getPlayer2().getLastAction() == GUI.ACTION.D) {
+                getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer2().setLastAction(GUI.ACTION.D);
+                getModel().getPlayer2().setLastActionCount(0);
+            }
+        } else if (actions.contains(GUI.ACTION.A)) {
+            if (getModel().getPlayer2().getLastAction() == GUI.ACTION.A) {
+                getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
+            } else {
+                getModel().getPlayer2().setLastAction(GUI.ACTION.A);
+                getModel().getPlayer2().setLastActionCount(0);
+            }
+        }
+    }
+
     public void setJumping (boolean jumping) {
         isJumping = jumping;
     }
@@ -113,5 +138,6 @@ public class Player2Controller extends Controller<Level> {
                 }
             }
         }
+        updatePlayerLastAction(actions);
     }
 }

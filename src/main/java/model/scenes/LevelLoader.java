@@ -1,12 +1,14 @@
 package model.scenes;
 
-import model.elements.ToggleableWall;
-import model.elements.movingelements.Monster;
-import model.elements.movingelements.Player;
-import model.elements.Key;
-import model.elements.Button;
-import model.elements.Trap;
-import model.elements.Wall;
+import gui.GUI;
+import model.elements.dynamicelements.Door;
+import model.elements.staticelements.ToggleableWall;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.elements.staticelements.Key;
+import model.elements.staticelements.Button;
+import model.elements.staticelements.Trap;
+import model.elements.staticelements.Wall;
 import model.Position;
 
 import javax.imageio.ImageIO;
@@ -34,7 +36,7 @@ public class LevelLoader {
     Player player1;
     Player player2;
 
-    Wall levelTransitionWall;
+    Door levelTransitionDoor;
     List<Wall> walls = new ArrayList<>();
     List<ToggleableWall> toggleableWalls = new ArrayList<>();
     List<Button> buttons = new ArrayList<>();
@@ -84,17 +86,17 @@ public class LevelLoader {
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.size() != 7) {
-            throw new IOException("Player 1 specification needs to be like: x,y,sizeX,sizeY,imagePath,maxJumpHeight,speed");
+        if (parts.size() != 6) {
+            throw new IOException("Player 1 specification needs to be like: x,y,sizeX,sizeY,maxJumpHeight,speed");
         } else {
             player1 = new Player(
                     "Tergon",
                     Integer.parseInt(parts.get(2)),
                     Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
-                    ImageIO.read(new File(parts.get(4))),
-                    Integer.parseInt(parts.get(6)),
-                    Integer.parseInt(parts.get(5))
+                    Integer.parseInt(parts.get(5)),
+                    Integer.parseInt(parts.get(4)),
+                    GUI.ACTION.DOWN
             );
         }
     }
@@ -108,17 +110,17 @@ public class LevelLoader {
 
         List<String> parts = Splitter.on(',').splitToList(line);
 
-        if (parts.size() != 7) {
-            throw new IOException("Player 2 specification needs to be like: x,y,sizeX,sizeY,imagePath,maxJumpHeight,speed");
+        if (parts.size() != 6) {
+            throw new IOException("Player 2 specification needs to be like: x,y,sizeX,sizeY,maxJumpHeight,speed");
         } else {
             player2 = new Player(
                     "Lavena",
                     Integer.parseInt(parts.get(2)),
                     Integer.parseInt(parts.get(3)),
                     new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
-                    ImageIO.read(new File(parts.get(4))),
-                    Integer.parseInt(parts.get(6)),
-                    Integer.parseInt(parts.get(5))
+                    Integer.parseInt(parts.get(5)),
+                    Integer.parseInt(parts.get(4)),
+                    GUI.ACTION.S
             );
         }
     }
@@ -139,16 +141,16 @@ public class LevelLoader {
 
     private void readMonster(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
-        if (parts.size() != 7) {
-            throw new IOException("Monster specification needs to be like: x,y,sizeX,sizeY,minX,maxX,imagePath");
+        if (parts.size() != 6) {
+            throw new IOException("Monster specification needs to be like: x,y,sizeX,sizeY,minX,maxX");
         }
         this.monsters.add(new Monster(
                 new Position(Integer.parseInt(parts.get(0)), Integer.parseInt(parts.get(1))),
-                ImageIO.read(new File(parts.get(6))),
                 Integer.parseInt(parts.get(2)),
                 Integer.parseInt(parts.get(3)),
                 Integer.parseInt(parts.get(4)),
-                Integer.parseInt(parts.get(5))
+                Integer.parseInt(parts.get(5)),
+                GUI.ACTION.RIGHT
         ));
     }
 
@@ -222,17 +224,15 @@ public class LevelLoader {
 
     private void readLevelTransitionWall(String line) throws IOException {
         List<String> parts = Splitter.on(',').splitToList(line);
-        if (parts.size() != 5) {
-            throw new IOException("Level Transition Wall specification needs to be like: x,y,sizeX,sizeY,imagePath");
+        if (parts.size() != 4) {
+            throw new IOException("Level Transition Door specification needs to be like: x,y,sizeX,sizeY");
         }
         int xPos = Integer.parseInt(parts.get(0));
         int yPos = Integer.parseInt(parts.get(1));
         int width = Integer.parseInt(parts.get(2));
         int height = Integer.parseInt(parts.get(3));
-        BufferedImage image = ImageIO.read(new File(parts.get(4))).getSubimage(0,0, width, height);
-        this.levelTransitionWall = new Wall(
+        this.levelTransitionDoor = new Door(
                 new Position(xPos,yPos),
-                image,
                 width,
                 height
         );
@@ -248,7 +248,6 @@ public class LevelLoader {
             br.readLine(); // Read empty line
             readPlayer2(br);
             br.readLine(); // Read empty line
-
             while (true) {
                 String line = br.readLine();
                 if (line == null) {
@@ -289,7 +288,7 @@ public class LevelLoader {
 
             String line = br.readLine();
             if (line == null || line.isEmpty()) {
-                throw new IOException("Level lacks level transition wall: going to next levels won't be possible");
+                throw new IOException("Level lacks level transition door: going to next levels won't be possible");
             } else {
                 readLevelTransitionWall(line);
             }
@@ -312,6 +311,6 @@ public class LevelLoader {
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionWall,this.nextLevel);
+        return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionDoor,this.nextLevel);
     }
 }

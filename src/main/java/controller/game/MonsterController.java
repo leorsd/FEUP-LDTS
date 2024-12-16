@@ -1,14 +1,13 @@
 package controller.game;
 
 import game.GameManager;
-import model.elements.movingelements.Monster;
+import model.elements.dynamicelements.Monster;
 import model.Position;
 import model.scenes.Level;
 import controller.Controller;
 import gui.GUI;
 
 import java.io.IOException;
-import java.util.Random;
 import java.util.Set;
 
 public class MonsterController extends Controller<Level> {
@@ -38,14 +37,19 @@ public class MonsterController extends Controller<Level> {
             int desiredX = posX + monster.getDirection();
             if(desiredX == monster.getMaxX()){
                 monster.setDirection(monster.getDirection() * -1);
+                monster.setLastAction(GUI.ACTION.LEFT);
+                monster.setLastControlCount(0);
                 desiredX = posX + monster.getDirection();
                 moveMonster(monster, new Position(desiredX, posY));
             }else if(desiredX == monster.getMinX()){
                 monster.setDirection(monster.getDirection() * -1);
+                monster.setLastAction(GUI.ACTION.RIGHT);
+                monster.setLastControlCount(0);
                 desiredX = posX + monster.getDirection();
                 moveMonster(monster, new Position(desiredX, posY));
             }else{
                 moveMonster(monster, new Position(desiredX, posY));
+                monster.setLastControlCount(monster.getLastControlCount() + 1);
             }
         }
     }
