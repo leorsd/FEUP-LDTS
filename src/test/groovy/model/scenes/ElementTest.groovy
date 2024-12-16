@@ -10,7 +10,7 @@ class ElementTest extends Specification {
 
     class TestElement extends Element {                                                   //Element is abstract so can't be instantiated
         TestElement(Position position, BufferedImage image, int sizeX, int sizeY) {       //We've created a TestElement for testing purposes
-            super(position, image, sizeX, sizeY)
+            super(position, sizeX, sizeY)
         }
     }
 
