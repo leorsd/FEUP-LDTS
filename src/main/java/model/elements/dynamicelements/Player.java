@@ -1,16 +1,16 @@
-package model.elements.movingelements;
+package model.elements.dynamicelements;
 
 import model.Position;
 
 import java.awt.image.BufferedImage;
 
-public class Player extends MovingElement {
+public class Player extends DynamicElement {
     private String name;
     private int speed;
     private int maxJumpHeight;
 
-    public Player(String name, int sizeX, int sizeY, Position position, BufferedImage image, int speed,  int maxJumpHeight) {
-        super(position, image, sizeX, sizeY);
+    public Player(String name, int sizeX, int sizeY, Position position, int speed,  int maxJumpHeight) {
+        super(position, sizeX, sizeY);
         this.name = name;
         this.speed = speed;
         this.maxJumpHeight = maxJumpHeight;

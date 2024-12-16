@@ -5,9 +5,9 @@ import game.GameManager
 import model.Position
 import model.scenes.Menu
 import spock.lang.Specification
-import model.elements.movingelements.Monster
-import model.elements.movingelements.Player
-import model.elements.Trap
+import model.elements.dynamicelements.Monster
+import model.elements.dynamicelements.Player
+import model.elements.staticelements.Trap
 import model.scenes.Level
 
 

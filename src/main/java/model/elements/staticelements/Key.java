@@ -1,15 +1,16 @@
-package model.elements;
+package model.elements.staticelements;
 
 import model.Position;
+import model.elements.Element;
 
 import java.awt.image.BufferedImage;
 
-public class Key extends Element{
+public class Key extends StaticElement {
     private String target;
     private boolean collected = false;
 
     public Key(Position position, BufferedImage image, int sizeX, int sizeY, String target) {
-        super(position, image, sizeX, sizeY);
+        super(position, sizeX, sizeY, image);
         this.target = target;
     }
 

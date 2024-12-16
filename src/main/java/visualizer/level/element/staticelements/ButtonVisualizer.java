@@ -1,7 +1,8 @@
-package visualizer.level.element;
+package visualizer.level.element.staticelements;
 
 import gui.GUI;
-import model.elements.Button;
+import model.elements.staticelements.Button;
+import visualizer.level.element.ElementVisualizer;
 
 public class ButtonVisualizer implements ElementVisualizer<Button> {
     @Override

@@ -2,7 +2,7 @@ package controller.game
 
 import gui.GUI
 import game.GameManager
-import model.elements.movingelements.Player
+import model.elements.dynamicelements.Player
 import model.Position
 import model.scenes.Level
 import spock.lang.Specification

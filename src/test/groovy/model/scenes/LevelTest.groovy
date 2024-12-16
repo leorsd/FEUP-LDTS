@@ -1,14 +1,14 @@
 package model.scenes
 
-import model.elements.Button
-import model.elements.ToggleableWall
-import model.elements.movingelements.Monster
-import model.elements.Key
-import model.elements.Trap
+import model.elements.staticelements.Button
+import model.elements.staticelements.ToggleableWall
+import model.elements.dynamicelements.Monster
+import model.elements.staticelements.Key
+import model.elements.staticelements.Trap
 import model.Position
 import spock.lang.Specification
-import model.elements.movingelements.Player
-import model.elements.Wall
+import model.elements.dynamicelements.Player
+import model.elements.staticelements.Wall
 
 class LevelTest extends Specification {
 
@@ -37,7 +37,7 @@ class LevelTest extends Specification {
         level.getPlayer2() == player2
         level.getxBoundary() == 10
         level.getyBoundary() == 10
-        level.getLevelEndingWall() == levelTransitionWall
+        level.getLevelEndingDoor() == levelTransitionWall
         level.getToggleableWalls() == toggleableWalls
         level.getButtons() == buttons
     }

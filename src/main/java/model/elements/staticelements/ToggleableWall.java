@@ -1,4 +1,4 @@
-package model.elements;
+package model.elements.staticelements;
 
 import model.Position;
 
