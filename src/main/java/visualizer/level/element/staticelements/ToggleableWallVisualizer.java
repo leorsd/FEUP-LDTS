@@ -7,6 +7,6 @@ import visualizer.level.element.ElementVisualizer;
 public class ToggleableWallVisualizer implements ElementVisualizer<ToggleableWall> {
     @Override
     public void draw(ToggleableWall wall, GUI gui) {
-        if (wall.isActive()) gui.drawWall(wall);
+        if (wall.isActive()) gui.drawImage(wall.getPosition(), wall.getImage());
     }
 }

@@ -7,6 +7,6 @@ import visualizer.level.element.ElementVisualizer;
 public class TrapVisualizer implements ElementVisualizer<Trap> {
     @Override
     public void draw(Trap trap, GUI gui){
-        gui.drawTrap(trap);
+        gui.drawImage(trap.getPosition(), trap.getImage());
     }
 }

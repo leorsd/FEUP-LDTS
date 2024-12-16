@@ -7,6 +7,6 @@ import visualizer.level.element.ElementVisualizer;
 public class WallVisualizer implements ElementVisualizer<Wall> {
     @Override
     public void draw(Wall wall, GUI gui) {
-        gui.drawWall(wall);
+        gui.drawImage(wall.getPosition(), wall.getImage());
     }
 }
