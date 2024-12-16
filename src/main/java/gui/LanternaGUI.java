@@ -69,38 +69,6 @@ public class LanternaGUI implements GUI {
     }
 
     @Override
-    public void drawPlayer(Player player) {
-        try {
-            drawImage(player.getPosition(), ImageIO.read(new File("src/main/resources/images/players/lavena.png")).getSubimage(0, 0, player.getSizeX(), player.getSizeY()));
-        } catch (IOException e) {}
-    }
-
-    @Override
-    public void drawKey(Key key) {
-        drawImage(key.getPosition(),key.getImage());
-    }
-
-    @Override
-    public void drawButton(Button button) {drawImage(button.getPosition(), button.getImage());}
-
-    @Override
-    public void drawMonster(Monster monster) {
-        try {
-            drawImage(monster.getPosition(), ImageIO.read(new File("src/main/resources/images/elements/monster.png")).getSubimage(0, 0, monster.getSizeX(), monster.getSizeY()));
-        } catch (IOException e) {}
-    }
-
-    @Override
-    public void drawWall(Wall wall) {
-        drawImage(wall.getPosition(),wall.getImage());
-    }
-
-    @Override
-    public void drawTrap(Trap trap) {
-        drawImage(trap.getPosition(),trap.getImage());
-    }
-
-    @Override
     public void clear() {
         screen.clear();
     }
