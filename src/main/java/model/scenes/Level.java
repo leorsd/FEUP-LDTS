@@ -1,15 +1,16 @@
 package model.scenes;
 
-import model.elements.*;
-import model.elements.movingelements.Monster;
-import model.elements.movingelements.Player;
+import model.elements.dynamicelements.Door;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
 import model.Position;
+import model.elements.staticelements.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Level implements Scene{
-    private Wall levelEndingWall;
+    private Door levelEndingDoor;
     private List<Wall> walls;
     private List<ToggleableWall> toggleableWalls;
     private List<Button> buttons;
@@ -25,7 +26,7 @@ public class Level implements Scene{
     private Position player2SpawnPosition;
     private String nextLevel;
 
-    public Level(List<Wall> walls, List<ToggleableWall> toggleableWalls, List<Button> buttons, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Wall levelEndingWall, String nextLevel) {
+    public Level(List<Wall> walls, List<ToggleableWall> toggleableWalls, List<Button> buttons, List<Monster> monsters, List<Trap> traps, List<Key> keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Door levelEndingWall, String nextLevel) {
         this.walls = walls;
         this.toggleableWalls = toggleableWalls;
         this.buttons = buttons;
@@ -37,7 +38,7 @@ public class Level implements Scene{
         this.xBoundary = xBoundary;
         this.yBoundary = yBoundary;
         this.background = background;
-        this.levelEndingWall = levelEndingWall;
+        this.levelEndingDoor = levelEndingWall;
         this.player1SpawnPosition = player1.getPosition();
         this.player2SpawnPosition = player2.getPosition();
         this.nextLevel = nextLevel;
@@ -95,12 +96,12 @@ public class Level implements Scene{
         return background;
     }
 
-    public Wall getLevelEndingWall() {
-        return levelEndingWall;
+    public Door getLevelEndingDoor() {
+        return levelEndingDoor;
     }
 
-    public void setLevelEndingWall(Wall levelEndingWall) {
-        this.levelEndingWall = levelEndingWall;
+    public void setLevelEndingDoor(Door levelEndingDoor) {
+        this.levelEndingDoor = levelEndingDoor;
     }
 
     public boolean isPositionFree(Position position) {

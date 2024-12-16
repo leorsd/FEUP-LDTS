@@ -1,8 +1,8 @@
 package controller.game
 
-import game.GameManager
+
 import model.scenes.Level
-import model.elements.movingelements.Monster
+import model.elements.dynamicelements.Monster
 import model.Position
 import spock.lang.Specification
 

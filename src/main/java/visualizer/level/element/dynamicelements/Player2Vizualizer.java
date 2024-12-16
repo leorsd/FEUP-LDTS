@@ -1,7 +1,7 @@
 package visualizer.level.element.dynamicelements;
 
 import gui.GUI;
-import model.elements.movingelements.Player;
+import model.elements.dynamicelements.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

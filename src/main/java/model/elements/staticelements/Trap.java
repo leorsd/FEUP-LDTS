@@ -1,14 +1,15 @@
-package model.elements;
+package model.elements.staticelements;
 
 import model.Position;
+import model.elements.Element;
 
 import java.awt.image.BufferedImage;
 
-public class Trap extends Element{
+public class Trap extends StaticElement {
     private String target;
 
     public Trap(String target, Position position, BufferedImage image, int sizeX, int sizeY) {
-        super(position, image, sizeX, sizeY);
+        super(position, sizeX, sizeY, image);
         this.target = target;
     }
 

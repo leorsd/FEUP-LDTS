@@ -1,14 +1,13 @@
 package controller.game;
 
 import game.GameManager;
-import model.elements.movingelements.Monster;
+import model.elements.dynamicelements.Monster;
 import model.Position;
 import model.scenes.Level;
 import controller.Controller;
 import gui.GUI;
 
 import java.io.IOException;
-import java.util.Random;
 import java.util.Set;
 
 public class MonsterController extends Controller<Level> {

@@ -1,8 +1,8 @@
-package visualizer.level.element;
+package visualizer.level.element.staticelements;
 
 import gui.GUI;
-import model.elements.ToggleableWall;
-import model.elements.Wall;
+import model.elements.staticelements.ToggleableWall;
+import visualizer.level.element.ElementVisualizer;
 
 public class ToggleableWallVisualizer implements ElementVisualizer<ToggleableWall> {
     @Override

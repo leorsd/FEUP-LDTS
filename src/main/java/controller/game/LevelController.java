@@ -2,12 +2,12 @@ package controller.game;
 
 import game.GameManager;
 import model.Position;
-import model.elements.Button;
-import model.elements.Key;
-import model.elements.ToggleableWall;
-import model.elements.movingelements.Monster;
-import model.elements.movingelements.Player;
-import model.elements.Trap;
+import model.elements.staticelements.Button;
+import model.elements.staticelements.Key;
+import model.elements.staticelements.ToggleableWall;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.elements.staticelements.Trap;
 import model.scenes.Level;
 import model.scenes.LevelLoader;
 import model.scenes.Menu;
@@ -104,7 +104,7 @@ public class LevelController extends Controller<Level> {
     }
 
     private boolean checkLevelTransition() {
-        return getModel().getPlayer1().isInside(getModel().getLevelEndingWall()) && getModel().getPlayer2().isInside(getModel().getLevelEndingWall()) && allKeysCollected();
+        return getModel().getPlayer1().isInside(getModel().getLevelEndingDoor()) && getModel().getPlayer2().isInside(getModel().getLevelEndingDoor()) && allKeysCollected();
     }
 
     @Override

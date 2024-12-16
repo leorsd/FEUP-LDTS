@@ -1,20 +1,23 @@
 package gui;
 
-import model.elements.movingelements.Monster;
-import model.elements.movingelements.Player;
-import model.elements.Key;
-import model.elements.Trap;
-import model.elements.Wall;
-import model.elements.Button;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.elements.staticelements.Key;
+import model.elements.staticelements.Trap;
+import model.elements.staticelements.Wall;
+import model.elements.staticelements.Button;
 import model.Position;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -67,7 +70,9 @@ public class LanternaGUI implements GUI {
 
     @Override
     public void drawPlayer(Player player) {
-        drawImage(player.getPosition(),player.getImage());
+        try {
+            drawImage(player.getPosition(), ImageIO.read(new File("src/main/resources/images/players/lavena.png")).getSubimage(0, 0, player.getSizeX(), player.getSizeY()));
+        } catch (IOException e) {}
     }
 
     @Override
@@ -80,7 +85,9 @@ public class LanternaGUI implements GUI {
 
     @Override
     public void drawMonster(Monster monster) {
-        drawImage(monster.getPosition(),monster.getImage());
+        try {
+            drawImage(monster.getPosition(), ImageIO.read(new File("src/main/resources/images/elements/monster.png")).getSubimage(0, 0, monster.getSizeX(), monster.getSizeY()));
+        } catch (IOException e) {}
     }
 
     @Override

@@ -1,16 +1,14 @@
-package model.elements.movingelements;
+package model.elements.dynamicelements;
 
 import model.Position;
 
-import java.awt.image.BufferedImage;
-
-public class Monster extends MovingElement {
+public class Monster extends DynamicElement {
     private int minX;
     private int maxX;
     private int direction = 1;
 
-    public Monster(Position position, BufferedImage image, int sizeX, int sizeY, int minX, int maxX) {
-        super(position, image, sizeX, sizeY);
+    public Monster(Position position, int sizeX, int sizeY, int minX, int maxX) {
+        super(position, sizeX, sizeY);
         this.minX = minX;
         this.maxX = maxX;
     }
