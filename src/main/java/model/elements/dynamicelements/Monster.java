@@ -4,22 +4,27 @@ import gui.GUI;
 import model.Position;
 
 public class Monster extends DynamicElement {
+    public enum ORIENTATION {LEFT, RIGHT, STANDING};
     private int minX;
     private int maxX;
     private int direction = 1;
-    private GUI.ACTION lastAction;
+    private Monster.ORIENTATION orientation;
     private int lastControlCount;
 
-    public Monster(Position position, int sizeX, int sizeY, int minX, int maxX, GUI.ACTION firstAction) {
+    public Monster(Position position, int sizeX, int sizeY, int minX, int maxX) {
         super(position, sizeX, sizeY);
         this.minX = minX;
         this.maxX = maxX;
-        this.lastAction = firstAction;
+        this.orientation = Monster.ORIENTATION.STANDING;
     }
 
-    public GUI.ACTION getLastAction() { return lastAction; }
+    public ORIENTATION getOrientation() {
+        return orientation;
+    }
 
-    public void setLastAction(GUI.ACTION lastAction) { this.lastAction = lastAction; }
+    public void setOrientation(ORIENTATION orientation) {
+        this.orientation = orientation;
+    }
 
     public int getLastControlCount() { return lastControlCount; }
 
