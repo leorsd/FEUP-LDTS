@@ -20,7 +20,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
     public void drawElements(GUI gui) throws IOException {
         int guiWidth= gui.getGUIWidth();
         int guiHeight= gui.getGUIHeight();
-        File menuFile = new File("src/main/resources/images/menu.png");
+        File menuFile = new File("src/main/resources/images/menu/menu.png");
         BufferedImage menuimage = null;
         try {
             menuimage = ImageIO.read(menuFile);
@@ -35,7 +35,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
 
         BufferedImage arrow = null;
         try {
-            arrow = ImageIO.read(new File("src/main/resources/images/arrow.png"));
+            arrow = ImageIO.read(new File("src/main/resources/images/menu/arrow.png"));
         } catch (IOException e) {
             System.out.println("Failed arrow");
         }
@@ -43,7 +43,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         for (int i = 0; i < getScene().getEntriesSize(); i++) {
             BufferedImage image = null;
             try {
-                image = ImageIO.read(new File("src/main/resources/images/option" + i + ".png"));
+                image = ImageIO.read(new File("src/main/resources/images/menu/option" + i + ".png"));
             } catch (IOException e) {
                 System.out.println("Failed option");
             }
