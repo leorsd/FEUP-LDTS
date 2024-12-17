@@ -50,7 +50,7 @@ public class Player1Controller extends Controller<Level> {
         getModel().getPlayer1().setPosition(position);
     }
 
-    private boolean isOnGround() {
+    public boolean isOnGround() {
         int playerSizeX = getModel().getPlayer1().getSizeX();
         int playerSizeY = getModel().getPlayer1().getSizeY();
         boolean isOnGround = false;
