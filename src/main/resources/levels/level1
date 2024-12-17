@@ -1,8 +1,8 @@
 320,180,src/main/resources/images/backgrounds/wallBackgroundLevel1.png,src/main/resources/images/backgrounds/backgroundLevel1.png,src/main/resources/levels/level2
 
-169,121,11,14,28,4
+169,120,11,15,28,4
 
-140,121,11,14,28,4
+140,120,11,15,28,4
 
 Lavena,303,155,7,9,src/main/resources/images/elements/lavenakey.png
 Tergon,11,155,7,9,src/main/resources/images/elements/tergonkey.png
