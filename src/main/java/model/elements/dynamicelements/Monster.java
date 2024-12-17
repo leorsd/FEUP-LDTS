@@ -15,7 +15,7 @@ public class Monster extends DynamicElement {
         super(position, sizeX, sizeY);
         this.minX = minX;
         this.maxX = maxX;
-        this.orientation = Monster.ORIENTATION.STANDING;
+        this.orientation = Monster.ORIENTATION.RIGHT;
     }
 
     public ORIENTATION getOrientation() {

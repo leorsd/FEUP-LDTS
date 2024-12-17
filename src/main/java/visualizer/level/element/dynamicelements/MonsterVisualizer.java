@@ -17,9 +17,13 @@ public class MonsterVisualizer implements DynamicElementVisualizer<Monster> {
 
     public MonsterVisualizer() {
         spriteMap = new HashMap<>();
-        spriteMap.put(Monster.ORIENTATION.LEFT, List.of("src/main/resources/images/elements/monster.png"));
-        spriteMap.put(Monster.ORIENTATION.RIGHT, List.of("src/main/resources/images/elements/monster.png"));
-        spriteMap.put(Monster.ORIENTATION.STANDING, List.of("src/main/resources/images/elements/monster.png"));
+        spriteMap.put(Monster.ORIENTATION.LEFT, List.of("src/main/resources/images/elements/druid-left-1.png",
+                "src/main/resources/images/elements/druid-left-2.png",
+                "src/main/resources/images/elements/druid-left-3.png"));
+        spriteMap.put(Monster.ORIENTATION.RIGHT, List.of("src/main/resources/images/elements/druid-right-1.png",
+                "src/main/resources/images/elements/druid-right-2.png",
+                "src/main/resources/images/elements/druid-right-3.png"));
+        spriteMap.put(Monster.ORIENTATION.STANDING, List.of("src/main/resources/images/elements/druid-right-1.png"));
     }
     @Override
     public void draw(Monster monster, GUI gui) throws IOException {
@@ -31,6 +35,6 @@ public class MonsterVisualizer implements DynamicElementVisualizer<Monster> {
 
     private String getSprite(Monster monster) {
         List<String> spriteActionList = spriteMap.get(monster.getOrientation());
-        return spriteActionList.get((int) (monster.getLastControlCount() % spriteActionList.size()));
+        return spriteActionList.get((int) (monster.getLastControlCount()/5 % spriteActionList.size()));
     }
 }
