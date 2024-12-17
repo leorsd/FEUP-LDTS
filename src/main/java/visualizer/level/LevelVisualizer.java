@@ -27,9 +27,9 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
         drawElements(gui, getScene().getMonsters(), new MonsterVisualizer());
         drawElements(gui, getScene().getKeys(), new KeyVisualizer());
         drawElement(gui, getScene().getLevelEndingDoor(), new DoorVisualizer());
-        drawElements(gui, getScene().getTraps(), new TrapVisualizer());
         drawElement(gui, getScene().getPlayer1(), new Player1Visualizer());
         drawElement(gui, getScene().getPlayer2(), new Player2Visualizer());
+        drawElements(gui, getScene().getTraps(), new TrapVisualizer());
     }
 
     private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementVisualizer<T> viewer) {
