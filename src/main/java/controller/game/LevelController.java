@@ -118,9 +118,12 @@ public class LevelController extends Controller<Level> {
         }
         Set<GUI.ACTION> player1Actions = new HashSet<>();
         Set<GUI.ACTION> player2Actions = new HashSet<>();
-
-        player1Actions.add(GUI.ACTION.DOWN);
-        player2Actions.add(GUI.ACTION.S);
+        if (!player1Controller.isOnGround()) {
+            player1Actions.add(GUI.ACTION.DOWN);
+        }
+        if (!player2Controller.isOnGround()) {
+            player2Actions.add(GUI.ACTION.S);
+        }
         for (GUI.ACTION action : actions) {
             if (action == GUI.ACTION.UP || action == GUI.ACTION.RIGHT || action == GUI.ACTION.LEFT) {
                 player1Actions.add(action);
