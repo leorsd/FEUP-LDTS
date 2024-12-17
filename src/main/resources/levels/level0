@@ -39,5 +39,5 @@ Both,210,60,35,2,src/main/resources/images/backgrounds/trapBothBackground.png
 
 1,265,72,5,46,src/main/resources/images/elements/toggleableWall.png
 
-1,230,115,14,3,src/main/resources/images/elements/button.png
-1,190,160,14,3,src/main/resources/images/elements/button.png
+1,230,116,8,2,src/main/resources/images/elements/button.png
+1,190,161,8,2,src/main/resources/images/elements/button.png
