@@ -18,15 +18,21 @@ public class Player2Visualizer implements DynamicElementVisualizer<Player> {
 
     public Player2Visualizer() {
         spriteMap = new HashMap<>();
-        spriteMap.put(Player.ORIENTATION.UP, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.LEFT, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.DOWN, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.RIGHT, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.UPLEFT, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.UPRIGHT, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.DOWNLEFT, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.DOWNRIGHT, List.of("src/main/resources/images/players/lavena.png"));
-        spriteMap.put(Player.ORIENTATION.STANDING, List.of("src/main/resources/images/players/lavena.png"));
+        spriteMap.put(Player.ORIENTATION.UP, List.of("src/main/resources/images/players/lavena-jumping.png"));
+        spriteMap.put(Player.ORIENTATION.LEFT, List.of("src/main/resources/images/players/lavena-left-1.png",
+                "src/main/resources/images/players/lavena-left-2.png",
+                "src/main/resources/images/players/lavena-left-3.png",
+                "src/main/resources/images/players/lavena-left-4.png"));
+        spriteMap.put(Player.ORIENTATION.DOWN, List.of("src/main/resources/images/players/lavena-jumping-down.png"));
+        spriteMap.put(Player.ORIENTATION.RIGHT, List.of("src/main/resources/images/players/lavena-right-1.png",
+                "src/main/resources/images/players/lavena-right-2.png",
+                "src/main/resources/images/players/lavena-right-3.png",
+                "src/main/resources/images/players/lavena-right-4.png"));
+        spriteMap.put(Player.ORIENTATION.UPLEFT, List.of("src/main/resources/images/players/lavena-jumping-left.png"));
+        spriteMap.put(Player.ORIENTATION.UPRIGHT, List.of("src/main/resources/images/players/lavena-jumping-right.png"));
+        spriteMap.put(Player.ORIENTATION.DOWNLEFT, List.of("src/main/resources/images/players/lavena-jumping-left.png"));
+        spriteMap.put(Player.ORIENTATION.DOWNRIGHT, List.of("src/main/resources/images/players/lavena-jumping-right.png"));
+        spriteMap.put(Player.ORIENTATION.STANDING, List.of("src/main/resources/images/players/lavena-standing.png"));
     }
 
     @Override
