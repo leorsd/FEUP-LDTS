@@ -12,27 +12,31 @@ Tergon,270,40,7,9,src/main/resources/images/elements/tergonkey.png
 60,139,14,16,50,86
 235,139,14,16,220,256
 
-Lavena,100,54,40,4,src/main/resources/images/backgrounds/trapP2Background.png
-Tergon,179,54,40,4,src/main/resources/images/backgrounds/trapP1Background.png
+Lavena,100,55,40,2,src/main/resources/images/backgrounds/trapP2Background.png
+Tergon,180,55,40,2,src/main/resources/images/backgrounds/trapP1Background.png
 Lavena,275,99,21,4,src/main/resources/images/backgrounds/trapP2Background.png
 Tergon,20,99,21,4,src/main/resources/images/backgrounds/trapP1Background.png
-Both,7,172,306,4,src/main/resources/images/backgrounds/trapBothBackground.png
+Both,7,172,306,3,src/main/resources/images/backgrounds/trapBothBackground.png
 
 0,0,320,7
 0,0,7,180
 313,0,7,180
 0,173,320,7
-85,110,20,3
-215,110,20,3
-0,75,20,3
-294,75,20,3
-50,155,50,3
-220,155,50,3
-60,55,200,3
+85,110,20,4
+215,110,20,4
+0,75,20,4
+294,75,20,4
+50,155,50,4
+220,155,50,4
+60,55,40,4
+100,57,40,2
+140,55,40,4
+180,57,40,2
+220,55,40,4
 21,100,19,3
 276,100,19,3
-7,166,14,3
-299,166,14,3
-130,135,60,3
+7,166,14,4
+299,166,14,4
+130,135,60,4
 
 151,36,17,19
