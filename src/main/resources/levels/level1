@@ -12,8 +12,8 @@ Tergon,270,40,7,9,src/main/resources/images/elements/tergonkey.png
 60,139,14,16,50,86
 235,139,14,16,220,256
 
-Both,100,54,40,4,src/main/resources/images/backgrounds/trapP2Background.png
-Both,179,54,40,4,src/main/resources/images/backgrounds/trapP1Background.png
+Lavena,100,54,40,4,src/main/resources/images/backgrounds/trapP2Background.png
+Tergon,179,54,40,4,src/main/resources/images/backgrounds/trapP1Background.png
 Lavena,275,99,21,4,src/main/resources/images/backgrounds/trapP2Background.png
 Tergon,20,99,21,4,src/main/resources/images/backgrounds/trapP1Background.png
 Both,7,172,306,4,src/main/resources/images/backgrounds/trapBothBackground.png
