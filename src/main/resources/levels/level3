@@ -34,5 +34,5 @@ Tergon,170,117,30,3,src/main/resources/images/backgrounds/trapP1Background.png
 
 1,250,72,5,46,src/main/resources/images/elements/toggleableWall.png
 
-1,200,57,14,3,src/main/resources/images/elements/button.png
-1,190,160,14,3,src/main/resources/images/elements/button.png
+1,200,58,8,2,src/main/resources/images/elements/button.png
+1,190,161,8,2,src/main/resources/images/elements/button.png
