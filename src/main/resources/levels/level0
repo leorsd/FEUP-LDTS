@@ -9,22 +9,28 @@ Tergon,55,48,7,9,src/main/resources/images/elements/tergonkey.png
 
 120,44,16,16,120,150
 
-Lavena,110,92,90,2,src/main/resources/images/backgrounds/trapP2Background.png
-Tergon,110,117,90,2,src/main/resources/images/backgrounds/trapP1Background.png
-Both,210,59,35,2,src/main/resources/images/backgrounds/trapBothBackground.png
+Lavena,110,93,90,2,src/main/resources/images/backgrounds/trapP2Background.png
+Tergon,110,118,90,2,src/main/resources/images/backgrounds/trapP1Background.png
+Both,210,60,35,2,src/main/resources/images/backgrounds/trapBothBackground.png
 
 0,0,320,7
 0,0,7,180
 313,0,7,180
 0,173,320,7
 0,150,100,4
-0,118,270,12
+0,118,110,12
+110,120,90,10
+200,118,70,12
 180,163,140,13
 220,157,100,6
 260,151,60,10
 285,140,35,11
-50,60,270,12
-100,93,110,4
+50,60,160,12
+210,62,35,10
+245,60,75,12
+100,93,10,4
+110,95,90,2
+200,93,10,4
 0,100,50,19
 0,85,29,15
 260,50,60,10
