@@ -18,15 +18,21 @@ public class Player1Visualizer implements DynamicElementVisualizer<Player> {
 
     public Player1Visualizer() {
         spriteMap = new HashMap<>();
-        spriteMap.put(Player.ORIENTATION.UP, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.LEFT, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.DOWN, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.RIGHT, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.UPLEFT, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.UPRIGHT, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.DOWNLEFT, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.DOWNRIGHT, List.of("src/main/resources/images/players/tergon.png"));
-        spriteMap.put(Player.ORIENTATION.STANDING, List.of("src/main/resources/images/players/tergon.png"));
+        spriteMap.put(Player.ORIENTATION.UP, List.of("src/main/resources/images/players/tergon-jumping.png"));
+        spriteMap.put(Player.ORIENTATION.LEFT, List.of("src/main/resources/images/players/tergon-left-1.png",
+                "src/main/resources/images/players/tergon-left-2.png",
+                "src/main/resources/images/players/tergon-left-3.png",
+                "src/main/resources/images/players/tergon-left-4.png"));
+        spriteMap.put(Player.ORIENTATION.DOWN, List.of("src/main/resources/images/players/tergon-jumping-down.png"));
+        spriteMap.put(Player.ORIENTATION.RIGHT, List.of("src/main/resources/images/players/tergon-right-1.png",
+                "src/main/resources/images/players/tergon-right-2.png",
+                "src/main/resources/images/players/tergon-right-3.png",
+                "src/main/resources/images/players/tergon-right-4.png"));
+        spriteMap.put(Player.ORIENTATION.UPLEFT, List.of("src/main/resources/images/players/tergon-jumping-left.png"));
+        spriteMap.put(Player.ORIENTATION.UPRIGHT, List.of("src/main/resources/images/players/tergon-jumping-right.png"));
+        spriteMap.put(Player.ORIENTATION.DOWNLEFT, List.of("src/main/resources/images/players/tergon-jumping-left.png"));
+        spriteMap.put(Player.ORIENTATION.DOWNRIGHT, List.of("src/main/resources/images/players/tergon-jumping-right.png"));
+        spriteMap.put(Player.ORIENTATION.STANDING, List.of("src/main/resources/images/players/tergon-standing.png"));
     }
 
     @Override
