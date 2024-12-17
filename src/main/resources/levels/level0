@@ -4,14 +4,14 @@
 
 15,136,11,14,28,4
 
-Lavena,200,50,7,9,src/main/resources/images/elements/lavenakey.png
-Tergon,70,50,7,9,src/main/resources/images/elements/tergonkey.png
+Lavena,65,48,7,9,src/main/resources/images/elements/lavenakey.png
+Tergon,55,48,7,9,src/main/resources/images/elements/tergonkey.png
 
-100,44,14,16,80,180
+120,44,14,16,120,150
 
 Lavena,110,92,90,2,src/main/resources/images/backgrounds/trapP2Background.png
 Tergon,110,117,90,2,src/main/resources/images/backgrounds/trapP1Background.png
-Both,240,59,40,2,src/main/resources/images/backgrounds/trapBothBackground.png
+Both,210,59,35,2,src/main/resources/images/backgrounds/trapBothBackground.png
 
 0,0,320,7
 0,0,7,180
@@ -27,9 +27,9 @@ Both,240,59,40,2,src/main/resources/images/backgrounds/trapBothBackground.png
 100,93,110,4
 0,100,50,19
 0,85,29,15
-280,50,40,10
+260,50,60,10
 
-290,31,17,19
+282,31,17,19
 
 1,265,72,5,46,src/main/resources/images/elements/toggleableWall.png
 
