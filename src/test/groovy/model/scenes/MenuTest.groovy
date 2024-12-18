@@ -88,7 +88,7 @@ class MenuTest extends Specification {
         def menu = new Menu()
 
         expect:"the Menu should have default entries"
-        menu.getEntriesSize() == 5
+        menu.getEntriesSize() == 6
         menu.getHighlightedEntry() == "src/main/resources/levels/level0"
 
         when:"select the next entry"
