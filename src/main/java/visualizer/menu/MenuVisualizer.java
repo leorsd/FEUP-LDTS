@@ -29,7 +29,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         }
         gui.drawImage(new Position(0,0), menuimage);
 
-        if (getScene().getEntriesSize() != 5) {
+        if (getScene().getEntriesSize() != 6) {
             throw new IOException("Not enough images for the entries of the menu");
         }
 
