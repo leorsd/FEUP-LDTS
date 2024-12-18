@@ -48,10 +48,10 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
                 System.out.println("Failed option");
             }
             if (i == getScene().getHighlightedEntryIndex()) {
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.55+0.08*i))), image);
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2-15, (int)(guiHeight*(0.55+0.08*i))-2), arrow);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.50+0.08*i))), image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2-15, (int)(guiHeight*(0.50+0.08*i))-1), arrow);
             }else{
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.55+0.08*i))),image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.50+0.08*i))),image);
             }
         }
     }
