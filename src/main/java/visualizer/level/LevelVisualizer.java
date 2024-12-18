@@ -40,7 +40,9 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
     private <T extends Element> void drawElement(GUI gui, T element, ElementVisualizer<T> viewer) {
         try {
             viewer.draw(element, gui);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void drawBackGround(GUI gui, BufferedImage image) {
