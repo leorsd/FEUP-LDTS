@@ -1,4 +1,4 @@
-320,180,src/main/resources/images/backgrounds/creditosBackground.png,src/main/resources/images/backgrounds/creditosWallBackground.png,src/main/resources/levels/credits
+320,180,src/main/resources/images/backgrounds/wallBackgroundLevel3.png,src/main/resources/images/backgrounds/backgroundLevel3.png,src/main/resources/levels/credits
 
 148,10,11,15,28,4
 
@@ -25,7 +25,7 @@ Tergon,190,7,3,23,src/main/resources/images/backgrounds/trapP1Background.png
 Lavena,220,35,2,16,src/main/resources/images/backgrounds/trapP2Background.png
 Lavena,270,35,2,16,src/main/resources/images/backgrounds/trapP2Background.png
 Lavena,272,50,28,2,src/main/resources/images/backgrounds/trapP2Background.png
-Tergon,7,60,105,2,src/main/resources/images/backgrounds/trapP1Background.png
+Tergon,7,59,107,3,src/main/resources/images/backgrounds/trapP1Background.png
 Tergon,112,60,2,15,src/main/resources/images/backgrounds/trapP1Background.png
 Lavena,265,100,48,2,src/main/resources/images/backgrounds/trapP2Background.png
 Lavena,135,57,2,18,src/main/resources/images/backgrounds/trapP2Background.png
@@ -77,18 +77,19 @@ Both,157,172,121,2,src/main/resources/images/backgrounds/trapBothBackground.png
 190,165,6,2
 230,150,6,2
 278,140,3,33
+7,60,105,1
 
 289,154,17,19
 
-1,272,35,28,2,src/main/resources/images/elements/toggleableWall.png
-2,120,36,2,21,src/main/resources/images/elements/toggleableWall.png
-3,193,7,3,23,src/main/resources/images/elements/toggleableWall.png
-4,40,77,14,2,src/main/resources/images/elements/toggleableWall.png
+1,272,35,28,2,src/main/resources/images/buttons/toggleableWall6.png
+2,120,36,2,21,src/main/resources/images/buttons/toggleableWall2.png
+3,197,7,3,23,src/main/resources/images/buttons/toggleableWall6.png
+4,40,77,14,2,src/main/resources/images/buttons/toggleableWall1.png
 
-1,18,49,8,2,src/main/resources/images/elements/button.png
-1,73,43,8,2,src/main/resources/images/elements/button.png
-3,18,49,8,2,src/main/resources/images/elements/button.png
-3,73,43,8,2,src/main/resources/images/elements/button.png
-2,305,73,8,2,src/main/resources/images/elements/button.png
-4,8,75,8,2,src/main/resources/images/elements/button.png
-4,138,138,8,2,src/main/resources/images/elements/button.png
+1,18,49,8,2,src/main/resources/images/buttons/button6.png
+1,73,43,8,2,src/main/resources/images/buttons/button6.png
+3,18,49,8,2,src/main/resources/images/buttons/button6.png
+3,73,43,8,2,src/main/resources/images/buttons/button6.png
+2,305,73,8,2,src/main/resources/images/buttons/button2.png
+4,8,75,8,2,src/main/resources/images/buttons/button1.png
+4,138,138,8,2,src/main/resources/images/buttons/button1.png
