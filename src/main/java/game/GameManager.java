@@ -26,6 +26,8 @@ public class GameManager {
         } else if (currentScene instanceof Level) {
             controller = new LevelController((Level) currentScene);
             sceneVisualizer = new LevelVisualizer((Level) currentScene);
+        }else {
+            throw new IllegalArgumentException("Scene must be either a Menu or a Level");
         }
     }
 
