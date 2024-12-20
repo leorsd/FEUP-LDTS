@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class Game {
     private static Game gameInstance;
-    private final LanternaGUI gui;
+    private LanternaGUI gui;
     private GameManager gameManager;
     private BackgroundSoundPlayer backgroundSoundPlayer;
 
@@ -59,6 +59,14 @@ public class Game {
 
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
+    }
+
+    public void setGui(LanternaGUI gui) {
+        this.gui=gui;
+    }
+
+    public void setBackgroundSoundPlayer(BackgroundSoundPlayer backgroundSoundPlayer) {
+        this.backgroundSoundPlayer = backgroundSoundPlayer;
     }
 
     private void start() throws IOException {
