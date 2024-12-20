@@ -2,6 +2,7 @@ plugins {
     id 'groovy'
     id 'net.ltgt.errorprone' version '3.1.0'
     id 'application'
+    id 'jacoco'
 }
 
 group = 'com.t11g2.project'
@@ -27,4 +28,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+tasks.jacocoTestReport {
+    dependsOn test
+    reports {
+        html.required.set(true)
+    }
 }
