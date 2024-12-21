@@ -78,4 +78,27 @@ class ToggleableWallTest extends Specification{
         then:
             wall1.hashCode() == wall2.hashCode()
     }
+
+    def "ToggleableWall equals should return true when compared to itself"() {
+        given:
+            def wall2 = wall
+        expect:
+            wall2.equals(wall)
+    }
+
+    def "ToggleableWall equals should return false when compared to an object of a different class"() {
+        given:
+            def otherObject = new Object()
+        expect:
+            wall != otherObject
+    }
+
+    def "ToggleableWall equals should return false when compared to ToggleableWall with different isActive state"() {
+        given:
+            def wall2 = new ToggleableWall(position as Position, image as BufferedImage, 30, 40)
+        when:
+            wall2.toggle()
+        then:
+            wall != wall2
+    }
 }

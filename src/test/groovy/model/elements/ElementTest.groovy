@@ -1,6 +1,6 @@
-package ModelTest
+package model.elements
 
-import model.elements.Element
+
 import model.Position
 import spock.lang.Specification
 

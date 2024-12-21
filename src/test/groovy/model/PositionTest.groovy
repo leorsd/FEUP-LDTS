@@ -1,5 +1,6 @@
-package model.elements;
-import model.Position
+package model
+
+
 import spock.lang.Specification
 
 class PositionTest extends Specification {
