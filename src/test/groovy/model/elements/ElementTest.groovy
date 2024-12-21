@@ -8,78 +8,105 @@ import java.awt.image.BufferedImage
 
 class ElementTest extends Specification {
 
-    class TestElement extends Element {                                                   //Element is abstract so can't be instantiated
-        TestElement(Position position, BufferedImage image, int sizeX, int sizeY) {       //We've created a TestElement for testing purposes
+    //Class to instantiate the Element class because it is abstract, only for testing purposes
+    class TestElement extends Element {
+        TestElement(Position position, BufferedImage image, int sizeX, int sizeY) {
             super(position, sizeX, sizeY)
         }
     }
 
+    def position
+    def image
+    def sizeX = 50
+    def sizeY = 50
+    def element
+
+    def setup() {
+        position = new Position(10, 10)
+        image = Mock(BufferedImage)
+        element = new TestElement(position, image, sizeX, sizeY)
+    }
+
     def "test equals and hashCode"() {
-        given: "Two elements with the same attributes"
-        Position position = new Position(10, 10)
-        BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB)
-        int sizeX = 50
-        int sizeY = 50
-        Element element1 = new TestElement(position, image, sizeX, sizeY)
-        Element element2 = new TestElement(position, image, sizeX, sizeY)
-
-        expect: "The elements should be equal"       // In Groovy, When overriding the equals method, '==' performs a content-based comparison
-        element1 == element2
-
-        and: "The hash codes should be equal"
-        element1.hashCode() == element2.hashCode()
-
-        when: "Change one element's position"
-        element2.setPosition(new Position(20, 20))
-
-        then: "The elements should no longer be equal"
-        element1 != element2
-
-        and: "The hash codes should also differ"
-        element1.hashCode() != element2.hashCode()
+        given:
+            def element2 = new TestElement(position as Position, image as BufferedImage, sizeX, sizeY)
+        expect:
+            element == element2
+        and:
+            element.hashCode() == element2.hashCode()
+        when:
+            element2.setPosition(new Position(20, 20))
+        then:
+            element != element2
+        and:
+            element.hashCode() != element2.hashCode()
     }
 
     def "an element should be equal to himself"() {
-        given: "An element"
-        def elementPosition = new Position(10,10)
-        int elementSizeX = 5
-        int elementSizeY = 5
-        TestElement testElement = new TestElement(elementPosition, new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB), elementSizeX, elementSizeY )
-
-        expect: "the element should be equal to itself"
-        testElement.equals(testElement)
+        given:
+            def element2 = element;
+        expect:
+            element.equals(element2)
     }
 
     def "an element can never be equal to an object that's not an instance of Element"() {
-        given: "An element and an object that's not an instance of Element"
-        def elementPosition = new Position(10,10)
-        int elementSizeX = 5
-        int elementSizeY = 5
-        TestElement testElement = new TestElement(elementPosition, new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB), elementSizeX, elementSizeY)
-        def nonElementObject = "not an element"
-
-        expect: "they should never be equal"
-        !(testElement == nonElementObject)
+        given:
+            def nonElementObject = "not an element"
+        expect:
+            !(element == nonElementObject)
     }
 
-    def "test hasCollided"() {
-        given: "An element and a position with specific sizes"
-        Position elementPosition = new Position(10, 10)
-        Position collisionPosition = new Position(40, 40)
-        int elementSizeX = 50
-        int elementSizeY = 50
-        int collisionSizeX = 10
-        int collisionSizeY = 10
+    def "test equals possibilities"(){
+        given:
+            def element2 = new TestElement(position as Position, image as BufferedImage, 5, 15)
+        expect:
+            element != element2
+        when:
+            element2.setSizeX(50)
+        then:
+            element != element2
+        when:
+            element2.setSizeY(50)
+        then:
+            element == element2
+    }
 
-        TestElement element = new TestElement(elementPosition, new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB), elementSizeX, elementSizeY)
+    def "test hasCollided - all possible paths"() {
+        expect:
+        element.hasCollided(new Position(posX, posY), otherSizeX, otherSizeY) == expectedCollision
 
-        expect: "The elements should collide"
-        element.hasCollided(collisionPosition, collisionSizeX, collisionSizeY)
+        where:
+        posX | posY | otherSizeX | otherSizeY | expectedCollision
 
-        when: "The position is far enough away"
-        collisionPosition = new Position(100, 100)
+        100  | 10   | 1          | 1          | false
+        10   | 100  | 1          | 1          | false
+        200  | 200  | 1          | 1          | false
+        0    | 0    | 1          | 1          | false
+        10   | 0    | 10         | 10         | false
 
-        then: "There should be no collision"
-        !element.hasCollided(collisionPosition, collisionSizeX, collisionSizeY)
+        10   | 10   | 50         | 50         | true
+        10   | 10   | 40         | 40         | true
+        50   | 10   | 1          | 50         | true
+        10   | 50   | 50         | 1          | true
+
+        60   | 10   | 1          | 50         | false
+        10   | 60   | 50         | 1          | false
+    }
+
+    def "test isInside - all possible paths"() {
+        given:
+            def newElement = new TestElement(new Position(newElementPositionX,newElementPositionY),image as BufferedImage, newElementSizeX, newElementSizeY)
+        expect:
+            element.isInside(newElement) == expectedInside
+        where:
+        newElementPositionX | newElementPositionY | newElementSizeX | newElementSizeY | expectedInside
+
+        0   | 0   | 10 | 10 | false
+        5   | 5   | 60 | 60 | true
+        0   | 10  | 10 | 60 | false
+        10  | 0   | 60 | 10 | false
+        10  | 10  | 50 | 50 | true
+        10  | 20  | 50 | 50 | false
+        20  | 10  | 50 | 50 | false
     }
 }
