@@ -327,6 +327,35 @@ class LevelControllerTest extends Specification {
         1 * door.setState(Door.STATE.CLOSED)
     }
 
+    def "checkLevelTransition returns #expectedResult for given conditions"() {
+        given:
+        level.getKeys() >> [key]
+        key.isCollected() >> keyCollected
+        player1.isInside(door) >> player1Inside
+        player2.isInside(door) >> player2Inside
+        level.getPlayer1() >> player1
+        level.getPlayer2() >> player2
+        level.getLevelEndingDoor() >> door
+
+        when:
+        def result = controller.checkLevelTransition()
+
+        then:
+        result == expectedResult
+
+        where:
+        keyCollected     | player1Inside | player2Inside || expectedResult
+        true             | true          | true          || true
+        false            | true          | true          || false
+        true             | false         | true          || false
+        true             | true          | false         || false
+        true             | false         | false         || false
+        false            | false         | true          || false
+        false            | true          | false         || false
+        false            | false         | false         || false
+    }
+
+
     def "should reset player position and keys when player dies"() {
         given:
             player1.hasCollided(_ as Position, _ as int, _ as int) >> true
