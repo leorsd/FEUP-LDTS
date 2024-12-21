@@ -72,15 +72,11 @@ public class LevelController extends Controller<Level> {
 
     private void collectKeys() {
         String player1Name = getModel().getPlayer1().getName();
-        Position player1Position = getModel().getPlayer1().getPosition();
-        int player1SizeX = getModel().getPlayer1().getSizeX();
-        int player1SizeY = getModel().getPlayer1().getSizeY();
+        Player player1 = getModel().getPlayer1();
         String player2Name = getModel().getPlayer2().getName();
-        Position player2Position = getModel().getPlayer2().getPosition();
-        int player2SizeX = getModel().getPlayer2().getSizeX();
-        int player2SizeY = getModel().getPlayer2().getSizeY();
+        Player player2 = getModel().getPlayer2();
         for (Key key : getModel().getKeys()) {
-            if ((key.getTarget().equals(player1Name) && key.hasCollided(player1Position, player1SizeX, player1SizeY)) || (key.getTarget().equals(player2Name) && key.hasCollided(player2Position, player2SizeX, player2SizeY))) {
+            if ((key.getTarget().equals(player1Name) && player1.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY())) || (key.getTarget().equals(player2Name) && player2.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY()))) {
                 key.setCollected(true);
             }
         }
