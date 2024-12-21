@@ -24,8 +24,8 @@ class LevelControllerTest extends Specification {
     def button = Mock(Button)
     def toggleableWall = Mock(ToggleableWall)
     def key = Mock(Key)
-    def door = Mock(Door)
     def trap = Mock(Trap)
+    def door = Mock(Door)
     def gameManager = Mock(GameManager)
     def controller
 
@@ -36,7 +36,6 @@ class LevelControllerTest extends Specification {
         level.getTraps() >> [trap]
         level.getButtons() >> [button]
         level.getToggleableWalls() >> [toggleableWall]
-        level.getKeys() >> [key]
         level.getLevelEndingDoor() >> door
 
         controller = new LevelController(level)
@@ -133,67 +132,208 @@ class LevelControllerTest extends Specification {
             1 * toggleableWall.setActive(true)
     }
 
-        def "should collect keys when player collides with corresponding key"() {
-            given:
-                player1.getName() >> "Player1"
-                player1.getPosition() >> new Position(5, 5)
-                player1.getSizeX() >> 1
-                player1.getSizeY() >> 1
+    def "key targets player 1 and player 1 collides"() {
+        given:
+            player1.getName() >> "Player1"
+            player1.getPosition() >> new Position(5, 5)
+            player2.getName() >> "Player2"
+            player2.getPosition() >> new Position(8, 10)
 
-                key.getTarget() >> "Player1"
-                player1.hasCollided(_, _, _) >> true
-                key.isCollected() >> false
+            key.getTarget() >> "Player1"
+            player1.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY()) >> true
+            key.isCollected() >> false
+            level.getKeys() >> [key]
 
-            when:
-                controller.collectKeys()
+        when:
+            controller.collectKeys()
 
-            then:
-                1 * key.setCollected(true)
-        }
+        then:
+            1 * key.setCollected(true)
+    }
 
-        def "should not collect keys when player collides with a key with a different target"() {
-            given:
-                player1.getName() >> "Player1"
-                player1.getPosition() >> new Position(5, 5)
-                player1.getSizeX() >> 1
-                player1.getSizeY() >> 1
+    def "key targets player 1 but player 1 does not collide"() {
+        given:
+            player1.getName() >> "Player1"
+            player1.getPosition() >> new Position(5, 5)
+            player2.getName() >> "Player2"
+            player2.getPosition() >> new Position(8, 10)
 
-                key.getTarget() >> "Player2"
-                key.hasCollided(_, _, _) >> true
-                key.isCollected() >> false
+            key.getTarget() >> "Player1"
+            player1.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY()) >> false
+            key.isCollected() >> false
+            level.getKeys() >> [key]
 
-            when:
-                controller.collectKeys()
+        when:
+            controller.collectKeys()
 
-            then:
-                0 * key.setCollected(true)
-        }
+        then:
+            0 * key.setCollected(true)
+    }
 
-        def "should not collect keys when player does not collide with a corresponding key"() {
-            given:
-                player1.getName() >> "Player1"
-                player1.getPosition() >> new Position(5, 5)
-                player1.getSizeX() >> 1
-                player1.getSizeY() >> 1
+    def "key targets player 2 and player 2 collides"() {
+        given:
+            player1.getName() >> "Player1"
+            player1.getPosition() >> new Position(5, 5)
+            player2.getName() >> "Player2"
+            player2.getPosition() >> new Position(8, 10)
 
-                key.getTarget() >> "Player1"
-                key.hasCollided(_, _, _) >> false
-                key.isCollected() >> false
+            key.getTarget() >> "Player2"
+            player2.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY()) >> true
+            key.isCollected() >> false
+            level.getKeys() >> [key]
 
-            when:
-                controller.collectKeys()
+        when:
+            controller.collectKeys()
 
-            then:
-                0 * key.setCollected(true)
-        }
+        then:
+            1 * key.setCollected(true)
+    }
 
+    def "key targets player 2 but player 2 does not collide"() {
+        given:
+            player1.getName() >> "Player1"
+            player1.getPosition() >> new Position(5, 5)
+            player2.getName() >> "Player2"
+            player2.getPosition() >> new Position(8, 10)
+
+            key.getTarget() >> "Player2"
+            player2.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY()) >> false
+            key.isCollected() >> false
+            level.getKeys() >> [key]
+
+        when:
+            controller.collectKeys()
+
+        then:
+            0 * key.setCollected(true)
+    }
+
+    def "key does not target either player"() {
+        given:
+            player1.getName() >> "Player1"
+            player1.getPosition() >> new Position(5, 5)
+            player2.getName() >> "Player2"
+            player2.getPosition() >> new Position(8, 10)
+
+            key.getTarget() >> "None"
+            key.isCollected() >> false
+            level.getKeys() >> [key]
+
+        when:
+            controller.collectKeys()
+
+        then:
+            0 * key.setCollected(true)
+    }
+
+    def "allKeysCollected returns true and opens door when all keys are collected"() {
+        given:
+        def key1 = Mock(Key)
+        key1.isCollected() >> true
+        def key2 = Mock(Key)
+        key2.isCollected() >> true
+        level.getKeys() >> [key1, key2]
+
+        when:
+        def result = controller.allKeysCollected()
+
+        then:
+        result == true
+        1 * door.setState(Door.STATE.OPEN)
+    }
+
+    def "allKeysCollected returns false when at least one key is not collected"() {
+        given:
+        def key1 = Mock(Key)
+        key1.isCollected() >> true
+        def key2 = Mock(Key)
+        key2.isCollected() >> false
+        level.getKeys() >> [key1, key2]
+
+
+        when:
+        def result = controller.allKeysCollected()
+
+        then:
+        result == false
+        0 * door.setState(Door.STATE.OPEN)
+    }
+
+    def "playerDied resets position, un-collects a key that matches and is collected, and closes the door"() {
+        given:
+        def spawnPosition = new Position(5, 5)
+        level.getPlayerSpawnPosition(player1) >> spawnPosition
+        player1.getName() >> "Player1"
+
+        def matchingKey = Mock(Key)
+        matchingKey.getPosition() >> new Position(40,60)
+        matchingKey.getTarget() >> "Player1"
+        matchingKey.isCollected() >> true
+
+        level.getKeys() >> [matchingKey]
+
+        when:
+        controller.playerDied(player1)
+
+        then:
+        1 * player1.setPosition(spawnPosition)
+        1 * matchingKey.setCollected(false)
+        1 * door.setState(Door.STATE.CLOSED)
+    }
+
+    def "playerDied resets position, does not un-collect a key that matches but is not collected, and closes the door"() {
+        given:
+        def spawnPosition = new Position(5, 5)
+        level.getPlayerSpawnPosition(player1) >> spawnPosition
+        player1.getName() >> "Player1"
+
+        def matchingKey = Mock(Key)
+        matchingKey.getPosition() >> new Position(50,60)
+        matchingKey.getTarget() >> "Player1"
+        matchingKey.isCollected() >> false
+
+        level.getKeys() >> [matchingKey]
+        level.getLevelEndingDoor() >> door
+
+        when:
+        controller.playerDied(player1)
+
+        then:
+        1 * player1.setPosition(spawnPosition)
+        0 * matchingKey.setCollected(_)
+        1 * door.setState(Door.STATE.CLOSED)
+    }
+
+    def "playerDied resets position, does not un-collect a key that doesn't match but is not collected, and closes the door"() {
+        given:
+        def spawnPosition = new Position(5, 5)
+        level.getPlayerSpawnPosition(player1) >> spawnPosition
+        player1.getName() >> "Player1"
+
+        def unmatchingKey = Mock(Key)
+        unmatchingKey.getPosition() >> new Position(60,60)
+        unmatchingKey.getTarget() >> "Player2"
+        unmatchingKey.isCollected() >> true
+
+        level.getKeys() >> [unmatchingKey]
+        level.getLevelEndingDoor() >> door
+
+        when:
+        controller.playerDied(player1)
+
+        then:
+        1 * player1.setPosition(spawnPosition)
+        0 * unmatchingKey.setCollected(_)
+        1 * door.setState(Door.STATE.CLOSED)
+    }
 
     def "should reset player position and keys when player dies"() {
         given:
-            player1.hasCollided(_, _, _) >> true
+            player1.hasCollided(_ as Position, _ as int, _ as int) >> true
             key.getTarget() >> "Tergon"
             player1.getName() >> "Tergon"
             key.isCollected() >> true
+            level.getKeys() >> [key]
 
         and:
             def spawnPosition = new Position(5, 5)
