@@ -1,46 +1,102 @@
 package game
-import spock.lang.Specification
+
+import gui.GUI
 import gui.LanternaGUI
+import model.scenes.Menu
+import spock.lang.Specification
 import sound.BackgroundSoundPlayer
 
 class GameTest extends Specification {
+    GUI mockGui
+    GameManager mockGameManager
+    BackgroundSoundPlayer mockBackgroundSoundPlayer
 
-    def mockGUI = Mock(LanternaGUI)
-    def mockGameManager = Mock(GameManager)
-    def mockSoundPlayer = Mock(BackgroundSoundPlayer)
-
-    def "getInstance should return a singleton instance"() {
-        when:
-            def game1 = Game.getInstance()
-            def game2 = Game.getInstance()
-        then:
-            game1 == game2
+    def setup() {
+        mockGui = Mock(GUI)
+        mockGameManager = Mock(GameManager)
+        mockBackgroundSoundPlayer = Mock(BackgroundSoundPlayer)
+        def field = Game.getDeclaredField("gameInstance")
+        field.accessible = true
+        field.set(null, null)
     }
 
-    def "start should interact with dependencies correctly"() {
+    def "Game singleton creation"() {
+        when:
+        def game = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
+
+        then:
+        game != null
+        game.getGui() == mockGui
+        game.getGameManager() == mockGameManager
+        game.getBackgroundSoundPlayer() == mockBackgroundSoundPlayer
+    }
+
+    def "Game singleton reuse"() {
         given:
-            def game = Game.getInstance()
-            game.setGui(mockGUI)
-            game.setGameManager(mockGameManager)
-            game.setBackgroundSoundPlayer(mockSoundPlayer)
-            mockGameManager.step(mockGUI, _ as long) >> false
+        def firstInstance = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
+
+        when:
+        def secondInstance = Game.getInstance(null, null, null)
+
+        then:
+        firstInstance.is(secondInstance)
+    }
+
+    def "Game start and stop"() {
+        given:
+            def game = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
+            mockGameManager.step(_, _) >>> [false]
         when:
             game.start()
         then:
-            1 * mockSoundPlayer.start()
-            1 * mockSoundPlayer.stop()
-            1 * mockGUI.close()
+            1 * mockGui.start()
+            1 * mockBackgroundSoundPlayer.start()
+            1 * mockGameManager.step(_, _)
+            1 * mockBackgroundSoundPlayer.stop()
+            1 * mockGui.close()
     }
 
-    def "getInstance should create the game instance with proper dependencies"() {
+    def "Game step frame timing"() {
         given:
-            def game = Game.getInstance()
+        mockGameManager.step(_, _) >> false // Simulate immediate exit
+        def game = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
+        def startTime = System.currentTimeMillis()
+
         when:
-            def instance = Game.getInstance()
+        game.start()
+        def elapsedTime = System.currentTimeMillis() - startTime
+
         then:
-            instance != null
-            instance.gui instanceof LanternaGUI
-            instance.gameManager instanceof GameManager
-            instance.backgroundSoundPlayer instanceof BackgroundSoundPlayer
+        def FPS = 20
+        def frameTime = 1000 / FPS
+        elapsedTime >= frameTime - 50 && elapsedTime <= frameTime + 50
+    }
+
+    def "Setters and getters"() {
+        given:
+        def game = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
+        def newGui = Mock(GUI)
+        def newBackgroundSoundPlayer = Mock(BackgroundSoundPlayer)
+        def newGameManager = Mock(GameManager)
+
+        when:
+        game.setGui(newGui)
+        game.setBackgroundSoundPlayer(newBackgroundSoundPlayer)
+        game.setGameManager(newGameManager)
+
+        then:
+        game.getGui() == newGui
+        game.getBackgroundSoundPlayer() == newBackgroundSoundPlayer
+        game.getGameManager() == newGameManager
+    }
+
+    def "Game.getInstance creates default components when provided with null arguments"() {
+        when:
+        def game = Game.getInstance(null, null, null)
+
+        then:
+        game.getGui() instanceof LanternaGUI
+        game.getGameManager().getCurrentScene() instanceof Menu
+        game.getBackgroundSoundPlayer() instanceof BackgroundSoundPlayer
     }
 }
