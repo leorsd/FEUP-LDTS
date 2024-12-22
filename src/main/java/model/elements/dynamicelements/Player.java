@@ -2,6 +2,8 @@ package model.elements.dynamicelements;
 
 import model.Position;
 
+import java.util.Objects;
+
 public class Player extends DynamicElement {
     public enum ORIENTATION {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT, STANDING}
     private String name;
@@ -53,4 +55,16 @@ public class Player extends DynamicElement {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player player)) return false;
+        if (!super.equals(o)) return false;
+        return speed == player.speed && maxJumpHeight == player.maxJumpHeight && lastActionCount == player.lastActionCount && Objects.equals(name, player.name) && orientation == player.orientation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, speed, maxJumpHeight, orientation, lastActionCount);
+    }
 }

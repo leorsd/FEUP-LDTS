@@ -2,6 +2,7 @@ package model.scenes;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Menu implements Scene{
     private List<String> entries;
@@ -41,5 +42,17 @@ public class Menu implements Scene{
 
     public int getHighlightedEntryIndex() {
         return highlightedEntryIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Menu menu)) return false;
+        return highlightedEntryIndex == menu.highlightedEntryIndex && Objects.equals(entries, menu.entries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(entries, highlightedEntryIndex);
     }
 }

@@ -3,6 +3,8 @@ package model.elements.dynamicelements;
 import gui.GUI;
 import model.Position;
 
+import java.util.Objects;
+
 public class Monster extends DynamicElement {
     public enum ORIENTATION {LEFT, RIGHT, STANDING};
     private int minX;
@@ -52,5 +54,18 @@ public class Monster extends DynamicElement {
 
     public void setMaxX(int maxX) {
         this.maxX = maxX;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Monster monster)) return false;
+        if (!super.equals(o)) return false;
+        return minX == monster.minX && maxX == monster.maxX && direction == monster.direction && lastControlCount == monster.lastControlCount && orientation == monster.orientation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), minX, maxX, direction, orientation, lastControlCount);
     }
 }

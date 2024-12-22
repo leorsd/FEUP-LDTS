@@ -1,5 +1,8 @@
 package game;
 
+import controller.game.MonsterController;
+import controller.game.Player1Controller;
+import controller.game.Player2Controller;
 import model.scenes.Level;
 import model.scenes.Menu;
 import model.scenes.Scene;
@@ -24,7 +27,7 @@ public class GameManager {
             controller = new MenuController((Menu) currentScene);
             sceneVisualizer = new MenuVisualizer((Menu) currentScene);
         } else if (currentScene instanceof Level) {
-            controller = new LevelController((Level) currentScene);
+            controller = new LevelController((Level) currentScene, new Player1Controller((Level) currentScene), new Player2Controller((Level) currentScene), new MonsterController((Level) currentScene));
             sceneVisualizer = new LevelVisualizer((Level) currentScene);
         }
     }
@@ -39,7 +42,7 @@ public class GameManager {
             controller = new MenuController((Menu) currentScene);
             sceneVisualizer = new MenuVisualizer((Menu) currentScene);
         } else if (currentScene instanceof Level) {
-            controller = new LevelController((Level) currentScene);
+            controller = new LevelController((Level) currentScene, new Player1Controller((Level) currentScene), new Player2Controller((Level) currentScene), new MonsterController((Level) currentScene));
             sceneVisualizer = new LevelVisualizer((Level) currentScene);
         }
     }

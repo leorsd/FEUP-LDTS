@@ -4,6 +4,7 @@ import model.Position;
 import model.elements.Element;
 
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class Key extends StaticElement {
     private String target;
@@ -28,5 +29,18 @@ public class Key extends StaticElement {
 
     public void setCollected(boolean collected) {
         this.collected = collected;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Key key)) return false;
+        if (!super.equals(o)) return false;
+        return collected == key.collected && Objects.equals(target, key.target);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), target, collected);
     }
 }
