@@ -4,6 +4,15 @@ import spock.lang.Specification
 
 class MenuTest extends Specification {
 
+    def "test equals and hashcode"() {
+        given:
+            def menu = new Menu()
+            def menu2 = new Menu()
+        expect:
+            menu == menu2
+            menu.hashCode() == menu2.hashCode()
+    }
+
     def "should correctly highlight the next entry"() {
         given:
             def entries = ["Entry1", "Entry2", "Entry3"]

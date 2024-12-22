@@ -308,16 +308,4 @@ public class LevelLoader {
         }
         return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionDoor,this.nextLevel);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LevelLoader that)) return false;
-        return Objects.equals(xBoundary, that.xBoundary) && Objects.equals(yBoundary, that.yBoundary) && Objects.equals(wallBackground, that.wallBackground) && Objects.equals(background, that.background) && Objects.equals(player1, that.player1) && Objects.equals(player2, that.player2) && Objects.equals(levelTransitionDoor, that.levelTransitionDoor) && Objects.equals(walls, that.walls) && Objects.equals(toggleableWalls, that.toggleableWalls) && Objects.equals(buttons, that.buttons) && Objects.equals(toggleableWallsMap, that.toggleableWallsMap) && Objects.equals(keys, that.keys) && Objects.equals(monsters, that.monsters) && Objects.equals(traps, that.traps) && Objects.equals(nextLevel, that.nextLevel);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(xBoundary, yBoundary, wallBackground, background, player1, player2, levelTransitionDoor, walls, toggleableWalls, buttons, toggleableWallsMap, keys, monsters, traps, nextLevel);
-    }
 }
