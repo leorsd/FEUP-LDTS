@@ -1,10 +1,20 @@
 package model.elements.dynamicelements
 
+import model.elements.staticelements.Key
 import spock.lang.Specification
 import model.Position
 import model.elements.dynamicelements.Monster
 
 class MonsterTest extends Specification {
+
+    def "test hashcode and equals"() {
+        given:
+        def monster1 = new Monster(new Position(10, 10), 50, 60, 0, 100)
+        def monster2 = new Monster(new Position(10, 10), 50, 60, 0, 100)
+        expect:
+        monster1 == monster2
+        monster1.hashCode() == monster2.hashCode()
+    }
 
     def "should correctly initialize monster with constructor"() {
         given: "A new Monster object"

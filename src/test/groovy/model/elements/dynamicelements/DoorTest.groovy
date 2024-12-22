@@ -1,9 +1,20 @@
 package model.elements.dynamicelements
 
 import model.Position
+import model.elements.staticelements.Key
 import spock.lang.Specification
 
 class DoorTest extends Specification{
+    def "test hashcode and equals"() {
+        given:
+        def door1 = new Door(new Position(10, 10), 15, 15)
+        def door2 = new Door(new Position(10, 10), 15, 15)
+        expect:
+        door1 == door2
+        door1.hashCode() == door2.hashCode()
+
+    }
+
     def "Door should initialize with given position and size and default state CLOSED"() {
         given:
             def position = new Position(10, 20)
