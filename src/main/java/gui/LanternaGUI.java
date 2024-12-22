@@ -27,22 +27,13 @@ import static gui.GUI.ACTION.*;
 
 public class LanternaGUI implements GUI {
     private final ScreenCreator screenCreator;
-    private final Screen screen;
+    private Screen screen;
     private final KeyAdapter keyAdapter;
     private final HashSet<ACTION> inputs = new HashSet<>();
 
     public LanternaGUI(ScreenCreator screenCreator) throws IOException, URISyntaxException, FontFormatException {
         this.screenCreator = screenCreator;
         this.keyAdapter = createKeyAdapter();
-        this.screen = createScreen();
-    }
-
-    private Screen createScreen() throws IOException, URISyntaxException, FontFormatException {
-        Screen screen = screenCreator.createScreen(keyAdapter);
-        screen.setCursorPosition(null);
-        screen.startScreen();
-        screen.doResizeIfNecessary();
-        return screen;
     }
 
     private KeyAdapter createKeyAdapter() {
@@ -81,6 +72,14 @@ public class LanternaGUI implements GUI {
     @Override
     public void refresh() throws IOException {
         screen.refresh();
+    }
+
+    @Override
+    public void start() throws IOException, URISyntaxException, FontFormatException {
+        screen = screenCreator.createScreen(keyAdapter);
+        screen.setCursorPosition(null);
+        screen.startScreen();
+        screen.doResizeIfNecessary();
     }
 
     @Override
