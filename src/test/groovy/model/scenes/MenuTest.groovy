@@ -5,97 +5,80 @@ import spock.lang.Specification
 class MenuTest extends Specification {
 
     def "should correctly highlight the next entry"() {
-        given:"a Menu with three entries"
-        def entries = ["Entry1", "Entry2", "Entry3"]
-        def menu = new Menu(entries)
-
-        when:"selectNextEntry is called"
-        menu.selectNextEntry()
-
-        then:"the highlighted entry should be the second one"
-        menu.getHighlightedEntryIndex() == 1
-        menu.getHighlightedEntry() == "Entry2"
-
-        when:"selectNextEntry is called again"
-        menu.selectNextEntry()
-
-        then:"the highlighted entry should be the third one"
-        menu.getHighlightedEntryIndex() == 2
-        menu.getHighlightedEntry() == "Entry3"
-
-        when:"selectNextEntry is called again (wrapping around)"
-        menu.selectNextEntry()
-
-        then:"the highlighted entry should be the first one"
-        menu.getHighlightedEntryIndex() == 0
-        menu.getHighlightedEntry() == "Entry1"
+        given:
+            def entries = ["Entry1", "Entry2", "Entry3"]
+            def menu = new Menu(entries)
+        when:
+            menu.selectNextEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 1
+            menu.getHighlightedEntry() == "Entry2"
+        when:
+            menu.selectNextEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 2
+            menu.getHighlightedEntry() == "Entry3"
+        when:
+            menu.selectNextEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 0
+            menu.getHighlightedEntry() == "Entry1"
     }
 
     def "should correctly highlight the previous entry"() {
-        given:"a Menu with three entries"
-        def entries = ["Entry1", "Entry2", "Entry3"]
-        def menu = new Menu(entries)
-
-        when:"selectPreviousEntry is called (wrapping around)"
-        menu.selectPreviousEntry()
-
-        then:"the highlighted entry should be the last one"
-        menu.getHighlightedEntryIndex() == 2
-        menu.getHighlightedEntry() == "Entry3"
-
-        when:"selectPreviousEntry is called again"
-        menu.selectPreviousEntry()
-
-        then:"the highlighted entry should be the second one"
-        menu.getHighlightedEntryIndex() == 1
-        menu.getHighlightedEntry() == "Entry2"
-
-        when:"selectPreviousEntry is called again"
-        menu.selectPreviousEntry()
-
-        then:"the highlighted entry should be the first one"
-        menu.getHighlightedEntryIndex() == 0
-        menu.getHighlightedEntry() == "Entry1"
+        given:
+            def entries = ["Entry1", "Entry2", "Entry3"]
+            def menu = new Menu(entries)
+        when:
+            menu.selectPreviousEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 2
+            menu.getHighlightedEntry() == "Entry3"
+        when:
+            menu.selectPreviousEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 1
+            menu.getHighlightedEntry() == "Entry2"
+        when:
+            menu.selectPreviousEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 0
+            menu.getHighlightedEntry() == "Entry1"
     }
 
-    def "should return null if trying to get highlighted entry when no entries exist"() {
-        given:"a Menu with no entries"
-        def menu = new Menu([])
-
-        expect:"getHighlightedEntry should return null"
-        menu.getHighlightedEntry() == null
-    }
-
-    def "should return 0 when trying to get the size of a menu with no entries"() {
-        given:"a Menu with no entries"
-        def menu = new Menu([])
-
-        expect: "getEntriesSize should return 0"
-        menu.getEntriesSize() == 0
+    def "all possibilities when the entries is empty"() {
+        given:
+            def menu = new Menu([])
+        when:
+            menu.selectNextEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 0
+        when:
+            menu.selectPreviousEntry()
+        then:
+            menu.getHighlightedEntryIndex() == 0
+        expect:
+            menu.getHighlightedEntry() == null
+            menu.getEntriesSize() == 0
     }
 
     def "should correctly return the number of entries"() {
-        given:"a Menu with specific entries"
-        def entries = ["Entry1", "Entry2", "Entry3"]
-        def menu = new Menu(entries)
-
-        expect:"getEntriesSize should return the number of entries"
-        menu.getEntriesSize() == 3
+        given:
+            def entries = ["Entry1", "Entry2", "Entry3"]
+            def menu = new Menu(entries)
+        expect:
+            menu.getEntriesSize() == 3
     }
 
     def "should handle initialization with default entries"() {
-        given:"a Menu initialized without entries"
-        def menu = new Menu()
-
-        expect:"the Menu should have default entries"
-        menu.getEntriesSize() == 6
-        menu.getHighlightedEntry() == "src/main/resources/levels/level0"
-
-        when:"select the next entry"
-        menu.selectNextEntry()
-
-        then:"it should highlight the second one"
-        menu.getHighlightedEntry() == "src/main/resources/levels/level1"
-
+        given:
+            def menu = new Menu()
+        expect:
+            menu.getEntriesSize() == 6
+            menu.getHighlightedEntry() == "src/main/resources/levels/level0"
+        when:
+            menu.selectNextEntry()
+        then:
+            menu.getHighlightedEntry() == "src/main/resources/levels/level1"
     }
 }

@@ -1,124 +1,159 @@
 package model.scenes
 
 import model.elements.dynamicelements.Door
-import model.elements.staticelements.Button
-import model.elements.staticelements.ToggleableWall
 import model.elements.dynamicelements.Monster
-import model.elements.staticelements.Key
-import model.elements.staticelements.Trap
-import model.Position
-import spock.lang.Specification
 import model.elements.dynamicelements.Player
-import model.elements.staticelements.Wall
+import model.Position
+import model.elements.staticelements.*
+import spock.lang.Specification
 
 class LevelTest extends Specification {
 
-    def "should correctly initialize with provided elements"() {
-        given:"lists of walls, monsters, traps, keys, and players"
-        def walls = [new Wall(new Position(1, 1), null, 1,1)]
-        def monsters = [new Monster(new Position(2, 2), 1, 1, 1,1)]
-        def toggleableWall = new ToggleableWall(new Position(2,3), null, 10, 10)
-        def toggleableWalls = [toggleableWall]
-        def buttons = [new Button(new Position(10,10), null, 10, 10, toggleableWall)]
-        def traps = [new Trap("Lavena", new Position(3, 3), null, 1,1)]
-        def keys = [new Key(new Position(4, 4), null, 1,1,"Lavena")]
-        def player1 = new Player("Lavena",1,1, new Position(5, 5),  2, 10)
-        def player2 = new Player("Tergon",1,1, new Position(6, 6), 2, 10)
-        def levelTransitionWall = new Door(new Position(1, 1), 1,1);
+    def player1
+    def player2
+    def wall
+    def toggleableWall
+    def toggleableWalls
+    def buttons
+    def traps
+    def keys
+    def level
+    def levelTransitionWall
 
-        when:"a Level is created"
-        def level = new Level(walls,toggleableWalls, buttons, monsters, traps, keys, player1, player2, 10, 10, null, levelTransitionWall,"src/main/resources/Levels/level2")
+    def setup() {
+        player1 = new Player("Lavena", 1, 1, new Position(5, 5), 2, 10)
+        player2 = new Player("Tergon", 1, 1, new Position(6, 6), 2, 10)
+        wall = new Wall(new Position(5, 5), null, 1, 1)
+        toggleableWall = new ToggleableWall(new Position(5, 5), null, 1, 1)
+        toggleableWalls = [toggleableWall]
+        buttons = [new Button(new Position(10, 10), null, 10, 10, toggleableWall)]
+        traps = [new Trap("Lavena", new Position(3, 3), null, 1, 1)]
+        keys = [new Key(new Position(4, 4), null, 1, 1, "Lavena")]
+        levelTransitionWall = new Door(new Position(1, 1), 1, 1)
 
-        then:"all elements should be initialized correctly"
-        level.getWalls() == walls
-        level.getMonsters() == monsters
-        level.getTraps() == traps
-        level.getKeys() == keys
-        level.getPlayer1() == player1
-        level.getPlayer2() == player2
-        level.getxBoundary() == 10
-        level.getyBoundary() == 10
-        level.getLevelEndingDoor() == levelTransitionWall
-        level.getToggleableWalls() == toggleableWalls
-        level.getButtons() == buttons
+        level = new Level([wall], toggleableWalls, buttons, [], traps, keys, player1, player2, 10, 10, null, levelTransitionWall, "src/main/resources/Levels/level2")
     }
 
-    def "test isPositionFree with no walls or obstacles"() {
-        given: "a level with no walls, monsters, traps, or keys"
-        def player1 = Mock(Player)
-        def player2 = Mock(Player)
-        def walls = []
-        def buttons = []
-        def toggleableWalls = []
-        def monsters = []
-        def traps = []
-        def keys = []
-        def level = new Level(walls, toggleableWalls, buttons, monsters, traps, keys, player1, player2, 10, 10,null,null, "src/main/resources/Levels/level2")
-
-        and: "a free position inside the boundaries"
-        def position = new Position(5, 5)
-
-        expect: "the position should be free"
-        level.isPositionFree(position)
+    def "should initialize correctly with all elements"() {
+        when:
+            level = new Level([wall], toggleableWalls, buttons, [new Monster(new Position(2, 2), 1, 1, 1, 1)], traps, keys, player1, player2, 10, 10, null, levelTransitionWall, "src/main/resources/Levels/level2")
+        then:
+            level.getWalls() == [wall]
+            level.getMonsters() == [new Monster(new Position(2, 2), 1, 1, 1, 1)]
+            level.getTraps() == traps
+            level.getKeys() == keys
+            level.getPlayer1() == player1
+            level.getPlayer2() == player2
+            level.getxBoundary() == 10
+            level.getyBoundary() == 10
+            level.getLevelEndingDoor() == levelTransitionWall
+            level.getToggleableWalls() == toggleableWalls
+            level.getButtons() == buttons
     }
 
-    def "test isPositionFree with a wall at the position"() {
-        given: "a level with one wall"
-        def player1 = Mock(Player)
-        def player2 = Mock(Player)
-        def wall = new Wall(new Position(5, 5), null, 1, 1)
-        def toggleableWalls = []
-        def buttons = []
-        def walls = [wall]
-        def monsters = []
-        def traps = []
-        def keys = []
-        def level = new Level(walls, toggleableWalls, buttons, monsters, traps, keys, player1, player2, 10, 10,null, null, "src/main/resources/Levels/level2")
-
-        and: "a position where a wall is present"
-        def position = new Position(5, 5)
-
-        expect: "the position should not be free"
-        !level.isPositionFree(position)
+    def "should correctly handle position checks for out of bounds"() {
+        given:
+            def levelWithBoundaries = new Level([], [], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            !levelWithBoundaries.isPositionFree(new Position(-1, 0))
+            !levelWithBoundaries.isPositionFree(new Position(0, -1))
+            !levelWithBoundaries.isPositionFree(new Position(10, 0))
+            !levelWithBoundaries.isPositionFree(new Position(0, 10))
     }
 
-    def "test boundary check"() {
-        given: "a level with boundaries"
-        def player1 = Mock(Player)
-        def player2 = Mock(Player)
-        def walls = []
-        def toggleableWalls = []
-        def buttons = []
-        def monsters = []
-        def traps = []
-        def keys = []
-        def level = new Level(walls, toggleableWalls, buttons, monsters, traps, keys, player1, player2, 5, 5,null,null, "src/main/resources/Levels/level2")
-
-        expect: "positions outside the boundaries should be marked as occupied"
-        !level.isPositionFree(new Position(-1, 0))
-        !level.isPositionFree(new Position(0, -1))
-        !level.isPositionFree(new Position(5, 0))
-        !level.isPositionFree(new Position(0, 5))
+    def "should correctly handle position inside boundaries and without obstacles"() {
+        given:
+            def emptyLevel = new Level([], [], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            emptyLevel.isPositionFree(new Position(5, 5))
     }
 
-    def "in a level with boundaries initialized as 0, all positions should be out of bounds"() {
-        given: "a level with boundaries initialized as 0"
-        def player1 = Mock(Player)
-        def player2 = Mock(Player)
-        def walls = []
-        def toggleableWalls = []
-        def buttons = []
-        def monsters = []
-        def traps = []
-        def keys = []
-        def level = new Level(walls, toggleableWalls, buttons, monsters, traps, keys, player1, player2, 0, 0,null,null, "src/main/resources/Levels/level2")
-
-        expect: "no position should be free"
-        !level.isPositionFree(new Position(0, 0))
-        !level.isPositionFree(new Position(1, 0))
-        !level.isPositionFree(new Position(0, 1))
-        !level.isPositionFree(new Position(-1, -1))
-        !level.isPositionFree(new Position(5, 5))
+    def "should not allow position to be free if there is a wall at the position"() {
+        given:
+            def levelWithWall = new Level([wall], [], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            !levelWithWall.isPositionFree(new Position(5, 5))
     }
+
+    def "should not allow position to be free if there is a toggleable wall at the position and it's active"() {
+        given:
+            toggleableWall.setActive(true)
+            def levelWithActiveToggleableWall = new Level([], [toggleableWall], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            !levelWithActiveToggleableWall.isPositionFree(new Position(5, 5))
+    }
+
+    def "should allow position to be free if toggleable wall is inactive"() {
+        given:
+            toggleableWall.setActive(false)
+            def levelWithInactiveToggleableWall = new Level([], [toggleableWall], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            levelWithInactiveToggleableWall.isPositionFree(new Position(5, 5))
+    }
+
+    def "should correctly handle player spawn position retrieval"() {
+        expect:
+            level.getPlayerSpawnPosition(player1) == new Position(5, 5)
+            level.getPlayerSpawnPosition(player2) == new Position(6, 6)
+    }
+
+    def "should correctly set player spawn position"() {
+        when:
+            level.setPlayerSpawnPosition(player1, new Position(7, 7))
+        then:
+            level.getPlayerSpawnPosition(player1) == new Position(7, 7)
+        when:
+            level.setPlayerSpawnPosition(player2, new Position(20, 20))
+        then:
+            level.getPlayerSpawnPosition(player2) == new Position(20, 20)
+    }
+
+    def "should correctly check position for multiple obstacles (wall and toggleable wall)"() {
+        given:
+            toggleableWall.setActive(true)
+            def levelWithWallAndActiveToggleableWall = new Level([wall], [toggleableWall], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            !levelWithWallAndActiveToggleableWall.isPositionFree(new Position(5, 5))
+    }
+
+    def "should handle toggleable wall collision only when active"() {
+        given:
+            wall.setPosition(new Position(10,10))
+            toggleableWall.setActive(false)
+            def levelWithInactiveToggleableWall = new Level([wall], [toggleableWall], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            levelWithInactiveToggleableWall.isPositionFree(new Position(5, 5))
+    }
+
+    def "should handle toggleable wall collision only if in the same position"() {
+        given:
+            toggleableWall.setPosition(new Position(100,100))
+            def levelWithInactiveToggleableWall = new Level([], [toggleableWall], [], [], [], [], Mock(Player), Mock(Player), 10, 10, null, null, "src/main/resources/Levels/level2")
+        expect:
+            levelWithInactiveToggleableWall.isPositionFree(new Position(5, 5))
+    }
+
+    def "test getBackground and getLevelEndingDoor"() {
+        given:
+            def levelEndingDoor = new Door(null, 1, 1)
+            def level = new Level([], [], [], [], [], [], player1, player2, 10, 10, null, levelEndingDoor, "nextLevel")
+        expect:
+            level.getBackground() == null
+            level.getLevelEndingDoor() == levelEndingDoor
+    }
+
+    def "test setLevelEndingDoor and setNextLevel"() {
+        given:
+            def initialDoor = new Door(null, 1, 1)
+            def newDoor = new Door(null, 2, 2)
+            def level = new Level([], [], [], [], [], [], player1, player2, 10, 10, null, initialDoor, "nextLevel")
+        when:
+            level.setLevelEndingDoor(newDoor)
+            level.setNextLevel("level2")
+        then:
+            level.getLevelEndingDoor() == newDoor
+            level.getNextLevel() == "level2"
+    }
+
+
 }
-
