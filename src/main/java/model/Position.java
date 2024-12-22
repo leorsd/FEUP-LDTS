@@ -30,8 +30,7 @@ public class Position {
     @Override
     public boolean equals(Object o) {
         if(this == o) return true;
-        if(!(o instanceof Position)) return false;
-        Position position = (Position) o;
+        if(!(o instanceof Position position)) return false;
         return (this.x == position.x && this.y == position.y);
     }
 
