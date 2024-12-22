@@ -25,4 +25,6 @@ jobs:
         run: ./gradlew build
       
       - name: Test with Gradle
-        run: ./gradlew test
+        run: |
+            export JAVA_OPTS="-Djava.awt.headless=true"
+            ./gradlew test --no-daemon
