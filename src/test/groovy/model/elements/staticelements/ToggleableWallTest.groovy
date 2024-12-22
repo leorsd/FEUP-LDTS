@@ -16,6 +16,16 @@ class ToggleableWallTest extends Specification{
         wall = new ToggleableWall(position, image, 30, 40)
     }
 
+    def "test hashcode and equals"() {
+        given:
+        def wall1 = new Wall(new Position(10, 10), null, 15, 15)
+        def wall2 = new Wall(new Position(10, 10), null, 15, 15)
+        expect:
+        wall1 == wall2
+        wall1.hashCode() == wall2.hashCode()
+
+    }
+
     def "ToggleableWall should initialize with given parameters and default active state true"() {
         expect:
             wall.getPosition() == position

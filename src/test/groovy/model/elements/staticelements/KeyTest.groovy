@@ -6,6 +6,16 @@ import spock.lang.Specification
 import java.awt.image.BufferedImage
 
 class KeyTest extends Specification{
+    def "test hashcode and equals"() {
+        given:
+            def Key1 = new Key(new Position(10, 10), null, 15, 15, "Lavena")
+            def Key2 = new Key(new Position(10, 10), null, 15, 15, "Lavena")
+        expect:
+            Key1 == Key2
+            Key1.hashCode() == Key2.hashCode()
+
+    }
+
     def "Key should initialize with given parameters and default state not collected"() {
         given:
             def position = new Position(10, 20)
