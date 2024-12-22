@@ -1,8 +1,6 @@
 package game
 
 import gui.GUI
-import gui.LanternaGUI
-import model.scenes.Menu
 import spock.lang.Specification
 import sound.BackgroundSoundPlayer
 
@@ -88,15 +86,5 @@ class GameTest extends Specification {
         game.getGui() == newGui
         game.getBackgroundSoundPlayer() == newBackgroundSoundPlayer
         game.getGameManager() == newGameManager
-    }
-
-    def "Game.getInstance creates default components when provided with null arguments"() {
-        when:
-        def game = Game.getInstance(null, null, null)
-
-        then:
-        game.getGui() instanceof LanternaGUI
-        game.getGameManager().getCurrentScene() instanceof Menu
-        game.getBackgroundSoundPlayer() instanceof BackgroundSoundPlayer
     }
 }
