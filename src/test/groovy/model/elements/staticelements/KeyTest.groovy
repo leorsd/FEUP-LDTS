@@ -6,14 +6,43 @@ import spock.lang.Specification
 import java.awt.image.BufferedImage
 
 class KeyTest extends Specification{
-    def "test hashcode and equals"() {
-        given:
-            def Key1 = new Key(new Position(10, 10), null, 15, 15, "Lavena")
-            def Key2 = new Key(new Position(10, 10), null, 15, 15, "Lavena")
-        expect:
-            Key1 == Key2
-            Key1.hashCode() == Key2.hashCode()
 
+    def "test hashcode"() {
+        given:
+            def key1 = new Key(new Position(10, 10), null, 15, 15, "Lavena")
+            def key2 = new Key(new Position(10, 10), null, 15, 15, "Lavena")
+            def key3 = new Key(new Position(10, 10), null, 15, 15, "Tergon")
+        expect:
+            key1.hashCode() == key2.hashCode()
+            key2.hashCode() != key3.hashCode()
+    }
+
+    def "should correctly compare keys for equality"() {
+        given:
+            def key1 = new Key(new Position(1, 1), null, 10, 10, "Lavena")
+            def key2 = new Key(new Position(1, 1), null, 10, 10, "Lavena")
+            def key3 = new Key(new Position(2, 1), null, 10, 10, "Lavena")
+            key1.setCollected(true)
+            key2.setCollected(true)
+            key3.setCollected(false)
+        expect:
+            key1.equals(key1)
+            key1 != key3
+            key1 == key2
+            !key1.equals(20)
+        when:
+            key2.setTarget("Tergon")
+        then:
+            key1 != key2
+        when:
+            key2.setTarget("Lavena")
+            key2.setCollected(false)
+        then:
+            key1 != key2
+        when:
+            key2.setTarget("Tergon")
+        then:
+            key1 != key2
     }
 
     def "Key should initialize with given parameters and default state not collected"() {

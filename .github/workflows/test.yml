@@ -22,8 +22,19 @@ jobs:
           java-version: '21'
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
       
-      - name: Test with Gradle
-        run:  ./gradlew test -Dtest.exclude.pattern=game/GameTest*
+      - name: Test with Gradle - Controller
+        run:  ./gradlew test --tests 'controller*'
 
+      - name: Test with Gradle - GUI
+        run: ./gradlew test --tests 'gui*'
+
+      - name: Test with Gradle - Model
+        run: ./gradlew test --tests 'model*'
+
+      - name: Test with Gradle - Sound
+        run: ./gradlew test --tests 'sound*'
+
+      - name: Test with Gradle - Visualizer
+        run: ./gradlew test --tests 'visualizer*'
