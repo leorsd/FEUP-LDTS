@@ -35,7 +35,7 @@ public class LevelLoader {
     Player player1;
     Player player2;
 
-    Door levelTransitionDoor;
+    Door levelEndingDoor;
     List<Wall> walls = new ArrayList<>();
     List<ToggleableWall> toggleableWalls = new ArrayList<>();
     List<Button> buttons = new ArrayList<>();
@@ -64,7 +64,7 @@ public class LevelLoader {
         List<String> parts = Splitter.on(',').splitToList(line);
 
         if (parts.size() != 5) {
-            throw new IOException("Level specification needs to be like: levelNumber,xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath");
+            throw new IOException("Level specification needs to be like: xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath,nextLevel");
         } else {
             xBoundary = Integer.parseInt(parts.getFirst());
             yBoundary = Integer.parseInt(parts.get(1));
@@ -227,7 +227,7 @@ public class LevelLoader {
         int yPos = Integer.parseInt(parts.get(1));
         int width = Integer.parseInt(parts.get(2));
         int height = Integer.parseInt(parts.get(3));
-        this.levelTransitionDoor = new Door(
+        this.levelEndingDoor = new Door(
                 new Position(xPos,yPos),
                 width,
                 height
@@ -307,6 +307,6 @@ public class LevelLoader {
         } catch (IOException e) {
             System.out.println("Error while trying to load level");
         }
-        return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelTransitionDoor,this.nextLevel);
+        return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelEndingDoor,this.nextLevel);
     }
 }
