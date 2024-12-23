@@ -23,7 +23,7 @@ public interface GUI {
 
     void close() throws IOException;
 
-    void start() throws IOException, URISyntaxException, FontFormatException;
+    void start() throws IOException;
 
     enum ACTION {UP, DOWN, LEFT, RIGHT, W, D, S, A, QUIT, SELECT}
 }
