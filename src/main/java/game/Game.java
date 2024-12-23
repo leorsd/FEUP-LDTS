@@ -72,15 +72,9 @@ public class Game {
         return soundPlayer;
     }
 
-    public static void main(String[] args) {
-        try {
-            Game game = Game.getInstance(null,null,null); // Use the singleton instance
-            game.start();
-        } catch (IOException | FontFormatException | URISyntaxException | UnsupportedAudioFileException | LineUnavailableException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public static void main(String[] args) throws Exception {
+        Game game = Game.getInstance(null,null,null); // Use the singleton instance
+        game.start();
     }
 
     public void setGameManager(GameManager gameManager) {
@@ -107,7 +101,7 @@ public class Game {
         return gameManager;
     }
 
-    public void start() throws IOException, URISyntaxException, FontFormatException {
+    public void start() throws Exception {
         int FPS = 20;
         int frameTime = 1000 / FPS;
         boolean running = true;
@@ -124,8 +118,8 @@ public class Game {
 
             try {
                 if (sleepTime > 0) Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                throw new Exception("Couldn't put thread to sleep for " + sleepTime + " milliseconds");
             }
         }
         backgroundSoundPlayer.stop();
