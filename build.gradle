@@ -3,6 +3,7 @@ plugins {
     id 'net.ltgt.errorprone' version '3.1.0'
     id 'application'
     id 'jacoco'
+    id "info.solidsoft.pitest" version '1.15.0'
 }
 
 group = 'com.t11g2.project'
@@ -26,8 +27,9 @@ dependencies {
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.21'
 }
 
-test {
-    useJUnitPlatform()
+pitest {
+    junit5PluginVersion = '1.0.0'
+    targetClasses = ['controller.*', 'model.*']
 }
 
 jacoco {
