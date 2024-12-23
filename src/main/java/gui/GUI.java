@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 import java.util.Set;
 
 public interface GUI {
-    Set<ACTION> getNextAction() throws IOException;
+    Set<ACTION> getNextAction();
 
     void drawImage(Position position, BufferedImage image);
 
