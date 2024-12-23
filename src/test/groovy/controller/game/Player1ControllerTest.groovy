@@ -29,106 +29,89 @@ class Player1ControllerTest extends Specification {
     }
 
     def "should move player 1 left if position is free"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(4, 5)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
-        and: "Position to the left is free"
-        level.isPositionFree(desiredPosition) >> true
-
-        when: "Player1Controller is commanded to move left"
-        controller.movePlayer1Left()
-
-        then: "Player's position is updated"
-        1 * player.setPosition(desiredPosition)
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(4, 5)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> true
+        when:
+            controller.movePlayer1Left()
+        then:
+            1 * player.setPosition(desiredPosition)
         cleanup:
-        defaultCleanUp()
+            defaultCleanUp()
     }
 
     def "should not move player 1 left if position is occupied"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(4, 5)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
-        and: "Position to the left is occupied"
-        level.isPositionFree(desiredPosition) >> false
-
-        when: "Player1Controller is commanded to move left"
-        controller.movePlayer1Left()
-
-        then: "Player's position is not updated"
-        0 * player.setPosition(_)
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(4, 5)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> false
+        when:
+            controller.movePlayer1Left()
+        then:
+            0 * player.setPosition(_)
         cleanup:
-        defaultCleanUp()
+            defaultCleanUp()
     }
 
     def "should move player 1 right if position is free"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(6, 5)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
-        and: "Position to the right is free"
-        level.isPositionFree(desiredPosition) >> true
-
-        when: "Player1Controller is commanded to move right"
-        controller.movePlayer1Right()
-
-        then: "Player's position is updated"
-        1 * player.setPosition(desiredPosition)
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(6, 5)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> true
+        when:
+            controller.movePlayer1Right()
+        then:
+            1 * player.setPosition(desiredPosition)
         cleanup:
-        defaultCleanUp()
+            defaultCleanUp()
     }
 
     def "should move player 1 up if position is free"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(5, 4)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(5, 4)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
         and:
-        level.isPositionFree(desiredPosition) >> true
-
+            level.isPositionFree(desiredPosition) >> true
         when:
-        controller.movePlayer1Up()
-
+            controller.movePlayer1Up()
         then:
-        1 * player.setPosition(desiredPosition)
+            1 * player.setPosition(desiredPosition)
         cleanup:
-        defaultCleanUp()
+            defaultCleanUp()
     }
 
     def "should move player 1 down if position is free"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(5, 6)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(5, 6)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
         and:
-        level.isPositionFree(desiredPosition) >> true
-
+            level.isPositionFree(desiredPosition) >> true
         when:
-        controller.movePlayer1Down()
+            controller.movePlayer1Down()
 
         then:
         1 * player.setPosition(desiredPosition)
@@ -137,7 +120,7 @@ class Player1ControllerTest extends Specification {
     }
 
     def "should not move player 1 down if already on ground"() {
-        given: "Player is on the ground"
+        given:
         defaultSetup()
         def currentPosition = new Position(5, 5)
         player.getPosition() >> currentPosition
@@ -145,10 +128,10 @@ class Player1ControllerTest extends Specification {
         player.getSizeY() >> 1
         level.isPositionFree(_) >> false
 
-        when: "Player1Controller tries to move down"
+        when:
         controller.movePlayer1Down()
 
-        then: "Player does not move"
+        then:
         0 * player.setPosition(_)
 
         cleanup:
@@ -156,7 +139,7 @@ class Player1ControllerTest extends Specification {
     }
 
     def "should move player 1 based on speed in update method"() {
-        given: "Player has speed 2"
+        given:
         defaultSetup()
         player.getSpeed() >> 2
         def currentPosition = new Position(5, 5)
@@ -164,13 +147,13 @@ class Player1ControllerTest extends Specification {
         player.getSizeX() >> 1
         player.getSizeY() >> 1
 
-        and: "Positions are free"
+        and:
         level.isPositionFree(_) >> true
 
-        when: "Update is called with RIGHT action"
+        when:
         controller.update(gameManager, [GUI.ACTION.RIGHT] as Set, 0)
 
-        then: "Player moves 2 positions to the right"
+        then:
         2 * player.setPosition(_)
 
         cleanup:
@@ -796,7 +779,7 @@ class Player1ControllerTest extends Specification {
         when:
         controller.update(gameManager, actions, 1000)
 
-        then: "The player moves right twice"
+        then:
         9 * player.setPosition(_)
         cleanup:
         defaultCleanUp()
