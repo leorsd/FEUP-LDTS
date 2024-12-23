@@ -8,5 +8,5 @@ import java.io.IOException;
 
 public interface DynamicElementVisualizer<T extends DynamicElement> extends ElementVisualizer<T> {
     @Override
-    void draw(T character, GUI gui) throws IOException;
+    void draw(T dynamicElement, GUI gui) throws IOException;
 }

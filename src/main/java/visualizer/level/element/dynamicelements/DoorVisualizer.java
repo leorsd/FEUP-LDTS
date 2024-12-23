@@ -19,8 +19,8 @@ public class DoorVisualizer implements DynamicElementVisualizer<Door> {
         spriteMap.put(Door.STATE.CLOSED, "src/main/resources/images/elements/door.png");
     }
     @Override
-    public void draw(Door monster, GUI gui) throws IOException {
-        String sprite = getSprite(monster);
+    public void draw(Door door, GUI gui) throws IOException {
+        String sprite = getSprite(door);
         BufferedImage loadedSprite;
         try {
             loadedSprite = ImageIO.read(new File(sprite));
@@ -28,7 +28,7 @@ public class DoorVisualizer implements DynamicElementVisualizer<Door> {
             throw new IOException("Could not load sprite for Door from path: " + sprite);
         }
         if (loadedSprite != null)
-            gui.drawImage(monster.getPosition(), loadedSprite);
+            gui.drawImage(door.getPosition(), loadedSprite);
     }
 
     private String getSprite(Door door) {
