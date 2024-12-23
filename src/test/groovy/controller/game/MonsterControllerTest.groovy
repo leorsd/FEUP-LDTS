@@ -108,5 +108,39 @@ class MonsterControllerTest extends Specification {
             1 * monster.setPosition(new Position(4, 5))
             1 * monster.setLastControlCount(1)
     }
+
+    def "desiredX should behave correctly when == to monsterMaxX"() {
+        given:
+        level.getMonsters() >> [monster]
+        monster.getPosition() >> new Position(319,5)
+        monster.getDirection() >> 1
+        monster.getMaxX() >> 320
+        monster.getMinX() >> 0
+        monster.getLastControlCount() >> 0
+
+        when:
+        controller.update(Mock(GameManager), [] as Set, 0)
+
+        then:
+        1 * monster.setPosition(new Position(320, 5))
+        1 * monster.setLastControlCount(0)
+    }
+
+    def "desiredX should behave correctly when == to monsterMinX"() {
+        given:
+            level.getMonsters() >> [monster]
+            monster.getPosition() >> new Position(1,5)
+            monster.getDirection() >> -1
+            monster.getMaxX() >> 6
+            monster.getMinX() >> 0
+            monster.getLastControlCount() >> 0
+
+        when:
+            controller.update(Mock(GameManager), [] as Set, 0)
+
+        then:
+            1 * monster.setPosition(new Position(0, 5))
+            1 * monster.setLastControlCount(0)
+    }
 }
 
