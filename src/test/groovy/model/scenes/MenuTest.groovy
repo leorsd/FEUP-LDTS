@@ -4,14 +4,46 @@ import spock.lang.Specification
 
 class MenuTest extends Specification {
 
-    def "test equals and hashcode"() {
+    def "test hashcode"() {
         given:
             def menu = new Menu()
             def menu2 = new Menu()
         expect:
-            menu == menu2
             menu.hashCode() == menu2.hashCode()
+        when:
+            menu2.selectPreviousEntry()
+        then:
+            menu.hashCode() != menu2.hashCode()
     }
+
+    def "should correctly compare menus for equality"() {
+        given:
+            def menu1 = new Menu(entries1)
+            def menu2 = new Menu(entries2)
+        expect:
+            menu1.equals(menu1)
+            (menu1 == menu2) == expectedResult
+        where:
+            entries1                       | entries2                       | expectedResult
+            ["Start", "Options", "Exit"]   | ["Start", "Options", "Exit"]   | true
+            ["Start", "Options", "Exit"]   | ["Play", "Settings", "Quit"]   | false
+            ["Start", "Options", "Exit"]   | []                             | false
+
+    }
+
+    def "should correctly compare menus for equality using the correct highlight entry"() {
+        given:
+            def menu1 = new Menu(["Entry1", "Entry2", "Entry3"])
+            def menu2 = new Menu(["Entry1", "Entry2", "Entry3"])
+        expect:
+            menu1.equals(menu2)
+            !menu1.equals(10)
+        when:
+            menu2.selectPreviousEntry()
+        then:
+            !menu1.equals(menu2)
+    }
+
 
     def "should correctly highlight the next entry"() {
         given:
