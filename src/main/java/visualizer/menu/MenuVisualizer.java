@@ -29,15 +29,11 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         }
         gui.drawImage(new Position(0,0), menuimage);
 
-        if (getScene().getEntriesSize() != 6) {
-            throw new IOException("Not enough images for the entries of the menu");
-        }
-
         BufferedImage arrow = null;
         try {
             arrow = ImageIO.read(new File("src/main/resources/images/menu/arrow.png"));
         } catch (IOException e) {
-            System.out.println("Failed to load arrow image when trying to draw menu");
+            throw new IOException("Failed to load arrow image when trying to draw menu");
         }
 
         for (int i = 0; i < getScene().getEntriesSize(); i++) {
