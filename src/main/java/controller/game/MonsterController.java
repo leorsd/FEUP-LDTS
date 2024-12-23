@@ -7,7 +7,6 @@ import model.scenes.Level;
 import controller.Controller;
 import gui.GUI;
 
-import java.io.IOException;
 import java.util.Set;
 
 public class MonsterController extends Controller<Level> {

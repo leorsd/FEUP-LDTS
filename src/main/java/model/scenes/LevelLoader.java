@@ -418,7 +418,7 @@ public class LevelLoader {
         if (parts.size() != 6) {
             throw new IOException("ToggleableWall specification needs to be like: id,x,y,sizeX,sizeY,imagePath");
         }
-        Integer id;
+        int id;
         int width;
         int height;
         BufferedImage wallBackground;
@@ -465,7 +465,7 @@ public class LevelLoader {
         if (parts.size() != 6) {
             throw new IOException("Button specification needs to be like: idToggleableWall,x,y,sizeX,sizeY,imagePath");
         }
-        Integer id;
+        int id;
         int xPos;
         int yPos;
         int width;

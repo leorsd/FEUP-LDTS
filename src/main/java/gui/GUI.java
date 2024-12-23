@@ -1,11 +1,8 @@
 package gui;
 
 import model.Position;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Set;
 
 public interface GUI {

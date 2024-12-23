@@ -16,7 +16,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Objects;
 
 
@@ -62,7 +61,7 @@ public class Game {
     }
 
     private static BackgroundSoundPlayer createDefaultBackgroundSoundPlayer() throws IOException {
-        BackgroundSoundPlayer soundPlayer = null;
+        BackgroundSoundPlayer soundPlayer;
         try {
             soundPlayer = new BackgroundSoundPlayer(
                     new SoundLoader().loadSound(AudioSystem.getAudioInputStream(

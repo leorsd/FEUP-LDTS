@@ -29,7 +29,7 @@ dependencies {
 
 pitest {
     junit5PluginVersion = '1.0.0'
-    targetClasses = ['controller.*', 'model.*']
+    targetClasses = ['controller.*', 'model.*', 'gui.*', 'sound.*', 'visualizer.*']
 }
 
 jacoco {
