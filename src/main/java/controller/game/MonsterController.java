@@ -30,7 +30,7 @@ public class MonsterController extends Controller<Level> {
     }
 
     @Override
-    public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) throws IOException {
+    public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
         for (Monster monster : getModel().getMonsters()) {
             int posX = monster.getPosition().getX();
             int posY = monster.getPosition().getY();
