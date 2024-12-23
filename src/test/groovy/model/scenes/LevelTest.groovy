@@ -61,6 +61,7 @@ class LevelTest extends Specification {
             !levelWithBoundaries.isPositionFree(new Position(0, -1))
             !levelWithBoundaries.isPositionFree(new Position(10, 0))
             !levelWithBoundaries.isPositionFree(new Position(0, 10))
+            levelWithBoundaries.isPositionFree(new Position(0,0))
     }
 
     def "should correctly handle position inside boundaries and without obstacles"() {
