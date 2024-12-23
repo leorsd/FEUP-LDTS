@@ -1,5 +1,6 @@
 package visualizer.menu
 
+import model.Position
 import spock.lang.Specification
 import model.scenes.Menu
 import gui.GUI
@@ -13,25 +14,54 @@ class MenuVisualizerTest extends Specification {
             menu.getEntriesSize() >> 6
             menu.getHighlightedEntryIndex() >> 2
             def menuVisualizer = new MenuVisualizer(menu)
+
         when:
             menuVisualizer.drawElements(gui)
+
         then:
             1 * gui.drawImage(_, _)
             1 * gui.drawImage(_, _)
             6 * gui.drawImage(_, _)
     }
 
-    def "test drawElements when not enough entries in menu"() {
+    def "gui.drawImage is called successfully"() {
         given:
             def gui = Mock(GUI)
-            def menu = Mock(Menu)
-            menu.getEntriesSize() >> 5
-            menu.getHighlightedEntryIndex() >> 0
+            gui.getGUIWidth() >> 320
+            gui.getGUIHeight() >> 180
+            def menu = new Menu(["Option0","Option1", "Option2"])
+            menu.selectNextEntry()
             def menuVisualizer = new MenuVisualizer(menu)
+
         when:
             menuVisualizer.drawElements(gui)
+
         then:
-            def e = thrown(IOException)
-            e.message == "Not enough images for the entries of the menu"
+            0 * gui.drawImage(new Position(143,75), _)
+            0 * gui.drawImage(new Position(128, 75), _)
+            1 * gui.drawImage(new Position(139,90), _)
+            1 * gui.drawImage(new Position(143, 104), _)
+            1 * gui.drawImage(new Position(128, 104), _)
+            1 * gui.drawImage(new Position(143, 118), _)
+    }
+
+    def "gui.drawImage is called successfully when the Selected Entry is 0"() {
+        given:
+        def gui = Mock(GUI)
+        gui.getGUIWidth() >> 320
+        gui.getGUIHeight() >> 180
+        def menu = new Menu(["Option0","Option1", "Option2"])
+        def menuVisualizer = new MenuVisualizer(menu)
+
+        when:
+        menuVisualizer.drawElements(gui)
+
+        then:
+        0 * gui.drawImage(new Position(143,75), _)
+        0 * gui.drawImage(new Position(128, 75), _)
+        1 * gui.drawImage(new Position(139,90), _)
+        1 * gui.drawImage(new Position(124,90), _)
+        1 * gui.drawImage(new Position(143, 104), _)
+        1 * gui.drawImage(new Position(143, 118), _)
     }
 }

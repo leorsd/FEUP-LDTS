@@ -11,7 +11,6 @@ import model.elements.staticelements.Key
 import model.elements.staticelements.ToggleableWall
 import model.elements.staticelements.Trap
 import model.scenes.Level
-import model.scenes.LevelLoader
 import model.scenes.Menu
 import spock.lang.Specification
 import gui.GUI

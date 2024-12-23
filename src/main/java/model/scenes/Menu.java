@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Menu implements Scene{
-    private List<String> entries;
+    private final List<String> entries;
     private int highlightedEntryIndex = 0;
 
     public Menu(List<String> entries) {

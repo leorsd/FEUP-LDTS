@@ -36,6 +36,7 @@ public class MenuEntriesLoader {
                 throw new IOException("Error while trying to read line from menu configs file while trying to load menu");
             }
         }
+        if (entries.size() != 6) throw new IOException("Error: Menu should have 6 entries");
         return entries;
     }
 }

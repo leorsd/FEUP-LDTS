@@ -1,7 +1,6 @@
 package visualizer
 
 import gui.GUI
-import model.scenes.Menu
 import spock.lang.Specification
 
 class SceneVisualizerTest extends Specification {

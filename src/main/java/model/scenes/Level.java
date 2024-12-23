@@ -12,17 +12,17 @@ import java.util.Objects;
 
 public class Level implements Scene{
     private Door levelEndingDoor;
-    private List<Wall> walls;
-    private List<ToggleableWall> toggleableWalls;
-    private List<Button> buttons;
-    private List<Monster> monsters;
-    private List<Trap> traps;
-    private List<Key> keys;
-    private Player player1;
-    private Player player2;
-    private int xBoundary;
-    private int yBoundary;
-    private BufferedImage background;
+    private final List<Wall> walls;
+    private final List<ToggleableWall> toggleableWalls;
+    private final List<Button> buttons;
+    private final List<Monster> monsters;
+    private final List<Trap> traps;
+    private final List<Key> keys;
+    private final Player player1;
+    private final Player player2;
+    private final int xBoundary;
+    private final int yBoundary;
+    private final BufferedImage background;
     private Position player1SpawnPosition;
     private Position player2SpawnPosition;
     private String nextLevel;

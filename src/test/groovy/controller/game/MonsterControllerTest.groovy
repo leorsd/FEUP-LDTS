@@ -68,7 +68,7 @@ class MonsterControllerTest extends Specification {
             controller.moveMonster(monster, expected)
 
         then:
-            1 * monster.setPosition(expected);
+            1 * monster.setPosition(expected)
     }
 
 

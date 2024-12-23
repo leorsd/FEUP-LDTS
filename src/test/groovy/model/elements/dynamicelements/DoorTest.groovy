@@ -1,7 +1,5 @@
 package model.elements.dynamicelements
-
 import model.Position
-import model.elements.staticelements.Key
 import spock.lang.Specification
 
 class DoorTest extends Specification{

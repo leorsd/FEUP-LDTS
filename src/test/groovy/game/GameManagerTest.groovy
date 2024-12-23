@@ -66,7 +66,7 @@ class GameManagerTest extends Specification {
         then:
         1 * mockController.update(gameManager, mockGUI.getNextAction(), 100L)
         1 * mockSceneVisualizer.draw(mockGUI)
-        result == true
+        result
     }
 
     def "step should return false if currentScene is null"() {
@@ -78,7 +78,7 @@ class GameManagerTest extends Specification {
         def result = gameManager.step(mockGUI, 100L)
 
         then:
-        result == false
+        !result
     }
 
     def "step should not update controller or draw visualizer if controller is null"() {
@@ -93,7 +93,7 @@ class GameManagerTest extends Specification {
         then:
         0 * mockController.update(_, _, _)
         1 * mockSceneVisualizer.draw(mockGUI)
-        result == true
+        result
     }
 
     def "step should not draw scene visualizer if sceneVisualizer is null"() {
@@ -108,7 +108,7 @@ class GameManagerTest extends Specification {
         then:
         1 * mockController.update(gameManager, mockGUI.getNextAction(), 100L)
         0 * mockSceneVisualizer.draw(mockGUI)
-        result == true
+        result
     }
 
     def "GameManager constructor should throw exception for null scene"() {
