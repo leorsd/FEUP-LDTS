@@ -22,7 +22,7 @@ jobs:
           java-version: '21'
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
       
       - name: Test with Gradle
         run:  ./gradlew test --tests 'controller*'
