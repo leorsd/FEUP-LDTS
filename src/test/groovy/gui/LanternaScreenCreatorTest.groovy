@@ -1,9 +1,16 @@
 package gui
 
 import com.googlecode.lanterna.TerminalSize
+import com.googlecode.lanterna.screen.TerminalScreen
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame
 import spock.lang.Specification
+
+import java.awt.GraphicsConfiguration
 import java.awt.Dimension
+import java.awt.GraphicsDevice
+import java.awt.Toolkit
 import java.awt.event.KeyListener
 
 class LanternaScreenCreatorTest extends Specification {
@@ -56,5 +63,59 @@ class LanternaScreenCreatorTest extends Specification {
         then:
             exception != null
             exception.message == "Error when trying to create Lanterna screen: Unable to create screen"
+    }
+
+    def "test getAwtTerminalFrame with full screen supported"() {
+        given:
+            def screen = Mock(TerminalScreen)
+            def gd = Mock(GraphicsDevice)
+            def awtTerminalFrame = Mock(AWTTerminalFrame)
+            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+            gd.isFullScreenSupported() >> true
+            screen.getTerminal() >> awtTerminalFrame
+        expect:
+            lanternaScreenCreator.getAwtTerminalFrame(screen, gd) == awtTerminalFrame
+    }
+
+    def "test getAwtTerminalFrame with full screen not supported"() {
+        given:
+            def screen = Mock(TerminalScreen)
+            def gd = Mock(GraphicsDevice)
+            def awtTerminalFrame = Mock(AWTTerminalFrame)
+            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+            gd.isFullScreenSupported() >> false
+            screen.getTerminal() >> awtTerminalFrame
+        expect:
+            lanternaScreenCreator.getAwtTerminalFrame(screen, gd) == awtTerminalFrame
+    }
+
+    def "load font from wrong file"() {
+        given:
+            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+            def exception
+        when:
+            try {
+                lanternaScreenCreator.loadFont(7, "levels/credits")
+            } catch (Exception e) {
+                exception = e
+            }
+        then:
+            exception != null
+            exception.message.substring(0, 61) == "Error while creating Lanterna screen when trying to load font"
+    }
+
+    def "load font from nonexistent file"() {
+        given:
+        def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+        def exception
+        when:
+        try {
+            lanternaScreenCreator.loadFont(7, "levels/creditos")
+        } catch (Exception e) {
+            exception = e
+        }
+        then:
+        exception != null
+        exception.message.substring(0, 66) == "Error while creating Lanterna screen when trying to open font file"
     }
 }
