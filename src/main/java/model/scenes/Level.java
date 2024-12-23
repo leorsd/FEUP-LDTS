@@ -141,16 +141,4 @@ public class Level implements Scene{
             this.player2SpawnPosition = playerSpawnPosition;
         }
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Level level)) return false;
-        return xBoundary == level.xBoundary && yBoundary == level.yBoundary && Objects.equals(levelEndingDoor, level.levelEndingDoor) && Objects.equals(walls, level.walls) && Objects.equals(toggleableWalls, level.toggleableWalls) && Objects.equals(buttons, level.buttons) && Objects.equals(monsters, level.monsters) && Objects.equals(traps, level.traps) && Objects.equals(keys, level.keys) && Objects.equals(player1, level.player1) && Objects.equals(player2, level.player2) && Objects.equals(background, level.background) && Objects.equals(player1SpawnPosition, level.player1SpawnPosition) && Objects.equals(player2SpawnPosition, level.player2SpawnPosition) && Objects.equals(nextLevel, level.nextLevel);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(levelEndingDoor, walls, toggleableWalls, buttons, monsters, traps, keys, player1, player2, xBoundary, yBoundary, background, player1SpawnPosition, player2SpawnPosition, nextLevel);
-    }
 }
