@@ -8,8 +8,10 @@ import model.elements.staticelements.Trap;
 import model.elements.staticelements.Wall;
 import model.Position;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Set;
 
 public interface GUI {
@@ -26,6 +28,8 @@ public interface GUI {
     void refresh() throws IOException;
 
     void close() throws IOException;
+
+    void start() throws IOException, URISyntaxException, FontFormatException;
 
     enum ACTION {UP, DOWN, LEFT, RIGHT, W, D, S, A, QUIT, SELECT}
 }
