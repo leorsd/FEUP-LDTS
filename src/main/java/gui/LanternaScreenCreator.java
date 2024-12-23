@@ -31,7 +31,7 @@ public class LanternaScreenCreator implements ScreenCreator {
     @Override
     public Screen createScreen(KeyListener keyListener) throws IOException {
         int fontSize = getBestFontSize(defaultBounds);
-        AWTTerminalFontConfiguration fontConfig = loadFont(fontSize);
+        AWTTerminalFontConfiguration fontConfig = loadFont(fontSize, "fonts/square.ttf");
         terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
         TerminalScreen screen;
         try {
@@ -39,14 +39,13 @@ public class LanternaScreenCreator implements ScreenCreator {
         } catch (IOException e) {
             throw new IOException("Error when trying to create Lanterna screen: " + e.getMessage());
         }
-        AWTTerminalFrame terminal = getAwtTerminalFrame(screen);
+        AWTTerminalFrame terminal = getAwtTerminalFrame(screen, GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());
         terminal.getComponent(0).addKeyListener(keyListener);
         return screen;
     }
 
-    private AWTTerminalFrame getAwtTerminalFrame(TerminalScreen screen) {
+    private AWTTerminalFrame getAwtTerminalFrame(TerminalScreen screen, GraphicsDevice gd) {
         AWTTerminalFrame terminal = (AWTTerminalFrame) screen.getTerminal();
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         if (gd.isFullScreenSupported()) {
             gd.setFullScreenWindow(terminal);
         }else {
@@ -57,13 +56,13 @@ public class LanternaScreenCreator implements ScreenCreator {
         return terminal;
     }
 
-    private AWTTerminalFontConfiguration loadFont(int fontSize) throws IOException {
-        URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
+    private AWTTerminalFontConfiguration loadFont(int fontSize, String path) throws IOException {
+        URL resource = getClass().getClassLoader().getResource(path);
         File fontFile;
         try {
             fontFile = new File(Objects.requireNonNull(resource).toURI());
-        } catch (URISyntaxException e) {
-            throw new IOException("Syntax error while creating Lanterna screen when trying to open font file: " + e.getMessage());
+        } catch (NullPointerException | URISyntaxException e) {
+            throw new IOException("Error while creating Lanterna screen when trying to open font file: " + e.getMessage());
         }
         Font font;
         try {
