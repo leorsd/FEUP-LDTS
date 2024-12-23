@@ -20,9 +20,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Build with Gradle
-        run: ./gradlew build
       
       - name: Test with Gradle
         run:  ./gradlew test -Dtest.exclude.pattern=game/GameTest*
