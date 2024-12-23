@@ -9,6 +9,7 @@ import model.Position
 import spock.lang.Specification
 import javax.swing.JPanel
 import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import java.awt.image.BufferedImage
 
 class LanternaGUITest extends Specification {
@@ -20,7 +21,7 @@ class LanternaGUITest extends Specification {
     def setup() {
         screen = Mock(Screen)
         screenCreator = Mock(ScreenCreator)
-        screenCreator.createScreen(_) >> screen
+        screenCreator.createScreen(_ as KeyListener) >> screen
         gui = new LanternaGUI(screenCreator)
     }
 
@@ -67,7 +68,7 @@ class LanternaGUITest extends Specification {
         screen.getTerminalSize() >> terminalSize
         terminalSize.getColumns() >> 80
         terminalSize.getRows() >> 24
-        screenCreator.createScreen(_) >> screen
+        screenCreator.createScreen(_ as KeyListener) >> screen
 
         when:
         def gui = new LanternaGUI(screenCreator)
@@ -84,7 +85,7 @@ class LanternaGUITest extends Specification {
         def screen = Mock(Screen)
         def graphics = Mock(TextGraphics)
         screen.newTextGraphics() >> graphics
-        screenCreator.createScreen(_) >> screen
+        screenCreator.createScreen(_ as KeyListener) >> screen
 
         and: "A LanternaGUI instance"
         def gui = new LanternaGUI(screenCreator)

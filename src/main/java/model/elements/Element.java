@@ -18,8 +18,7 @@ public abstract class Element {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Element)) return false;
-        Element element = (Element) o;
+        if (!(o instanceof Element element)) return false;
         return Objects.equals(position, element.position) && sizeX==element.sizeX && sizeY==element.sizeY;
     }
 

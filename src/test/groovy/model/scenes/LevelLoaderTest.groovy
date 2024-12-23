@@ -2,7 +2,7 @@ package model.scenes
 
 import spock.lang.Specification
 import java.awt.image.BufferedImage
-import java.nio.file.Files;
+import java.nio.file.Files
 
 class LevelLoaderTest extends Specification {
 

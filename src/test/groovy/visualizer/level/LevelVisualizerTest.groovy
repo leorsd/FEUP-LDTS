@@ -12,7 +12,6 @@ import model.elements.staticelements.Wall
 import spock.lang.Specification
 import gui.GUI
 import model.scenes.Level
-import java.awt.image.BufferedImage
 
 class LevelVisualizerTest extends Specification{
     def "test drawElements correctly draws all elements in the level"() {

@@ -2,7 +2,6 @@ package model.elements.dynamicelements
 
 import spock.lang.Specification
 import model.Position
-import model.elements.dynamicelements.Player
 
 class PlayerTest extends Specification {
 

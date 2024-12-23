@@ -50,7 +50,7 @@ class GameTest extends Specification {
     def "Game start and stop"() {
         given:
             def game = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
-            mockGameManager.step(_, _) >>> [false]
+            mockGameManager.step(_ as GUI, _ as long) >>> [false]
         when:
             game.start()
         then:
@@ -63,7 +63,7 @@ class GameTest extends Specification {
 
     def "Game step frame timing"() {
         given:
-            mockGameManager.step(_, _) >> false
+            mockGameManager.step(_ as GUI, _ as long) >> false
             def game = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
             def startTime = System.currentTimeMillis()
         when:

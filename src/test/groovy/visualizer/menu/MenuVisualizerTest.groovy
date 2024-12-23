@@ -5,9 +5,6 @@ import spock.lang.Specification
 import model.scenes.Menu
 import gui.GUI
 
-import javax.imageio.ImageIO
-import java.awt.image.BufferedImage
-
 class MenuVisualizerTest extends Specification {
 
     def "test drawElements when menu and images are loaded successfully"() {
