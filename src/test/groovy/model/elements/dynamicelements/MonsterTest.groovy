@@ -1,19 +1,58 @@
 package model.elements.dynamicelements
 
-import model.elements.staticelements.Key
 import spock.lang.Specification
 import model.Position
-import model.elements.dynamicelements.Monster
 
 class MonsterTest extends Specification {
 
-    def "test hashcode and equals"() {
+    def "test hashcode"() {
         given:
-        def monster1 = new Monster(new Position(10, 10), 50, 60, 0, 100)
-        def monster2 = new Monster(new Position(10, 10), 50, 60, 0, 100)
+            def monster1 = new Monster(new Position(10, 10), 15, 15, 5, 20)
+            def monster2 = new Monster(new Position(10, 10), 15, 15, 5, 20)
+            def monster3 = new Monster(new Position(10, 10), 15, 15, 10, 25)
         expect:
-        monster1 == monster2
-        monster1.hashCode() == monster2.hashCode()
+            monster1.hashCode() == monster2.hashCode()
+            monster2.hashCode() != monster3.hashCode()
+    }
+
+    def "should correctly compare monsters for equality"() {
+        given:
+            def monster1 = new Monster(new Position(1, 1), 10, 10, 5, 10)
+            def monster2 = new Monster(new Position(1, 1), 10, 10, 5, 10)
+            def monster3 = new Monster(new Position(1, 1), 10, 10, 10, 10)
+            def monster4 = new Monster(new Position(1, 1), 10, 10, 5, 15)
+            def monster5 = new Monster(new Position(1, 1), 10, 10, 5, 10)
+            def monster6 = new Monster(new Position(1, 1), 10, 10, 5, 10)
+            def monster7 = new Monster(new Position(10, 10), 10, 10, 5, 10)
+
+            monster1.setOrientation(Monster.ORIENTATION.LEFT)
+            monster2.setOrientation(Monster.ORIENTATION.LEFT)
+            monster3.setOrientation(Monster.ORIENTATION.RIGHT)
+            monster4.setOrientation(Monster.ORIENTATION.RIGHT)
+            monster5.setDirection(2)
+            monster6.setLastControlCount(1)
+        expect:
+            monster1.equals(monster1)
+            monster1 == monster2
+            monster1 != monster3
+            monster1 != monster4
+            monster1 != monster5
+            monster1 != monster6
+            monster1 != monster7
+            !monster1.equals(20)
+        when:
+            monster2.setOrientation(Monster.ORIENTATION.RIGHT)
+        then:
+            monster1 != monster2
+        when:
+            monster2.setDirection(2)
+        then:
+            monster1 != monster2
+        when:
+            monster2.setMinX(6)
+            monster2.setMaxX(12)
+        then:
+            monster1 != monster2
     }
 
     def "should correctly initialize monster with constructor"() {

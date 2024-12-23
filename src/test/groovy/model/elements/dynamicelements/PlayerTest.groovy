@@ -5,13 +5,51 @@ import model.Position
 import model.elements.dynamicelements.Player
 
 class PlayerTest extends Specification {
-    def "test hashcode and equals"() {
+
+    def "test hashcode"() {
         given:
-        def player1 = new Player("Player1", 50, 60, new Position(10, 15), 10, 15)
-        def player2 = new Player("Player1", 50, 60, new Position(10, 15), 10, 15)
+            def player1 = new Player("John", 10, 10, new Position(5, 5), 10, 15)
+            def player2 = new Player("John", 10, 10, new Position(5, 5), 10, 15)
+            def player3 = new Player("Doe", 10, 10, new Position(5, 5), 10, 15)
         expect:
-        player1 == player2
-        player1.hashCode() == player2.hashCode()
+            player1.hashCode() == player2.hashCode()
+            player2.hashCode() != player3.hashCode()
+    }
+
+    def "should correctly compare players for equality"() {
+        given:
+            def player1 = new Player("John", 10, 10, new Position(1, 1), 10, 15)
+            def player2 = new Player("John", 10, 10, new Position(1, 1), 10, 15)
+            def player3 = new Player("Jane", 10, 10, new Position(1, 1), 10, 15)
+            def player4 = new Player("John", 10, 10, new Position(2, 1), 10, 15)
+            def player5 = new Player("John", 10, 10, new Position(1, 1), 12, 15)
+            def player6 = new Player("John", 10, 10, new Position(1, 1), 10, 20)
+
+            player1.setOrientation(Player.ORIENTATION.UP)
+            player2.setOrientation(Player.ORIENTATION.UP)
+            player3.setOrientation(Player.ORIENTATION.DOWN)
+            player4.setOrientation(Player.ORIENTATION.UP)
+            player5.setOrientation(Player.ORIENTATION.UP)
+            player6.setOrientation(Player.ORIENTATION.UP)
+
+        expect:
+            player1.equals(player1)
+            player1 == player2
+            !player1.equals(20)
+            player1 != player4
+            player1 != player3
+            player1 != player5
+            player1 != player6
+
+        when:
+            player2.setOrientation(Player.ORIENTATION.DOWN)
+        then:
+            player1 != player2
+        when:
+            player2.setOrientation(Player.ORIENTATION.STANDING)
+            player2.setLastActionCount(10)
+        then:
+            player1 != player2
     }
 
     def "should correctly initialize player with constructor"() {
