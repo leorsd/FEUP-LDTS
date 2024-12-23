@@ -61,11 +61,7 @@ public class LevelController extends Controller<Level> {
             }
         }
         for (ToggleableWall wall : getModel().getToggleableWalls()) {
-            if (activeWallsTemp.get(wall)) {
-                wall.setActive(true);
-            } else {
-                wall.setActive(false);
-            }
+            wall.setActive(activeWallsTemp.get(wall));
         }
     }
 

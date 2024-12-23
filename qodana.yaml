@@ -27,3 +27,4 @@ include:
   - name: DuplicatedCode
   - name: UNUSED_IMPORT
   - name: RedundantCast
+  - name: TrivialIf

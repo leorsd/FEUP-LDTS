@@ -21,7 +21,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         int guiWidth= gui.getGUIWidth();
         int guiHeight= gui.getGUIHeight();
         File menuFile = new File("src/main/resources/images/menu/menu.png");
-        BufferedImage menuimage = null;
+        BufferedImage menuimage;
         try {
             menuimage = ImageIO.read(menuFile);
         } catch (IOException e) {
