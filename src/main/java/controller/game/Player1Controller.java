@@ -170,6 +170,18 @@ public class Player1Controller extends Controller<Level> {
         isJumping = jumping;
     }
 
+    public boolean getIsJumping() {
+        return isJumping;
+    }
+
+    public int getCurrentJumpHeight() {
+        return currentJumpHeight;
+    }
+
+    public void setCurrentJumpHeight(int currentJumpHeight) {
+        this.currentJumpHeight = currentJumpHeight;
+    }
+
     @Override
     public void update(GameManager gameManager, Set<GUI.ACTION> actions, long updateTime) {
         if (actions.contains(GUI.ACTION.UP)) jump();
