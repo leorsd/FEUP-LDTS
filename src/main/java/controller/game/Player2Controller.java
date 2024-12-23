@@ -125,7 +125,7 @@ public class Player2Controller extends Controller<Level> {
             if (getModel().getPlayer2().getOrientation() == Player.ORIENTATION.DOWNRIGHT) {
                 getModel().getPlayer2().setLastActionCount(getModel().getPlayer2().getLastActionCount() + 1);
             } else {
-                getModel().getPlayer2().setOrientation(Player.ORIENTATION.RIGHT);
+                getModel().getPlayer2().setOrientation(Player.ORIENTATION.DOWNRIGHT);
                 getModel().getPlayer2().setLastActionCount(0);
             }
         } else if (actions.contains(GUI.ACTION.A) && actions.contains(GUI.ACTION.S)) {

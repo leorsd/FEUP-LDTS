@@ -134,4 +134,515 @@ class Player2ControllerTest extends Specification {
         cleanup:
         defaultCleanUp()
     }
+
+
+    def "can jump"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        expect:
+        controller.canJump()
+    }
+
+    def "jump"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 1
+        player.getSizeY() >> 1
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> false
+        when:
+        controller.jump()
+        then:
+        0 * level.equals(_)
+    }
+
+    def "test orientation while jumping; previous: UPRIGHT, next: UPRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.UPRIGHT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.W, GUI.ACTION.D] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation while jumping; previous: STANDING, next: UPRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getSpeed() >> 1
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.W, GUI.ACTION.D] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.UPRIGHT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation while jumping; previous: UPLEFT, next: UPLEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.UPLEFT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.A] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation while jumping; previous: STANDING, next: UPLEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.A] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.UPLEFT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation while jumping; previous: UP, next: UP"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.UP
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.W] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation while jumping; previous: STANDING, next: UP"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.W] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.UP)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: UPRIGHT, next: UPRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.UPRIGHT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.W,  GUI.ACTION.D] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: STANDING, next: UPRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.W, GUI.ACTION.D] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.UPRIGHT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: UPLEFT, next: UPLEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.UPLEFT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.W,  GUI.ACTION.A] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation previous: STANDING, next: UPRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.W, GUI.ACTION.A] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.UPLEFT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: UP, next: UP"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.UP
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.W] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation previous: STANDING, next: UP"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.W] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.UP)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: DOWNRIGHT, next: DOWNRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.DOWNRIGHT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.S,  GUI.ACTION.D] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: STANDING, next: DOWNRIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.S, GUI.ACTION.D] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.DOWNRIGHT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: DOWNLEFT, next: DOWNLEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.DOWNLEFT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.S,  GUI.ACTION.A] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: STANDING, next: DOWNLEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSpeed() >> 1
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.S, GUI.ACTION.A] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.DOWNLEFT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: DOWN, next: DOWN"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.DOWN
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.S] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: STANDING, next: DOWN"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.S] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.DOWN)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: RIGHT, next: RIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.RIGHT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.D] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: STANDING, next: RIGHT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.D] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.RIGHT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: LEFT, next: LEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.LEFT
+        player.getLastActionCount() >> 2
+        def actions = [GUI.ACTION.A] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: STANDING, next: LEFT"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [GUI.ACTION.A] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.LEFT)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test orientation; previous: STANDING, next: STANDING"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        player.getLastActionCount() >> 2
+        def actions = [] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setLastActionCount(3)
+    }
+
+    def "test orientation; previous: LEFT, next: STANDING"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> true
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.LEFT
+        def actions = [] as Set
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        1 * player.setOrientation(Player.ORIENTATION.STANDING)
+        1 * player.setLastActionCount(0)
+    }
+
+    def "test while jumping cant jump anymore"() {
+        given:
+        defaultSetup()
+        player.getSizeX() >> 10
+        player.getSizeX() >> 320
+        player.getSizeY() >> 180
+        player.getSpeed() >> 1
+        player.getPosition() >> new Position(0,0)
+        player.getPosition().getX() >> 0
+        level.isPositionFree(_) >> false
+        player.getMaxJumpHeight() >> 10
+        player.getOrientation() >> Player.ORIENTATION.STANDING
+        def actions = [] as Set
+        when:
+        controller.setJumping(true)
+        controller.update(gameManager, actions, 1000)
+        then:
+        0 * player.setOrientation(Player.ORIENTATION.UPRIGHT)
+    }
 }
