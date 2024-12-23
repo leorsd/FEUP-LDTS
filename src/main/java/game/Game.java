@@ -47,7 +47,7 @@ public class Game {
         return gameInstance;
     }
 
-    private static LanternaGUI createDefaultGUI() {
+    private static LanternaGUI createDefaultGUI() { // This method cannot be used with pitest
         ScreenCreator screenCreator = new LanternaScreenCreator(
                 new DefaultTerminalFactory(),
                 new TerminalSize(320, 180),

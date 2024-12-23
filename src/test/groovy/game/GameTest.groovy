@@ -80,4 +80,27 @@ class GameTest extends Specification {
             game.getBackgroundSoundPlayer() == newBackgroundSoundPlayer
             game.getGameManager() == newGameManager
     }
+
+    def "Game singleton creation with default Game Manager and BackgroundSoundPlayer"() {
+        when:
+        def game = Game.getInstance(Mock(GUI), null,null)
+        then:
+        game != null
+        game.getGui() != null
+        game.getGameManager() != null
+        game.getBackgroundSoundPlayer() != null
+    }
+
+    def "test main"() {
+        given:
+            def gameManager = Mock(GameManager)
+            def gui = Mock(GUI)
+            def backgroundSoundPlayer= Mock(BackgroundSoundPlayer)
+            def game = Game.getInstance(gui,gameManager,backgroundSoundPlayer)
+            gameManager.step(_ as GUI, _ as long) >> false
+        when:
+            game.main()
+        then:
+            1 * gameManager.step(_ as GUI, _ as Long)
+    }
 }
