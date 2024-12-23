@@ -1,6 +1,5 @@
 package model.scenes;
 
-import gui.GUI;
 import model.elements.dynamicelements.Door;
 import model.elements.staticelements.ToggleableWall;
 import model.elements.dynamicelements.Monster;

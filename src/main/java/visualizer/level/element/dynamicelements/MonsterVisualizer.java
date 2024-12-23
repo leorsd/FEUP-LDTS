@@ -2,7 +2,6 @@ package visualizer.level.element.dynamicelements;
 
 import model.elements.dynamicelements.Monster;
 import gui.GUI;
-import model.elements.dynamicelements.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

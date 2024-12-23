@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static javax.imageio.ImageIO.read;
 
 public class Player2Visualizer implements DynamicElementVisualizer<Player> {
     private final Map<Player.ORIENTATION, List<String>> spriteMap;

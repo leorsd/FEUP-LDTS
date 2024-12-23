@@ -1,6 +1,5 @@
 package model.scenes;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Menu implements Scene{

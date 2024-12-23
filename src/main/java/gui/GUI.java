@@ -1,11 +1,5 @@
 package gui;
 
-import model.elements.staticelements.Button;
-import model.elements.dynamicelements.Monster;
-import model.elements.dynamicelements.Player;
-import model.elements.staticelements.Key;
-import model.elements.staticelements.Trap;
-import model.elements.staticelements.Wall;
 import model.Position;
 
 import java.awt.*;
