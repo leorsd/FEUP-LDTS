@@ -23,7 +23,7 @@ class SoundLoaderTest extends Specification{
             Clip mockClip = Mock()
             def soundLoader = new SoundLoader()
         and:
-            mockClip.open(mockAudioInput) >> { throw new Exception("Clip failed to open") }
+            mockClip.open(mockAudioInput) >> { throw new IOException("Clip failed to open") }
         when:
             soundLoader.loadSound(mockAudioInput, mockClip)
         then:

@@ -27,7 +27,12 @@ public class MonsterVisualizer implements DynamicElementVisualizer<Monster> {
     @Override
     public void draw(Monster monster, GUI gui) throws IOException {
         String sprite = getSprite(monster);
-        BufferedImage loadedSprite = ImageIO.read(new File(sprite));
+        BufferedImage loadedSprite;
+        try {
+            loadedSprite = ImageIO.read(new File(sprite));
+        } catch (IOException e) {
+            throw new IOException("Could not load sprite for Monster from path: " + sprite);
+        }
         if (loadedSprite != null)
             gui.drawImage(monster.getPosition(), loadedSprite);
     }

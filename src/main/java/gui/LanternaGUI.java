@@ -5,12 +5,10 @@ import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +20,7 @@ public class LanternaGUI implements GUI {
     private final KeyAdapter keyAdapter;
     private final HashSet<ACTION> inputs = new HashSet<>();
 
-    public LanternaGUI(ScreenCreator screenCreator) throws IOException, URISyntaxException, FontFormatException {
+    public LanternaGUI(ScreenCreator screenCreator) {
         this.screenCreator = screenCreator;
         this.keyAdapter = createKeyAdapter();
     }
@@ -62,14 +60,22 @@ public class LanternaGUI implements GUI {
 
     @Override
     public void refresh() throws IOException {
-        screen.refresh();
+        try {
+            screen.refresh();
+        } catch (IOException e) {
+            throw new IOException("Error while refreshing Lanterna screen in LanternaGUI: " + e.getMessage() + " cause: " + e.getCause());
+        }
     }
 
     @Override
-    public void start() throws IOException, URISyntaxException, FontFormatException {
+    public void start() throws IOException {
         screen = screenCreator.createScreen(keyAdapter);
         screen.setCursorPosition(null);
-        screen.startScreen();
+        try {
+            screen.startScreen();
+        } catch (IOException e) {
+            throw new IOException("Error while starting Lanterna screen in LanternaGUI: " + e.getMessage() + " cause: " + e.getCause());
+        }
         screen.doResizeIfNecessary();
     }
 

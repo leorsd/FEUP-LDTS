@@ -10,6 +10,7 @@ import gui.GUI;
 import visualizer.level.element.staticelements.*;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
 public class LevelVisualizer extends SceneVisualizer<Level> {
@@ -19,7 +20,7 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
     }
 
     @Override
-    public void drawElements(GUI gui) {
+    public void drawElements(GUI gui) throws IOException {
         drawBackGround(gui, getScene().getBackground());
         drawElements(gui, getScene().getWalls(), new WallVisualizer());
         drawElements(gui, getScene().getToggleableWalls(), new ToggleableWallVisualizer());
@@ -32,17 +33,13 @@ public class LevelVisualizer extends SceneVisualizer<Level> {
         drawElements(gui, getScene().getTraps(), new TrapVisualizer());
     }
 
-    private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementVisualizer<T> viewer) {
+    private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementVisualizer<T> viewer) throws IOException {
         for (T element : elements)
             drawElement(gui, element, viewer);
     }
 
-    private <T extends Element> void drawElement(GUI gui, T element, ElementVisualizer<T> viewer) {
-        try {
-            viewer.draw(element, gui);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    private <T extends Element> void drawElement(GUI gui, T element, ElementVisualizer<T> viewer) throws IOException {
+        viewer.draw(element, gui);
     }
 
     private void drawBackGround(GUI gui, BufferedImage image) {

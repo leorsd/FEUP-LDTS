@@ -55,6 +55,6 @@ class LanternaScreenCreatorTest extends Specification {
             }
         then:
             exception != null
-            exception.message == "Unable to create screen"
+            exception.message == "Error when trying to create Lanterna screen: Unable to create screen"
     }
 }

@@ -47,8 +47,7 @@ Both,210,60,35,2,src/main/resources/images/backgrounds/trapBothBackground.png
 1,265,72,5,46,src/main/resources/images/buttons/toggleableWall3.png
 
 1,230,116,8,2,src/main/resources/images/buttons/button3.png
-1,190,161,8,2,src/main/resources/images/buttons/button3.png
-        """
+1,190,161,8,2,src/main/resources/images/buttons/button3.png"""
 
         def tempFile = Files.createTempFile("testLevel", ".txt").toFile()
         tempFile.text = levelData

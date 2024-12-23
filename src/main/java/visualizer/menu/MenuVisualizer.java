@@ -25,7 +25,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         try {
             menuimage = ImageIO.read(menuFile);
         } catch (IOException e) {
-            System.out.println("Menu failed to load");
+            throw new IOException("Failed to load menu image when trying to draw menu");
         }
         gui.drawImage(new Position(0,0), menuimage);
 
@@ -37,20 +37,21 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         try {
             arrow = ImageIO.read(new File("src/main/resources/images/menu/arrow.png"));
         } catch (IOException e) {
-            System.out.println("Failed arrow");
+            System.out.println("Failed to load arrow image when trying to draw menu");
         }
 
         for (int i = 0; i < getScene().getEntriesSize(); i++) {
+            BufferedImage image;
             try {
-                BufferedImage image = ImageIO.read(new File("src/main/resources/images/menu/option" + i + ".png"));
-                if (i == getScene().getHighlightedEntryIndex()) {
-                    gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.50+0.08*i))), image);
-                    gui.drawImage(new Position((guiWidth-image.getWidth())/2-15, (int)(guiHeight*(0.50+0.08*i))), arrow);
-                }else{
-                    gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.50+0.08*i))),image);
-                }
+                image = ImageIO.read(new File("src/main/resources/images/menu/option" + i + ".png"));
             } catch (IOException e) {
-                System.out.println("Failed option");
+                throw new IOException("Failed to load image for option: " + i + " when trying to draw menu");
+            }
+            if (i == getScene().getHighlightedEntryIndex()) {
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.50+0.08*i))), image);
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2-15, (int)(guiHeight*(0.50+0.08*i))), arrow);
+            }else{
+                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.50+0.08*i))),image);
             }
         }
     }

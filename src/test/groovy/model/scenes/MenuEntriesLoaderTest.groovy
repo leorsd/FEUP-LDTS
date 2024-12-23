@@ -22,15 +22,21 @@ class MenuEntriesLoaderTest extends Specification  {
             Files.delete(tempFile)
     }
 
-    def "should return empty list when IOException is thrown"() {
+    def "should catch exception when wrong file path is used"() {
         given:
             GroovyMock(Files, global: true)
             Files.newBufferedReader(_ as Path) >> { throw new IOException("Mocked IOException") }
 
         when:
-            def result = MenuEntriesLoader.readFile("mocked_menu.txt")
+            def exception = null
+            try {
+                MenuEntriesLoader.readFile("wrong_path_for_menu.txt")
+            } catch (Exception e) {
+                exception = e.message
+            }
 
         then:
-            result.isEmpty()
+            exception != null
+            exception == "Error while trying to open menu configs file while trying to load menu"
     }
 }

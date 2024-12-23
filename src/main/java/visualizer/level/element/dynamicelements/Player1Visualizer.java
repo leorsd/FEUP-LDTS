@@ -36,7 +36,12 @@ public class Player1Visualizer implements DynamicElementVisualizer<Player> {
     @Override
     public void draw(Player player, GUI gui) throws IOException {
         String sprite = getSprite(player);
-        BufferedImage loadedSprite = ImageIO.read(new File(sprite));
+        BufferedImage loadedSprite;
+        try {
+            loadedSprite = ImageIO.read(new File(sprite));
+        } catch (IOException e) {
+            throw new IOException("Could not load sprite for Player 1 from path: " + sprite);
+        }
         if (loadedSprite != null)
             gui.drawImage(player.getPosition(), loadedSprite);
     }

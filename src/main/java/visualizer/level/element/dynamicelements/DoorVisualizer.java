@@ -21,7 +21,12 @@ public class DoorVisualizer implements DynamicElementVisualizer<Door> {
     @Override
     public void draw(Door monster, GUI gui) throws IOException {
         String sprite = getSprite(monster);
-        BufferedImage loadedSprite = ImageIO.read(new File(sprite));
+        BufferedImage loadedSprite;
+        try {
+            loadedSprite = ImageIO.read(new File(sprite));
+        } catch (IOException e) {
+            throw new IOException("Could not load sprite for Door from path: " + sprite);
+        }
         if (loadedSprite != null)
             gui.drawImage(monster.getPosition(), loadedSprite);
     }

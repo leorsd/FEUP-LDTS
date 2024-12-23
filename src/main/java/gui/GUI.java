@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 import java.util.Set;
 
 public interface GUI {
-    Set<ACTION> getNextAction() throws IOException;
+    Set<ACTION> getNextAction();
 
     void drawImage(Position position, BufferedImage image);
 
@@ -23,7 +23,7 @@ public interface GUI {
 
     void close() throws IOException;
 
-    void start() throws IOException, URISyntaxException, FontFormatException;
+    void start() throws IOException;
 
     enum ACTION {UP, DOWN, LEFT, RIGHT, W, D, S, A, QUIT, SELECT}
 }

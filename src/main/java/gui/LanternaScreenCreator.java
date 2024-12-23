@@ -29,11 +29,16 @@ public class LanternaScreenCreator implements ScreenCreator {
     }
 
     @Override
-    public Screen createScreen(KeyListener keyListener) throws IOException, URISyntaxException, FontFormatException {
+    public Screen createScreen(KeyListener keyListener) throws IOException {
         int fontSize = getBestFontSize(defaultBounds);
         AWTTerminalFontConfiguration fontConfig = loadFont(fontSize);
         terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
-        TerminalScreen screen = terminalFactory.createScreen();
+        TerminalScreen screen;
+        try {
+            screen = terminalFactory.createScreen();
+        } catch (IOException e) {
+            throw new IOException("Error when trying to create Lanterna screen: " + e.getMessage());
+        }
         AWTTerminalFrame terminal = getAwtTerminalFrame(screen);
         terminal.getComponent(0).addKeyListener(keyListener);
         return screen;
@@ -52,10 +57,20 @@ public class LanternaScreenCreator implements ScreenCreator {
         return terminal;
     }
 
-    private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
+    private AWTTerminalFontConfiguration loadFont(int fontSize) throws IOException {
         URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
-        File fontFile = new File(Objects.requireNonNull(resource).toURI());
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);
+        File fontFile;
+        try {
+            fontFile = new File(Objects.requireNonNull(resource).toURI());
+        } catch (URISyntaxException e) {
+            throw new IOException("Syntax error while creating Lanterna screen when trying to open font file: " + e.getMessage());
+        }
+        Font font;
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);
+        } catch (Exception e) {
+            throw new IOException("Error while creating Lanterna screen when trying to load font: " + e.getMessage() + " cause : " +  e.getCause());
+        }
         return AWTTerminalFontConfiguration.newInstance(font);
     }
 
