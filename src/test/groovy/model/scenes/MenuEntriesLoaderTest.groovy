@@ -8,15 +8,21 @@ import java.nio.file.Path
 class MenuEntriesLoaderTest extends Specification  {
     def menuEntriesLoader = Mock(MenuEntriesLoader)
 
-    def "should handle empty file"() {
+    def "should not handle files under 6 entries"() {
         given:
             def tempFile = Files.createTempFile("menu", ".txt")
 
         when:
-            def entries = menuEntriesLoader.readFile(tempFile.toString())
+            def exception = null
+            try {
+                def entries = menuEntriesLoader.readFile(tempFile.toString())
+            } catch (Exception e) {
+                exception = e.message
+            }
 
         then:
-            entries.isEmpty()
+        exception != null
+        exception == "Error: Menu should have 6 entries"
 
         cleanup:
             Files.delete(tempFile)
