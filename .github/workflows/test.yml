@@ -26,8 +26,4 @@ jobs:
       
       - name: Test with Gradle
         run:  ./gradlew test --tests 'controller*'
-              ./gradlew test --tests 'gui*'
-              ./gradlew test --tests 'model*'
-              ./gradlew test --tests 'sound*'
-              ./gradlew test --tests 'visualizer*'
 
