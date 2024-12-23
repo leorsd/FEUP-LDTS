@@ -7,6 +7,8 @@ import model.Position
 import model.elements.staticelements.*
 import spock.lang.Specification
 
+import java.awt.image.BufferedImage
+
 class LevelTest extends Specification {
 
     def player1
@@ -59,6 +61,7 @@ class LevelTest extends Specification {
             !levelWithBoundaries.isPositionFree(new Position(0, -1))
             !levelWithBoundaries.isPositionFree(new Position(10, 0))
             !levelWithBoundaries.isPositionFree(new Position(0, 10))
+            levelWithBoundaries.isPositionFree(new Position(0,0))
     }
 
     def "should correctly handle position inside boundaries and without obstacles"() {
@@ -135,10 +138,11 @@ class LevelTest extends Specification {
 
     def "test getBackground and getLevelEndingDoor"() {
         given:
+            def levelBackground = Mock(BufferedImage)
             def levelEndingDoor = new Door(null, 1, 1)
-            def level = new Level([], [], [], [], [], [], player1 as Player, player2 as Player, 10, 10, null, levelEndingDoor, "nextLevel")
+            def level = new Level([], [], [], [], [], [], player1 as Player, player2 as Player, 10, 10, levelBackground, levelEndingDoor, "nextLevel")
         expect:
-            level.getBackground() == null
+            level.getBackground() == levelBackground
             level.getLevelEndingDoor() == levelEndingDoor
     }
 
