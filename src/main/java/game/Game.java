@@ -2,6 +2,7 @@ package game;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import gui.GUI;
 import gui.LanternaGUI;
 import gui.LanternaScreenCreator;
 import gui.ScreenCreator;
@@ -21,34 +22,59 @@ import java.util.Objects;
 
 public class Game {
     private static Game gameInstance;
-    private final LanternaGUI gui;
+    private GUI gui;
     private GameManager gameManager;
     private BackgroundSoundPlayer backgroundSoundPlayer;
 
-    private Game() throws Exception {
+    private Game(GUI gui, GameManager gameManager, BackgroundSoundPlayer backgroundSoundPlayer) {
+        this.gui = gui;
+        this.gameManager = gameManager;
+        this.backgroundSoundPlayer = backgroundSoundPlayer;
+    }
+
+    public static synchronized Game getInstance(GUI gui, GameManager gameManager, BackgroundSoundPlayer backgroundSoundPlayer) throws Exception {
+        if (gameInstance == null) {
+            if (gui == null) {
+                gui = createDefaultGUI();
+            }
+            if (gameManager == null) {
+                gameManager = createDefaultGameManager();
+            }
+            if (backgroundSoundPlayer == null) {
+                backgroundSoundPlayer = createDefaultBackgroundSoundPlayer();
+            }
+            gameInstance = new Game(gui, gameManager, backgroundSoundPlayer);
+        }
+        return gameInstance;
+    }
+
+    private static LanternaGUI createDefaultGUI() throws Exception {
         ScreenCreator screenCreator = new LanternaScreenCreator(
                 new DefaultTerminalFactory(),
                 new TerminalSize(320, 180),
                 Toolkit.getDefaultToolkit().getScreenSize()
         );
-        this.gui = new LanternaGUI(screenCreator);
-        this.gameManager = new GameManager(new Menu());
-        this.backgroundSoundPlayer = new BackgroundSoundPlayer(new SoundLoader().loadSound(AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sounds/powerup!.wav"))), AudioSystem.getClip()));
-
-        FloatControl gainControl = (FloatControl) backgroundSoundPlayer.getSound().getControl(FloatControl.Type.MASTER_GAIN);
-        gainControl.setValue(-15f);
+        return new LanternaGUI(screenCreator);
     }
 
-    public static synchronized Game getInstance() throws Exception {
-        if (gameInstance == null) {
-            gameInstance = new Game();
-        }
-        return gameInstance;
+    private static GameManager createDefaultGameManager() {
+        return new GameManager(new Menu());
+    }
+
+    private static BackgroundSoundPlayer createDefaultBackgroundSoundPlayer() throws Exception {
+        BackgroundSoundPlayer soundPlayer = new BackgroundSoundPlayer(
+                new SoundLoader().loadSound(AudioSystem.getAudioInputStream(
+                        Objects.requireNonNull(Game.class.getClassLoader().getResource("sounds/powerup!.wav"))
+                ), AudioSystem.getClip())
+        );
+        FloatControl gainControl = (FloatControl) soundPlayer.getSound().getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-15f);
+        return soundPlayer;
     }
 
     public static void main(String[] args) {
         try {
-            Game game = Game.getInstance(); // Use the singleton instance
+            Game game = Game.getInstance(null,null,null); // Use the singleton instance
             game.start();
         } catch (IOException | FontFormatException | URISyntaxException | UnsupportedAudioFileException | LineUnavailableException e) {
             System.out.println(e.getMessage());
@@ -61,11 +87,32 @@ public class Game {
         this.gameManager = gameManager;
     }
 
-    private void start() throws IOException {
+    public void setGui(GUI gui) {
+        this.gui=gui;
+    }
+
+    public void setBackgroundSoundPlayer(BackgroundSoundPlayer backgroundSoundPlayer) {
+        this.backgroundSoundPlayer = backgroundSoundPlayer;
+    }
+
+    public GUI getGui() {
+        return gui;
+    }
+
+    public BackgroundSoundPlayer getBackgroundSoundPlayer() {
+        return backgroundSoundPlayer;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+    public void start() throws IOException, URISyntaxException, FontFormatException {
         int FPS = 20;
         int frameTime = 1000 / FPS;
         boolean running = true;
 
+        gui.start();
         backgroundSoundPlayer.start();
         while (running) {
             long startTime = System.currentTimeMillis();
