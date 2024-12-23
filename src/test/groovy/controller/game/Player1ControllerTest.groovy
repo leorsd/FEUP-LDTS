@@ -29,73 +29,98 @@ class Player1ControllerTest extends Specification {
     }
 
     def "should move player 1 left if position is free"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(4, 5)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
-        and: "Position to the left is free"
-        level.isPositionFree(desiredPosition) >> true
-
-        when: "Player1Controller is commanded to move left"
-        controller.movePlayer1Left()
-
-        then: "Player's position is updated"
-        1 * player.setPosition(desiredPosition)
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(4, 5)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> true
+        when:
+            controller.movePlayer1Left()
+        then:
+            1 * player.setPosition(desiredPosition)
         cleanup:
-        defaultCleanUp()
+            defaultCleanUp()
     }
 
     def "should not move player 1 left if position is occupied"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(4, 5)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
-
-        and: "Position to the left is occupied"
-        level.isPositionFree(desiredPosition) >> false
-
-        when: "Player1Controller is commanded to move left"
-        controller.movePlayer1Left()
-
-        then: "Player's position is not updated"
-        0 * player.setPosition(_)
-
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(4, 5)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> false
+        when:
+            controller.movePlayer1Left()
+        then:
+            0 * player.setPosition(_)
         cleanup:
-        defaultCleanUp()
+            defaultCleanUp()
     }
 
     def "should move player 1 right if position is free"() {
-        given: "Player is at position (5, 5)"
-        defaultSetup()
-        def currentPosition = new Position(5, 5)
-        def desiredPosition = new Position(6, 5)
-        player.getPosition() >> currentPosition
-        player.getSizeX() >> 1
-        player.getSizeY() >> 1
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(6, 5)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> true
+        when:
+            controller.movePlayer1Right()
+        then:
+            1 * player.setPosition(desiredPosition)
+        cleanup:
+            defaultCleanUp()
+    }
 
-        and: "Position to the right is free"
-        level.isPositionFree(desiredPosition) >> true
+    def "should move player 1 up if position is free"() {
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(5, 4)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> true
+        when:
+            controller.movePlayer1Up()
+        then:
+            1 * player.setPosition(desiredPosition)
+        cleanup:
+            defaultCleanUp()
+    }
 
-        when: "Player1Controller is commanded to move right"
-        controller.movePlayer1Right()
+    def "should move player 1 down if position is free"() {
+        given:
+            defaultSetup()
+            def currentPosition = new Position(5, 5)
+            def desiredPosition = new Position(5, 6)
+            player.getPosition() >> currentPosition
+            player.getSizeX() >> 1
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(desiredPosition) >> true
+        when:
+            controller.movePlayer1Down()
 
-        then: "Player's position is updated"
+        then:
         1 * player.setPosition(desiredPosition)
-
         cleanup:
         defaultCleanUp()
     }
 
     def "should not move player 1 down if already on ground"() {
-        given: "Player is on the ground"
+        given:
         defaultSetup()
         def currentPosition = new Position(5, 5)
         player.getPosition() >> currentPosition
@@ -103,10 +128,10 @@ class Player1ControllerTest extends Specification {
         player.getSizeY() >> 1
         level.isPositionFree(_) >> false
 
-        when: "Player1Controller tries to move down"
+        when:
         controller.movePlayer1Down()
 
-        then: "Player does not move"
+        then:
         0 * player.setPosition(_)
 
         cleanup:
@@ -114,7 +139,7 @@ class Player1ControllerTest extends Specification {
     }
 
     def "should move player 1 based on speed in update method"() {
-        given: "Player has speed 2"
+        given:
         defaultSetup()
         player.getSpeed() >> 2
         def currentPosition = new Position(5, 5)
@@ -122,13 +147,13 @@ class Player1ControllerTest extends Specification {
         player.getSizeX() >> 1
         player.getSizeY() >> 1
 
-        and: "Positions are free"
+        and:
         level.isPositionFree(_) >> true
 
-        when: "Update is called with RIGHT action"
+        when:
         controller.update(gameManager, [GUI.ACTION.RIGHT] as Set, 0)
 
-        then: "Player moves 2 positions to the right"
+        then:
         2 * player.setPosition(_)
 
         cleanup:
@@ -589,59 +614,265 @@ class Player1ControllerTest extends Specification {
 
     def "test orientation; previous: STANDING, next: STANDING"() {
         given:
-        defaultSetup()
-        player.getSizeX() >> 10
-        player.getSizeX() >> 320
-        player.getSizeY() >> 180
-        player.getPosition() >> new Position(0,0)
-        player.getPosition().getX() >> 0
-        level.isPositionFree(_) >> true
-        player.getMaxJumpHeight() >> 10
-        player.getOrientation() >> Player.ORIENTATION.STANDING
-        player.getLastActionCount() >> 2
-        def actions = [] as Set
+            defaultSetup()
+            player.getSizeX() >> 10
+            player.getSizeX() >> 320
+            player.getSizeY() >> 180
+            player.getPosition() >> new Position(0,0)
+            player.getPosition().getX() >> 0
+            level.isPositionFree(_) >> true
+            player.getMaxJumpHeight() >> 10
+            player.getOrientation() >> Player.ORIENTATION.STANDING
+            player.getLastActionCount() >> 2
+            def actions = [] as Set
         when:
-        controller.update(gameManager, actions, 1000)
+            controller.update(gameManager, actions, 1000)
         then:
-        1 * player.setLastActionCount(3)
+            1 * player.setLastActionCount(3)
     }
 
     def "test orientation; previous: LEFT, next: STANDING"() {
         given:
-        defaultSetup()
-        player.getSizeX() >> 10
-        player.getSizeX() >> 320
-        player.getSizeY() >> 180
-        player.getPosition() >> new Position(0,0)
-        player.getPosition().getX() >> 0
-        level.isPositionFree(_) >> true
-        player.getMaxJumpHeight() >> 10
-        player.getOrientation() >> Player.ORIENTATION.LEFT
-        def actions = [] as Set
+            defaultSetup()
+            player.getSizeX() >> 10
+            player.getSizeX() >> 320
+            player.getSizeY() >> 180
+            player.getPosition() >> new Position(0,0)
+            player.getPosition().getX() >> 0
+            level.isPositionFree(_) >> true
+            player.getMaxJumpHeight() >> 10
+            player.getOrientation() >> Player.ORIENTATION.LEFT
+            def actions = [] as Set
         when:
-        controller.update(gameManager, actions, 1000)
+            controller.update(gameManager, actions, 1000)
         then:
-        1 * player.setOrientation(Player.ORIENTATION.STANDING)
-        1 * player.setLastActionCount(0)
+            1 * player.setOrientation(Player.ORIENTATION.STANDING)
+            1 * player.setLastActionCount(0)
     }
 
     def "test while jumping cant jump anymore"() {
         given:
-        defaultSetup()
-        player.getSizeX() >> 10
-        player.getSizeX() >> 320
-        player.getSizeY() >> 180
-        player.getSpeed() >> 1
-        player.getPosition() >> new Position(0,0)
-        player.getPosition().getX() >> 0
-        level.isPositionFree(_) >> false
-        player.getMaxJumpHeight() >> 10
-        player.getOrientation() >> Player.ORIENTATION.STANDING
-        def actions = [] as Set
+            defaultSetup()
+            player.getSizeX() >> 10
+            player.getSizeX() >> 320
+            player.getSizeY() >> 180
+            player.getSpeed() >> 1
+            player.getPosition() >> new Position(0,0)
+            player.getPosition().getX() >> 0
+            level.isPositionFree(_) >> false
+            player.getMaxJumpHeight() >> 10
+            player.getOrientation() >> Player.ORIENTATION.STANDING
+            def actions = [] as Set
         when:
-        controller.setJumping(true)
+            controller.setJumping(true)
+            controller.update(gameManager, actions, 1000)
+        then:
+            0 * player.setOrientation(Player.ORIENTATION.UPRIGHT)
+    }
+
+    def "test movePlayer with free position"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(5, 5)
+        def targetPosition = new Position(6, 5)
+
+        and:
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 2
+        player.getSizeY() >> 2
+
+        and:
+        level.isPositionFree(new Position(6, 5)) >> true
+        level.isPositionFree(new Position(6,6))  >> true
+        level.isPositionFree(new Position(7,6))  >> true
+        level.isPositionFree(new Position(7,5))  >> true
+        when:
+        controller.movePlayer(targetPosition)
+        then:
+        1 * player.setPosition(targetPosition)
+
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test isOnGround"() {
+        given:
+            defaultSetup()
+            def initialPosition = new Position(2, 2)
+        and:
+            player.getPosition() >> initialPosition
+            player.getSizeX() >> 2
+            player.getSizeY() >> 1
+        and:
+            level.isPositionFree(new Position(2,3)) >> false
+            level.isPositionFree(new Position(1,3)) >> true
+            level.isPositionFree(new Position(2,1)) >> true
+            level.isPositionFree(new Position(3,1)) >> true
+        expect:
+            controller.isOnGround()
+        when:
+            controller.jump()
+        then:
+            controller.getIsJumping()
+            controller.getCurrentJumpHeight() == 0
+        cleanup:
+            defaultCleanUp()
+    }
+
+    def "test canJump"() {
+        given:
+            defaultSetup()
+            def initialPosition = new Position(2, 2)
+            player.getPosition() >> initialPosition
+            player.getSizeX() >> 2
+            player.getSizeY() >> 2
+        and:
+            level.isPositionFree(new Position(2, 1)) >> true
+            level.isPositionFree(new Position(3, 1)) >> true
+        expect:
+            controller.canJump()
+        cleanup:
+            defaultCleanUp()
+    }
+    def "test canJump but negative case"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(2, 2)
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 2
+        player.getSizeY() >> 2
+        and:
+        level.isPositionFree(new Position(2, 1)) >> false
+        level.isPositionFree(new Position(3, 1)) >> false
+        expect:
+        !controller.canJump()
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test getters"() {
+        given:
+            defaultSetup()
+        when:
+            controller.setCurrentJumpHeight(10)
+            controller.setJumping(false)
+        then:
+            controller.getCurrentJumpHeight() == 10
+            controller.getIsJumping() == false
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test movePlayer with speed"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(10, 10)
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 1
+        player.getSizeY() >> 1
+        player.getSpeed() >> 3
+
+        and:
+        def actions = [GUI.ACTION.DOWN,GUI.ACTION.RIGHT,GUI.ACTION.LEFT] as Set
+        level.isPositionFree(_) >> true
+
+        when:
+        controller.update(gameManager, actions, 1000)
+
+        then:
+        9 * player.setPosition(_)
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test jump with action up"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(2, 2)
+        and:
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 2
+        player.getSizeY() >> 1
+        and:
+        level.isPositionFree(new Position(2,3)) >> false
+        level.isPositionFree(new Position(1,3)) >> true
+        level.isPositionFree(new Position(2,1)) >> true
+        level.isPositionFree(new Position(3,1)) >> true
+        when:
+        controller.update(gameManager,[GUI.ACTION.UP] as Set,0)
+        then:
+        controller.getIsJumping()
+        controller.getCurrentJumpHeight() == 0
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test jump 2 times with action up"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(2, 6)
+        and:
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 1
+        player.getSizeY() >> 1
+        player.getMaxJumpHeight() >> 2
+        player.getSpeed() >> 2
+        and:
+        def actions = [GUI.ACTION.UP] as Set
+        level.isPositionFree(new Position(2,7)) >> false
+        level.isPositionFree(new Position(2,5)) >> true
+        when:
         controller.update(gameManager, actions, 1000)
         then:
-        0 * player.setOrientation(Player.ORIENTATION.UPRIGHT)
+        2 * player.setPosition(_)
+        controller.getCurrentJumpHeight() == 2
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test jump 2 times with action up but hit max height"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(2, 6)
+        and:
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 1
+        player.getSizeY() >> 1
+        player.getMaxJumpHeight() >> 2
+        player.getSpeed() >> 4
+        and:
+        def actions = [GUI.ACTION.UP] as Set
+        level.isPositionFree(new Position(2,7)) >> false
+        level.isPositionFree(new Position(2,5)) >> true
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        2 * player.setPosition(_)
+        controller.getCurrentJumpHeight() == 2
+        cleanup:
+        defaultCleanUp()
+    }
+
+    def "test jump but it cant jump"() {
+        given:
+        defaultSetup()
+        def initialPosition = new Position(2, 6)
+        and:
+        player.getPosition() >> initialPosition
+        player.getSizeX() >> 1
+        player.getSizeY() >> 1
+        player.getMaxJumpHeight() >> 4
+        player.getSpeed() >> 4
+        and:
+        def actions = [GUI.ACTION.UP] as Set
+        level.isPositionFree(new Position(2,7)) >> false
+        level.isPositionFree(new Position(2,5)) >> false
+        when:
+        controller.update(gameManager, actions, 1000)
+        then:
+        0 * player.setPosition(_)
+        controller.getCurrentJumpHeight() == 0
+        cleanup:
+        defaultCleanUp()
     }
 }
