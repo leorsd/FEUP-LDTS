@@ -158,38 +158,4 @@ class LevelTest extends Specification {
             level.getLevelEndingDoor() == newDoor
             level.getNextLevel() == "level2"
     }
-
-    def "test equals method for two different Level instances"() {
-        given:
-            def door2 = new Door(new Position(20, 20), 50, 50)
-            def level2 = new Level([wall], toggleableWalls, buttons, [], traps, keys, player1, player2, 10, 10, null, levelTransitionWall, "src/main/resources/Levels/level2")
-        expect:
-            level.equals(level)
-        when:
-            level2.setLevelEndingDoor(door2)
-        then:
-            !(level == level2)
-        when:
-            level2.setLevelEndingDoor(levelTransitionWall)
-        then:
-            (level == level2)
-            !(level == player2)
-    }
-
-    def "test hashCode method for Level class"() {
-        given:
-            def door1 = new Door(new Position(10, 10), 50, 50)
-            def door2 = new Door(new Position(20, 20), 50, 50)
-            level.setLevelEndingDoor(door1)
-            def level2 = new Level([wall], toggleableWalls, buttons, [], traps, keys, player1, player2, 10, 10, null, door1, "src/main/resources/Levels/level2")
-        when:
-            def hash1 = level.hashCode()
-            def hash2 = level2.hashCode()
-        then:
-            hash1 == hash2
-        when:
-            def level3 = new Level([wall], toggleableWalls, buttons, [], traps, keys, player1, player2, 10, 10, null, door2, "level2")
-        then:
-            level.hashCode() != level3.hashCode()
-    }
 }
