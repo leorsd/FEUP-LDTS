@@ -13,11 +13,13 @@ import java.awt.image.BufferedImage
 
 class LanternaGUITest extends Specification {
 
-    Screen screen = Mock(Screen)
-    ScreenCreator screenCreator = Mock(ScreenCreator)
+    Screen screen
+    ScreenCreator screenCreator
     LanternaGUI gui
 
     def setup() {
+        screen = Mock(Screen)
+        screenCreator = Mock(ScreenCreator)
         screenCreator.createScreen(_) >> screen
         gui = new LanternaGUI(screenCreator)
     }
@@ -26,14 +28,15 @@ class LanternaGUITest extends Specification {
         when: "LanternaGUI is initialized"
         gui = new LanternaGUI(screenCreator)
 
-        then: "Screen initialization methods are called"
-        1 * screen.setCursorPosition(null)
-        1 * screen.startScreen()
-        1 * screen.doResizeIfNecessary()
+        then: "Screen initialization methods are not called"
+        0 * screen.setCursorPosition(null)
+        0 * screen.startScreen()
+        0 * screen.doResizeIfNecessary()
     }
 
     def "test clear calls screen clear method"() {
         when:
+        gui.start()
         gui.clear()
         then:
         1 * screen.clear()
@@ -41,6 +44,7 @@ class LanternaGUITest extends Specification {
 
     def "test refresh calls screen refresh method"() {
         when:
+        gui.start()
         gui.refresh()
         then:
         1 * screen.refresh()
@@ -48,6 +52,7 @@ class LanternaGUITest extends Specification {
 
     def "test close calls screen close method"() {
         when:
+        gui.start()
         gui.close()
         then:
         1 * screen.close()
@@ -66,6 +71,7 @@ class LanternaGUITest extends Specification {
 
         when:
         def gui = new LanternaGUI(screenCreator)
+        gui.start()
 
         then:
         gui.getGUIWidth() == 80
@@ -82,6 +88,7 @@ class LanternaGUITest extends Specification {
 
         and: "A LanternaGUI instance"
         def gui = new LanternaGUI(screenCreator)
+        gui.start()
 
         and: "A BufferedImage to draw"
         def image = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB)
