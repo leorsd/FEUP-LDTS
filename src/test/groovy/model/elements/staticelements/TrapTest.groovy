@@ -16,13 +16,28 @@ class TrapTest extends Specification{
         trap = new Trap("Both", position, image, 30, 40)
     }
 
-    def "test hashcode and equals"() {
+    def "test hashcode"() {
         given:
-        def trap1 = new Trap("Lavena", new Position(10, 10), null, 15, 15)
-        def trap2 = new Trap("Lavena", new Position(10, 10), null, 15, 15)
+            def trap1 = new Trap("Lavena", new Position(10, 10), null, 15, 15)
+            def trap2 = new Trap("Lavena", new Position(10, 10), null, 15, 15)
+            def trap3 = new Trap("Tergon", new Position(10, 10), null, 5, 15)
         expect:
-        trap1 == trap2
-        trap1.hashCode() == trap2.hashCode()
+            trap1.hashCode() == trap2.hashCode()
+            trap2.hashCode() != trap3.hashCode()
+    }
+
+    def "should correctly compare traps for equality"() {
+        given:
+            def trap1 = new Trap("Lavena", new Position(1, 1), null, 10, 10)
+            def trap2 = new Trap("Lavena", new Position(1, 1), null, 10, 10)
+            def trap3 = new Trap("Tergon", new Position(1, 1), null, 10, 10)
+            def trap4 = new Trap("Tergon", new Position(2, 1), null, 10, 10)
+        expect:
+            trap1.equals(trap1)
+            trap1 == trap2
+            !(trap1 == trap3)
+            !(trap3 == trap4)
+            !trap1.equals(20)
     }
 
     def "Trap should initialize with given parameters"() {
