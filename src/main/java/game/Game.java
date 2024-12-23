@@ -57,7 +57,7 @@ public class Game {
         return new LanternaGUI(screenCreator);
     }
 
-    private static GameManager createDefaultGameManager() {
+    private static GameManager createDefaultGameManager() throws IOException {
         return new GameManager(new Menu());
     }
 

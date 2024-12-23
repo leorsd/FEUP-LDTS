@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MenuEntriesLoader {
 
-    public static List<String> readFile(String menu) {
+    public static List<String> readFile(String menu) throws IOException {
         List<String> entries = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(Paths.get(menu))) {
             String line;
@@ -20,7 +20,7 @@ public class MenuEntriesLoader {
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error while trying to read file: " + e.getMessage());
+            throw new IOException("Error while reading menu entries from file: " + menu);
         }
         return entries;
     }

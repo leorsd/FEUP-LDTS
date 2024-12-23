@@ -1,5 +1,6 @@
 package model.scenes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class Menu implements Scene{
         this.entries = entries;
     }
 
-    public Menu() {
+    public Menu() throws IOException {
         this.entries = MenuEntriesLoader.readFile("src/main/resources/levels/menu");
     }
 

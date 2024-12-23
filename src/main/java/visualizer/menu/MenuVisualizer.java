@@ -25,7 +25,7 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         try {
             menuimage = ImageIO.read(menuFile);
         } catch (IOException e) {
-            System.out.println("Menu failed to load");
+            throw new IOException("Failed to load menu image");
         }
         gui.drawImage(new Position(0,0), menuimage);
 
