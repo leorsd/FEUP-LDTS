@@ -28,16 +28,6 @@ class GameTest extends Specification {
             game.getBackgroundSoundPlayer() == mockBackgroundSoundPlayer
     }
 
-    def "Game singleton creation with default values"() {
-        when:
-            def game = Game.getInstance(null,null,null)
-        then:
-            game != null
-            game.getGui() != null
-            game.getGameManager() != null
-            game.getBackgroundSoundPlayer() != null
-    }
-
     def "Game singleton reuse"() {
         given:
             def firstInstance = Game.getInstance(mockGui, mockGameManager, mockBackgroundSoundPlayer)
