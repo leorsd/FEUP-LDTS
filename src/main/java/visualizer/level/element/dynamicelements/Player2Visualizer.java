@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static javax.imageio.ImageIO.read;
 
 public class Player2Visualizer implements DynamicElementVisualizer<Player> {
     private final Map<Player.ORIENTATION, List<String>> spriteMap;
@@ -45,7 +44,7 @@ public class Player2Visualizer implements DynamicElementVisualizer<Player> {
 
     private String getSprite(Player player) {
         List<String> spriteActionList = spriteMap.get(player.getOrientation());
-        return spriteActionList.get((int) (player.getLastActionCount()/2 % spriteActionList.size()));
+        return spriteActionList.get((player.getLastActionCount()/2 % spriteActionList.size()));
     }
 }
 

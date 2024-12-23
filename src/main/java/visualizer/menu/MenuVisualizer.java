@@ -41,17 +41,16 @@ public class MenuVisualizer extends SceneVisualizer<Menu> {
         }
 
         for (int i = 0; i < getScene().getEntriesSize(); i++) {
-            BufferedImage image = null;
             try {
-                image = ImageIO.read(new File("src/main/resources/images/menu/option" + i + ".png"));
+                BufferedImage image = ImageIO.read(new File("src/main/resources/images/menu/option" + i + ".png"));
+                if (i == getScene().getHighlightedEntryIndex()) {
+                    gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.50+0.08*i))), image);
+                    gui.drawImage(new Position((guiWidth-image.getWidth())/2-15, (int)(guiHeight*(0.50+0.08*i))), arrow);
+                }else{
+                    gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.50+0.08*i))),image);
+                }
             } catch (IOException e) {
                 System.out.println("Failed option");
-            }
-            if (i == getScene().getHighlightedEntryIndex()) {
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2, (int)(guiHeight*(0.50+0.08*i))), image);
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2-15, (int)(guiHeight*(0.50+0.08*i))), arrow);
-            }else{
-                gui.drawImage(new Position((guiWidth-image.getWidth())/2,(int)(guiHeight*(0.50+0.08*i))),image);
             }
         }
     }

@@ -1,7 +1,6 @@
 package controller.game;
 
 import game.GameManager;
-import model.Position;
 import model.elements.dynamicelements.Door;
 import model.elements.staticelements.Button;
 import model.elements.staticelements.Key;

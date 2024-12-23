@@ -2,7 +2,6 @@ package model.elements;
 
 import model.Position;
 
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public abstract class Element {

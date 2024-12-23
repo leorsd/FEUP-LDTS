@@ -9,6 +9,6 @@ public class KeyVisualizer implements ElementVisualizer<Key> {
     public void draw(Key key, GUI gui) {
         if (!key.isCollected()) {
             gui.drawImage(key.getPosition(), key.getImage());
-        };
+        }
     }
 }

@@ -1,10 +1,9 @@
 package model.elements.dynamicelements;
 
-import gui.GUI;
 import model.Position;
 
 public class Monster extends DynamicElement {
-    public enum ORIENTATION {LEFT, RIGHT, STANDING};
+    public enum ORIENTATION {LEFT, RIGHT, STANDING}
     private int minX;
     private int maxX;
     private int direction = 1;

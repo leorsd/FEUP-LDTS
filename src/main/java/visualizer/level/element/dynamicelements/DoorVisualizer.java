@@ -2,14 +2,12 @@ package visualizer.level.element.dynamicelements;
 
 import gui.GUI;
 import model.elements.dynamicelements.Door;
-import model.elements.dynamicelements.Monster;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DoorVisualizer implements DynamicElementVisualizer<Door> {

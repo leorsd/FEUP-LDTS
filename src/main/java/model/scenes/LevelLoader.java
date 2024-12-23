@@ -1,6 +1,5 @@
 package model.scenes;
 
-import gui.GUI;
 import model.elements.dynamicelements.Door;
 import model.elements.staticelements.ToggleableWall;
 import model.elements.dynamicelements.Monster;
@@ -193,11 +192,11 @@ public class LevelLoader {
             throw new IOException("ToggleableWall specification needs to be like: id,x,y,sizeX,sizeY,imagePath");
         }
         Integer id = Integer.parseInt(parts.getFirst());
-        int xPos = Integer.parseInt(parts.get(1));
-        int yPos = Integer.parseInt(parts.get(2));
         int width = Integer.parseInt(parts.get(3));
         int height = Integer.parseInt(parts.get(4));
         BufferedImage wallBackground = ImageIO.read(new File(parts.get(5))).getSubimage(0,0, width, height);
+        int xPos = Integer.parseInt(parts.get(1));
+        int yPos = Integer.parseInt(parts.get(2));
         ToggleableWall toggleableWall = new ToggleableWall(new Position(xPos,yPos), wallBackground, width, height);
         toggleableWallsMap.put(id, toggleableWall);
         toggleableWalls.add(toggleableWall);
@@ -289,7 +288,7 @@ public class LevelLoader {
             } else {
                 readLevelTransitionWall(line);
             }
-            line = br.readLine();
+            br.readLine();
             while (true) {
                 line = br.readLine();
                 if (line == null || line.isEmpty()) {

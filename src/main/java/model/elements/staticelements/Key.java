@@ -1,7 +1,6 @@
 package model.elements.staticelements;
 
 import model.Position;
-import model.elements.Element;
 
 import java.awt.image.BufferedImage;
 

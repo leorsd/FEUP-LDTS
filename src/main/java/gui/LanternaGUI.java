@@ -1,23 +1,14 @@
 package gui;
 
-import model.elements.dynamicelements.Monster;
-import model.elements.dynamicelements.Player;
-import model.elements.staticelements.Key;
-import model.elements.staticelements.Trap;
-import model.elements.staticelements.Wall;
-import model.elements.staticelements.Button;
 import model.Position;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
