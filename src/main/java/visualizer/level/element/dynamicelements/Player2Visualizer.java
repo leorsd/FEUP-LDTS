@@ -44,7 +44,7 @@ public class Player2Visualizer implements DynamicElementVisualizer<Player> {
 
     private String getSprite(Player player) {
         List<String> spriteActionList = spriteMap.get(player.getOrientation());
-        return spriteActionList.get((int) (player.getLastActionCount()/2 % spriteActionList.size()));
+        return spriteActionList.get((player.getLastActionCount()/2 % spriteActionList.size()));
     }
 }
 

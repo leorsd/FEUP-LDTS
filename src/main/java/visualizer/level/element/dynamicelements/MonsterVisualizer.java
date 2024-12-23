@@ -34,6 +34,6 @@ public class MonsterVisualizer implements DynamicElementVisualizer<Monster> {
 
     private String getSprite(Monster monster) {
         List<String> spriteActionList = spriteMap.get(monster.getOrientation());
-        return spriteActionList.get((int) (monster.getLastControlCount()/5 % spriteActionList.size()));
+        return spriteActionList.get((monster.getLastControlCount()/5 % spriteActionList.size()));
     }
 }
