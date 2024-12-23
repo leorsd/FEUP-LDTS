@@ -1,4 +1,5 @@
-import controller.menu.MenuController
+package controller.menu
+
 import game.GameManager
 import model.scenes.Level
 import model.scenes.Menu
