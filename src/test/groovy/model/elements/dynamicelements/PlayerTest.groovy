@@ -5,6 +5,14 @@ import model.Position
 import model.elements.dynamicelements.Player
 
 class PlayerTest extends Specification {
+    def "test hashcode and equals"() {
+        given:
+        def player1 = new Player("Player1", 50, 60, new Position(10, 15), 10, 15)
+        def player2 = new Player("Player1", 50, 60, new Position(10, 15), 10, 15)
+        expect:
+        player1 == player2
+        player1.hashCode() == player2.hashCode()
+    }
 
     def "should correctly initialize player with constructor"() {
         given: "A new Player object"

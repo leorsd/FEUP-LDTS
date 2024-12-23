@@ -25,12 +25,12 @@ public class LevelController extends Controller<Level> {
     private final Player2Controller player2Controller;
     private final MonsterController monsterController;
 
-    public LevelController(Level level) {
+    public LevelController(Level level, Player1Controller player1Controller, Player2Controller player2Controller, MonsterController monsterController) {
         super(level);
 
-        this.player1Controller = new Player1Controller(level);
-        this.player2Controller = new Player2Controller(level);
-        this.monsterController = new MonsterController(level);
+        this.player1Controller = player1Controller;
+        this.player2Controller = player2Controller;
+        this.monsterController = monsterController;
     }
 
     private boolean checkPlayerDead(Player player) {

@@ -6,6 +6,16 @@ import spock.lang.Specification
 import java.awt.image.BufferedImage
 
 class ButtonTest extends Specification{
+
+    def "test hashcode and equals"() {
+        given:
+        def button1 = new Button(new Position(10, 10), null, 15, 15, null)
+        def button2 = new Button(new Position(10, 10), null, 15, 15, null)
+        expect:
+        button1 == button2
+        button1.hashCode() == button2.hashCode()
+
+    }
     def "Button should initialize with given parameters and default state not pressed"() {
         given:
             def position = new Position(10, 20)
