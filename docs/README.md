@@ -9,9 +9,33 @@ In each level, the difficulty increases, introducing new challenges. In the fina
 
 This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
 
+## Table of Contents
+- [Implemented Features](#implemented-features)
+  - [Interactive Menu](#interactive-menu)
+  - [Keyboard Actions Handling](#keyboard-actions-handling)
+  - [Collision Detection](#colision-detection)
+  - [Respawn](#respawn)
+  - [Different Levels](#different-levels)
+  - [Level-Ending Logics](#level-ending-logics)
+- [Features and Mechanics](#-features-and-mechanics)
+- [UML Class Diagram](#-uml-class-diagram)
+- [Design Patterns](#-design-patterns)
+  - [Singleton](#singleton)
+  - [Composite](#composite)
+  - [Adapter](#adapter)
+  - [State](#state)
+  - [Template Method](#template-method)
+  - [Model-View-Controller](#model-view-controller-mvc)
+  - [Game Loop](#game-loop)
+- [Testing](#-testing)
+- [Quality Assurance](#-quality-assurance)
+- [Code Smells](#-code-smells)
+- [Development](#-development)
+- [Retrospective](#-retrospective)
+
 ## Implemented Features
 
-### Interactive Menu 
+### Interactive Menu
 Upon launching the game, the user is presented with several options. They can begin with the tutorial, select a specific level to play, view the credits, or exit the game.
 
 The currently highlighted option is indicated by a key on the left side, and the user can navigate through the menu using the up and down arrow keys. To confirm their selection, they simply press the Enter key.
@@ -27,7 +51,7 @@ We implemented all the collision mechanics that seemed essential for our game.
 
 If a player collides with a monster, a trap, or is crushed by a toggleable wall, they will die instantly. Players cannot pass through walls but can move through each other and in front of the level's exit door, as intended.
 
-### Respawn 
+### Respawn
 If a player dies, they will respawn at their initial starting position from when the level first loaded. Upon respawning, any progress made up to that point will be reset, requiring the player to recollect all previously obtained keys.
 
 ### Different Levels
@@ -219,6 +243,14 @@ Its configuration can be seen in this [file](../build.gradle).
 
 This tool allowed us to automatically detect unnecessary import statements, simplifiable if clauses, unnecessary semicolons and other code smells. 
 The configuration for this tool can be seen at: [qodana config](../qodana.yaml).
+## 🤢 Code Smells
+
+Even though we used SOLID principles, used code analysis tools, and extensively tested our code, some other code smells remain, namely:
+- Long switch statements are still present in [LanternaGUI](../src/main/java/gui/LanternaGUI.java).
+- Chained if-else-if statements are used in controllers of [player 1](../src/main/java/controller/game/Player1Controller.java) and [player 2](../src/main/java/controller/game/Player2Controller.java).
+- The controllers of player [1](../src/main/java/controller/game/Player1Controller.java) and [2](../src/main/java/controller/game/Player2Controller.java) are almost duplicated code, since the only difference between them is that player 1 moves with arrows and player2 moves with WASD.
+- In some places, like the [visualizer of the level-ending door](../src/main/java/visualizer/level/element/dynamicelements/DoorVisualizer.java), the `get` method may throw unhandled exceptions if the code is carelessly changed.
+- Some classes, like [ToggleableWallVisualizer](../src/main/java/visualizer/level/element/staticelements/ToggleableWallVisualizer.java) are at the frontier of acceptable name length.
 
 ## 🤝 Development
 
@@ -230,6 +262,6 @@ To protect the `master` branch and ensure no code breaks it, we also enforce a s
 
 We use feature and fix branches, and common naming conventions on branches and commits.
 
-## 🔜 Future work and upcoming features
+## 🔙 Retrospective
 
 All proposed features were implemented, except for PowerUps, because we felt like that didn't make sense in the context of our game.
