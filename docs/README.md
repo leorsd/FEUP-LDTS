@@ -138,7 +138,8 @@ It ensures consistent behavior across different visualizers and facilitates the 
 
 #### Model-View-Controller (MVC)
 * Justification: Having a clear division of tasks among classes helps us follow the Single responsibility principle and allows dependency injection on tests. The three main responsibilities in a game are holding the state of the game, modifying it, and displaying it on an UI. Therefore, the most logical thing to do is to use the MVC pattern.
-* Consequences: Using this method implies clearly separating the code in 3 parts, and holding an instance of each component in some of the classes. In our case, GameManager is the class that manages the interactions between them.
+* Consequences: Using this method implies clearly separating the code in 3 parts, and holding an instance of each component in some of the classes.In our case, GameManager is the class that manages the interactions between them, for more information check [GameManager](../src/main/java/game/GameManager.java). 
+* You can see a simple illustration showing how the classes will interact in this simple diagram: ![MVC Diagram](../assets/finalDelivery/uml_mvc.drawio.png).
 
 ### Sequencing Pattern
 
@@ -151,7 +152,6 @@ It ensures consistent behavior across different visualizers and facilitates the 
 * Diagram:
 
 ![GameLoop](../assets/finalDelivery/gameLoop.png)
-
 
 ## 🏁 Testing
 All the tests were developed using Spock, a testing platform based on the language Groovy. This platform was chosen over JUnit due to its simplicity and native mocking scheme.

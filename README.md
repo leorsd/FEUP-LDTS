@@ -13,12 +13,18 @@ In each level, the difficulty increases, introducing new challenges. In the fina
 >This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
 ></p>
 
-## Detailed Challenges and Obstacles
+## 🏔️ Detailed Challenges and Obstacles
 
 ### Goal
 In each level, the players' main objective is to collect all the keys that unlock the door, allowing them to move on to the next stage. Each player can only pick up the keys that correspond to their color, which adds an element of strategy and increases the challenge.
 
-In the tutorial, all the game features are introduced and explained, and they will be progressively implemented in more complex ways as players advance through the levels:
+<p align="center">
+<img src="assets/finalDelivery/levelTransition.gif"/>
+</p> 
+
+<p align="center">
+  <b><i>Gif 1 - When both players collect their keys, the door to the next level opens</i></b>
+</p>
 
 ### Obstacles
 
@@ -28,13 +34,45 @@ The walls are the obstacles that make up the majority of the map. They serve as 
 #### Traps 🪤
 Traps are obstacles that players may or may not collide with, depending on their color. Players can only pass through traps that match their own color. If a trap is green, it targets both players, meaning neither player can walk over or touch it.
 
+<p align="center">
+<img src="assets/finalDelivery/trap.gif"/>
+</p> 
+
+<p align="center">
+  <b><i>Gif 2 - Players can only touch traps that match their color</i></b>
+</p>
+
+<p align="center">
+<img src="assets/finalDelivery/bothTrap.gif"/>
+</p> 
+
+<p align="center">
+  <b><i>Gif 3 - The green trap affects both players</i></b>
+</p>
+
 #### Enemies 🧙‍♂️
 The only enemies in this game are the druids, small creatures that inhabit the caves (how did they come down here?). These druids wander around the dungeons, moving only horizontally, left to right. If a player comes into contact with a druid, they will die instantly. The only way to avoid them is by jumping over them or carefully coordinating your movement to bypass them safely.
+
+<p align="center">
+<img src="assets/finalDelivery/monster.gif"/>
+</p> 
+
+<p align="center">
+  <b><i>Gif 4 - Player dies when he touches the monster and then respawns</i></b>
+</p>
 
 #### Toggleable Walls and Buttons 🖲️
 While exploring a level, players may encounter a couple walls of different colors. These are toggleable walls! Unlike regular walls, toggleable walls can be deactivated using buttons.
 
 For each toggleable wall, there must be at least one button of the same color. When a player presses the corresponding button, the toggleable wall becomes inactive and disappears. However, players must be cautious—if the button stops being pressed, the wall reappears. If a player is in the position of the wall when this happens, he will die instantly.
+
+<p align="center">
+<img src="assets/finalDelivery/togglewalls.gif"/>
+</p> 
+
+<p align="center">
+  <b><i>Gif 5 - Door disappears while the button is being pressed</i></b>
+</p>
 
 ## 🎮 Gameplay Functionalities and Details
 
@@ -52,54 +90,51 @@ Move Left: ←
 Move Right: →  
 Jump: ↑  
 
-## 🗺️ Features and Mechanics
+## 🗺️ Levels
 
 ### Menu
 Start a new game, select a specific level or exit the game.
 
-![Menu](assets/firstDelivery/menu_mockup.png)
+<p align="center">
+<img src="assets/finalDelivery/menu.gif"/>
+</p>
 
-### Levels
+### Tutorial
 
-In every level, the players' primary objective is to gather two keys that unlock the gate (black line), allowing them to progress to the next stage.
-Each player can only pick up the key that matches their color, which enables the creation of more entertaining and challenging puzzles.
-New levels gradually introduce new features, like:
-* Environmental Obstacles: Toxic Lakes, platforms and walls.
+Basic layout and terrain to familiarize players with teamwork mechanics. Includes one of each obstacle, and their explanations.
 
-* Enemies: Skeleton and Final Boss Skeleton.
+<p align="center">
+<img src="assets/finalDelivery/tutorial.gif"/>
+</p> 
 
-* Traps and challenges: Toxic ponds and button-coordenated walls.
+### Level 1
 
-### Level 1 (Tutorial)
+Features more complex platforming, therefore harder parkour sections. Now there are also 2 keys for each player! 
 
-Basic layout and terrain to familiarize players with teamwork mechanics.
-
-![Level 1](assets/firstDelivery/level1_mockup.png)
-
-In Level 1, we decided to:
-* Implement small parkour sections
-* Introduce the players to the key feature
-All of these features allow the new players to get familiar with the controls, mechanics and objectives of the game.
+<p align="center">
+<img src="assets/finalDelivery/level1.gif"/>
+</p> 
 
 ### Level 2
+This level requires even more team cooperation and precise jumping timing.
 
-Features new enemies, platforms and toxic ponds.  
-
-![Level 2](assets/firstDelivery/level2_mockup.png)
-
-This level includes:
-* More challenging parkour sections;
-* Toxic ponds (which can only be touched by the character of the matching color);
-* A new enemy, the skeleton, which moves exclusively sideways.
-* Deaths: If the wrong player touches the toxic pond or any of them comes in contact with the monster, they will die instantly and respawn at the initial position.
+<p align="center">
+<img src="assets/finalDelivery/level2.gif"/>
+</p> 
 
 ### Level 3
-Introduced new button obstacles and a bigger boss enemy.
+Complete Madness! Only the most skillful players will be up to the challenge!
 
-![Level 3](assets/firstDelivery/level3_mockup.png)
-This level introduces:
-* A new button-coordenated purple wall, that disappears while one of the players is pressing the (also purple) button;
-* A new enemy, the final boss, consisting of a bigger skeleton with a twist: this one stays still, only jumping vertically from time to time.
+<p align="center">
+<img src="assets/finalDelivery/level3.png"/>
+</p> 
+
+### Credits
+If you got here, congrats! Thank you for playing our game!
+
+<p align="center">
+<img src="assets/finalDelivery/credits.gif"/>
+</p> 
 
 ## 🚀 How to Play
 Follow these steps:
