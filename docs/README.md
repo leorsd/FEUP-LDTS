@@ -71,6 +71,10 @@ To ensure our game functions as intended, we implemented a physics mechanism tha
 ### Fullscreen
 To ensure optimal display settings, our game has the ability to automatically adjust the terminal and screen, switching to fullscreen mode. If your PC uses a 16:9 resolution, the game will automatically adapt the font size to fit the screen appropriately.
 
+### Background Music
+
+To make the experience more fun and immersive, we decided to include background music in the game. After careful consideration, we chose [<i>Powerup!</i>](https://www.youtube.com/watch?v=l7SwiFWOQqM) as the main theme because we believe it fits the game's vibe perfectly.
+
 ## 📈 UML Class Diagram
 
 The following simplified UML diagram showcases classes and interfaces, as well as used design patters. Most dependencies were excluded because otherwise the diagram would be chaotic and unreadable.
