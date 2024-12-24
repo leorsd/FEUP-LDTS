@@ -64,44 +64,31 @@ class LanternaScreenCreatorTest extends Specification {
             exception != null
             exception.message == "Error when trying to create Lanterna screen: Unable to create screen"
     }
-
     def "test getAwtTerminalFrame with full screen supported"() {
         given:
-            def screen = Mock(TerminalScreen)
-            def gd = Mock(GraphicsDevice)
-            def awtTerminalFrame = Mock(AWTTerminalFrame)
-            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
-            gd.isFullScreenSupported() >> true
-            screen.getTerminal() >> awtTerminalFrame
+        def screen = Mock(TerminalScreen)
+        def gd = Mock(GraphicsDevice)
+        def awtTerminalFrame = Mock(AWTTerminalFrame)
+        def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+        gd.isFullScreenSupported() >> true
+        screen.getTerminal() >> awtTerminalFrame
         expect:
-            lanternaScreenCreator.getAwtTerminalFrame(screen, gd) == awtTerminalFrame
-    }
-
-    def "test getAwtTerminalFrame with full screen not supported"() {
-        given:
-            def screen = Mock(TerminalScreen)
-            def gd = Mock(GraphicsDevice)
-            def awtTerminalFrame = Mock(AWTTerminalFrame)
-            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
-            gd.isFullScreenSupported() >> false
-            screen.getTerminal() >> awtTerminalFrame
-        expect:
-            lanternaScreenCreator.getAwtTerminalFrame(screen, gd) == awtTerminalFrame
+        lanternaScreenCreator.getAwtTerminalFrame(screen, gd) == awtTerminalFrame
     }
 
     def "load font from wrong file"() {
         given:
-            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
-            def exception
+        def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+        def exception
         when:
-            try {
-                lanternaScreenCreator.loadFont(7, "levels/credits")
-            } catch (Exception e) {
-                exception = e
-            }
+        try {
+            lanternaScreenCreator.loadFont(7, "levels/credits")
+        } catch (Exception e) {
+            exception = e
+        }
         then:
-            exception != null
-            exception.message.substring(0, 61) == "Error while creating Lanterna screen when trying to load font"
+        exception != null
+        exception.message.substring(0, 61) == "Error while creating Lanterna screen when trying to load font"
     }
 
     def "load font from nonexistent file"() {
