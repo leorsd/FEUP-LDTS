@@ -4,7 +4,7 @@ import gui.GUI;
 import model.elements.staticelements.ToggleableWall;
 import visualizer.level.element.ElementVisualizer;
 
-public class ToggleableWallVisualizer implements ElementVisualizer<ToggleableWall> {
+public class ToggleableWallVisualizer implements StaticElementVisualizer<ToggleableWall> {
     @Override
     public void draw(ToggleableWall wall, GUI gui) {
         if (wall.isActive()) gui.drawImage(wall.getPosition(), wall.getImage());
