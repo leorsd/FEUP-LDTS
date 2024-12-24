@@ -8,7 +8,6 @@ import model.elements.staticelements.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Objects;
 
 public class Level implements Scene{
     private Door levelEndingDoor;

@@ -2,7 +2,6 @@ package visualizer.level.element.staticelements;
 
 import gui.GUI;
 import model.elements.staticelements.Wall;
-import visualizer.level.element.ElementVisualizer;
 
 public class WallVisualizer implements StaticElementVisualizer<Wall> {
     @Override

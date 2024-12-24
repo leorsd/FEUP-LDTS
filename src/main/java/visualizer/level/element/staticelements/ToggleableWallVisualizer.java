@@ -2,7 +2,6 @@ package visualizer.level.element.staticelements;
 
 import gui.GUI;
 import model.elements.staticelements.ToggleableWall;
-import visualizer.level.element.ElementVisualizer;
 
 public class ToggleableWallVisualizer implements StaticElementVisualizer<ToggleableWall> {
     @Override
