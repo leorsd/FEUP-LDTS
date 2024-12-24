@@ -9,6 +9,8 @@ In this game, two players take on the roles of our main characters, Lavena and T
 
 In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, along with a surprising new challenge that will push your abilities to the limit.
 
+This file focuses solely on the gameplay aspects of the game, providing an overview of how to play. For a more in-depth understanding of the technical details, please refer to the [documentation](docs/README.md).
+
 ><p align="center">
 >This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
 ></p>
@@ -51,7 +53,7 @@ Traps are obstacles that players may or may not collide with, depending on their
 </p>
 
 #### Enemies 🧙‍♂️
-The only enemies in this game are the druids, small creatures that inhabit the caves (how did they come down here?). These druids wander around the dungeons, moving only horizontally, left to right. If a player comes into contact with a druid, they will die instantly. The only way to avoid them is by jumping over them or carefully coordinating your movement to bypass them safely.
+The only enemies in this game are the druids, small creatures that inhabit the caves (how did they come down here?). These druids wander around the dungeons, moving only horizontally. If a player comes into contact with a druid, they will die instantly. The only way to avoid them is by jumping over them or carefully coordinating your movement to bypass them safely.
 
 <p align="center">
 <img src="assets/finalDelivery/monster.gif"/>
@@ -81,14 +83,14 @@ Number of Players: 2 (local co-op).
 ### Controls
 
 ####  __Tergon__ (Player 1)
+Move Left: ←  
+Move Right: →  
+Jump: ↑
+
+#### __Lavena__ (Player 2)
 Move Left: A  
 Move Right: D  
 Jump: W
-
-#### __Lavena__ (Player 2)
-Move Left: ←  
-Move Right: →  
-Jump: ↑  
 
 ## 🗺️ Levels
 
@@ -141,5 +143,5 @@ Follow these steps:
 * 1. Open a terminal and launch the game with `./gradlew run`
 * 2. Use the menu to select a level, start from the tutorial or exit the game.
 * 3. Work together to collect the keys and open the gate to complete the level.
-* 4. Defeat the boss in the final level to win the game.
+* 4. Complete all levels and fisnish the game. Congrats!
 
