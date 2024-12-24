@@ -120,7 +120,8 @@ For more details refer to:
 
 #### Model-View-Controller (MVC)
 * Justification: Having a clear division of tasks among classes helps us follow the Single responsibility principle and allows dependency injection on tests. The three main responsibilities in a game are holding the state of the game, modifying it, and displaying it on an UI. Therefore, the most logical thing to do is to use the MVC pattern.
-* Consequences: Using this method implies clearly separating the code in 3 parts, and holding an instance of each component in some of the classes. In our case, GameManager is the class that manages the interactions between them.
+* Consequences: Using this method implies clearly separating the code in 3 parts, and holding an instance of each component in some of the classes.In our case, GameManager is the class that manages the interactions between them, for more information check [GameManager](../src/main/java/game/GameManager.java). 
+* You can see a simple illustration showing how the classes will interact in this simple diagram: ![MVC Diagram](../assets/finalDelivery/uml_mvc.drawio.png).
 
 ### Sequencing Pattern
 
@@ -128,7 +129,7 @@ For more details refer to:
 * Justification: We decided to use this pattern because we don't really need to differentiate entities’ movement rates, and also to avoid synchronization errors between the threads. This pattern also ensures that the update and render processes happen in a consistent and smooth way. Additionally, it allows us to control the game's update rate, making it either smoother or lighter depending on our needs.
   This pattern can be broken down into five steps that repeat continuously. First, we initialize the game and set everything up for the start. Next, we process the user input, update the game objects, and draw all the elements. We then ensure updates occur at a steady rate using sleep, and the cycle repeats.
 * Consequences: To implement this pattern, we created our Game class, which orchestrates the game's lifecycle (looping every 50ms) and maintains a controlled frame rate.
-  This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement it in our project.
+  This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement it in our project. For more information of how this was implemented you can check the [Game](../src/main/java/game/Game.java) and the [GameManager](../src/main/java/game/GameManager.java) classes.
 ## 🏁 Testing
 All the tests were developed using Spock, a testing platform based on the language Groovy. This platform was chosen over JUnit due to its simplicity and native mocking scheme.
 
