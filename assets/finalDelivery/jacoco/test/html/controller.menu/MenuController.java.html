@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">controller.menu</a> &gt; <span class="el_source">MenuController.java</span></div><h1>MenuController.java</h1><pre class="source lang-java linenums">package controller.menu;
+
+import game.GameManager;
+import model.scenes.LevelLoader;
+import model.scenes.Menu;
+import controller.Controller;
+import gui.GUI;
+
+import java.io.IOException;
+import java.util.Set;
+
+public class MenuController extends Controller&lt;Menu&gt; {
+    private long lastUpdateTime;
+    public MenuController(Menu menu) {
+<span class="fc" id="L15">        super(menu);</span>
+<span class="fc" id="L16">        this.lastUpdateTime = 0;</span>
+<span class="fc" id="L17">    }</span>
+
+    @Override
+    public void update(GameManager gameManager, Set&lt;GUI.ACTION&gt; actions, long updateTime) throws IOException {
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (!(actions.size() == 1)) return;</span>
+
+<span class="fc" id="L23">        GUI.ACTION action = actions.iterator().next();</span>
+
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if(action == GUI.ACTION.SELECT){</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">            if (getModel().getHighlightedEntry().equals(&quot;EXIT&quot;)) {</span>
+<span class="fc" id="L27">                gameManager.setCurrentScene(null);</span>
+            } else {
+<span class="fc" id="L29">                String level = getModel().getHighlightedEntry();</span>
+<span class="fc" id="L30">                gameManager.setCurrentScene( new LevelLoader().loadLevel(level));</span>
+<span class="fc" id="L31">            }</span>
+        }else {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (updateTime - lastUpdateTime &gt; 200) {</span>
+<span class="pc bpc" id="L34" title="1 of 3 branches missed.">                switch (action) {</span>
+                    case UP:
+<span class="fc" id="L36">                        getModel().selectPreviousEntry();</span>
+<span class="fc" id="L37">                        break;</span>
+                    case DOWN:
+<span class="fc" id="L39">                        getModel().selectNextEntry();</span>
+<span class="fc" id="L40">                        break;</span>
+                    default:
+                        break;
+                }
+<span class="fc" id="L44">                lastUpdateTime = updateTime;</span>
+            }
+        }
+<span class="fc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>Controller.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package controller;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import game.GameManager;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.IOException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Set;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import gui.GUI;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public abstract class Controller&#60;T&#62; {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final T model;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public Controller(T model) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.model = model;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public T getModel() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_17'/>
+17
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_17'>1</a>
+<span>
+1. getModel : replaced return value with null for controller/Controller::getModel &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return model;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public abstract void update(GameManager game, Set&#60;GUI.ACTION&#62; actions, long updateTime) throws IOException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8b1202a_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8b1202a_17'>17</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8b1202a_17'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getModel<br/><b>Killed by : </b>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_3]</span></span> replaced return value with null for controller/Controller::getModel &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+<li class='mutator'>EMPTY_RETURNS</li>
+<li class='mutator'>FALSE_RETURNS</li>
+<li class='mutator'>INCREMENTS</li>
+<li class='mutator'>INVERT_NEGS</li>
+<li class='mutator'>MATH</li>
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+<li class='mutator'>NULL_RETURNS</li>
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+<li class='mutator'>TRUE_RETURNS</li>
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_3] (0 ms)</li><li>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_6] (0 ms)</li><li>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_5] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_7] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_7] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_5] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_5] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_36] (0 ms)</li><li>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_0] (10 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_36] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_1] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_37] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_37] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_3] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_1] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_2] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_8] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_3] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_2] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_0] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_8] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_4] (0 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_1] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_34] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_4] (1 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_4] (0 ms)</li><li>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_2] (14 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_5] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_34] (1 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_11] (0 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_2] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_32] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_31] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_31] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_32] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_29] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_25] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_21] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:5] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:1] (0 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_3] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_22] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_0] (2 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_26] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_22] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:6] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_29] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_25] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_21] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_30] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_27] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_23] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:7] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_28] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_28] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_30] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_27] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_23] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_14] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_26] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_11] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_6] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_12] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_12] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_13] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_9] (1 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_0]/[iteration:3] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_10] (2 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_35] (0 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_0]/[iteration:2] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_6] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_35] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_18] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_17] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:2] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_15] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_19] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_16] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_16] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_20] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_19] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_20] (0 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_0]/[iteration:1] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:4] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_9] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_17] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_18] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_33] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_33] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:3] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_15] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_11] (4 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_39] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_39] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_14] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_9] (2 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_40] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_14] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_40] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_15]/[iteration:0] (3 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_13] (3 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_12] (1 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_13] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_43] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_43] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_16] (1 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_8] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_6] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_7] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_41] (0 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_10] (2 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_41] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_3] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_42] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_42] (0 ms)</li><li>controller.game.MonsterControllerTest.[engine:spock]/[spec:controller.game.MonsterControllerTest]/[feature:$spock_feature_0_0]/[iteration:0] (13 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_4] (2 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_2] (1 ms)</li><li>controller.game.Player2ControllerTest.[engine:spock]/[spec:controller.game.Player2ControllerTest]/[feature:$spock_feature_0_24] (4 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_5] (6 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_1] (5 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_0]/[iteration:3] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_0]/[iteration:4] (0 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_0]/[iteration:5] (0 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_24] (8 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_0]/[iteration:2] (1 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_0]/[iteration:1] (1 ms)</li><li>controller.game.Player1ControllerTest.[engine:spock]/[spec:controller.game.Player1ControllerTest]/[feature:$spock_feature_0_10] (16 ms)</li><li>controller.menu.MenuControllerTest.[engine:spock]/[spec:controller.menu.MenuControllerTest]/[feature:$spock_feature_0_1] (21 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_22] (2 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_23] (1 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_19] (4 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_20] (6 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_18] (73 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_21] (79 ms)</li><li>controller.game.LevelControllerTest.[engine:spock]/[spec:controller.game.LevelControllerTest]/[feature:$spock_feature_0_0]/[iteration:0] (564 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.15.0
+
+</body>
+</html>

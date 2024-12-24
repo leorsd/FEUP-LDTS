@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LanternaGUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">gui</a> &gt; <span class="el_source">LanternaGUI.java</span></div><h1>LanternaGUI.java</h1><pre class="source lang-java linenums">package gui;
+
+import model.Position;
+import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.screen.Screen;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import static gui.GUI.ACTION.*;
+
+public class LanternaGUI implements GUI {
+    private final ScreenCreator screenCreator;
+    private Screen screen;
+    private final KeyAdapter keyAdapter;
+<span class="fc" id="L21">    private final HashSet&lt;ACTION&gt; inputs = new HashSet&lt;&gt;();</span>
+
+<span class="fc" id="L23">    public LanternaGUI(ScreenCreator screenCreator) {</span>
+<span class="fc" id="L24">        this.screenCreator = screenCreator;</span>
+<span class="fc" id="L25">        this.keyAdapter = createKeyAdapter();</span>
+<span class="fc" id="L26">    }</span>
+
+    private KeyAdapter createKeyAdapter() {
+<span class="fc" id="L29">        return new KeyAdapter() {</span>
+            @Override
+            public void keyPressed(KeyEvent e) {
+<span class="fc" id="L32">                handleKeyPress(e);</span>
+<span class="fc" id="L33">            }</span>
+            @Override
+            public void keyReleased(KeyEvent e) {
+<span class="fc" id="L36">                handleKeyRelease(e);</span>
+<span class="fc" id="L37">            }</span>
+        };
+    }
+
+    @Override
+    public int getGUIWidth() {
+<span class="fc" id="L43">        return screen.getTerminalSize().getColumns();</span>
+    }
+
+    @Override
+    public int getGUIHeight() {
+<span class="fc" id="L48">        return screen.getTerminalSize().getRows();</span>
+    }
+
+    @Override
+    public void clear() {
+<span class="fc" id="L53">        screen.clear();</span>
+<span class="fc" id="L54">    }</span>
+
+    @Override
+    public void close() throws IOException {
+<span class="fc" id="L58">        screen.close();</span>
+<span class="fc" id="L59">    }</span>
+
+    @Override
+    public void refresh() throws IOException {
+        try {
+<span class="fc" id="L64">            screen.refresh();</span>
+<span class="fc" id="L65">        } catch (IOException e) {</span>
+<span class="fc" id="L66">            throw new IOException(&quot;Error while refreshing Lanterna screen in LanternaGUI: &quot; + e.getMessage() + &quot; cause: &quot; + e.getCause());</span>
+<span class="fc" id="L67">        }</span>
+<span class="fc" id="L68">    }</span>
+
+    @Override
+    public void start() throws IOException {
+<span class="fc" id="L72">        screen = screenCreator.createScreen(keyAdapter);</span>
+<span class="fc" id="L73">        screen.setCursorPosition(null);</span>
+        try {
+<span class="fc" id="L75">            screen.startScreen();</span>
+<span class="fc" id="L76">        } catch (IOException e) {</span>
+<span class="fc" id="L77">            throw new IOException(&quot;Error while starting Lanterna screen in LanternaGUI: &quot; + e.getMessage() + &quot; cause: &quot; + e.getCause());</span>
+<span class="fc" id="L78">        }</span>
+<span class="fc" id="L79">        screen.doResizeIfNecessary();</span>
+<span class="fc" id="L80">    }</span>
+
+    @Override
+    public Set&lt;ACTION&gt; getNextAction(){
+<span class="fc" id="L84">        return new HashSet&lt;&gt;(inputs);</span>
+    }
+
+    private void handleKeyPress(KeyEvent e) {
+<span class="pc bpc" id="L88" title="1 of 11 branches missed.">        switch (e.getKeyCode()) {</span>
+            case KeyEvent.VK_LEFT:
+<span class="fc" id="L90">                inputs.add(LEFT);</span>
+<span class="fc" id="L91">                break;</span>
+            case KeyEvent.VK_RIGHT:
+<span class="fc" id="L93">                inputs.add(RIGHT);</span>
+<span class="fc" id="L94">                break;</span>
+            case KeyEvent.VK_UP:
+<span class="fc" id="L96">                inputs.add(UP);</span>
+<span class="fc" id="L97">                break;</span>
+            case KeyEvent.VK_DOWN:
+<span class="fc" id="L99">                inputs.add(DOWN);</span>
+<span class="fc" id="L100">                break;</span>
+            case KeyEvent.VK_ENTER:
+<span class="fc" id="L102">                inputs.add(SELECT);</span>
+<span class="fc" id="L103">                break;</span>
+            case KeyEvent.VK_Q:
+<span class="fc" id="L105">                inputs.add(QUIT);</span>
+<span class="fc" id="L106">                break;</span>
+            case KeyEvent.VK_W:
+<span class="fc" id="L108">                inputs.add(W);</span>
+<span class="fc" id="L109">                break;</span>
+            case KeyEvent.VK_S:
+<span class="fc" id="L111">                inputs.add(S);</span>
+<span class="fc" id="L112">                break;</span>
+            case KeyEvent.VK_A:
+<span class="fc" id="L114">                inputs.add(A);</span>
+<span class="fc" id="L115">                break;</span>
+            case KeyEvent.VK_D:
+<span class="fc" id="L117">                inputs.add(D);</span>
+<span class="fc" id="L118">                break;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L122">    }</span>
+
+    private void handleKeyRelease(KeyEvent e) {
+<span class="pc bpc" id="L125" title="1 of 11 branches missed.">        switch (e.getKeyCode()) {</span>
+            case KeyEvent.VK_LEFT:
+<span class="fc" id="L127">                inputs.remove(LEFT);</span>
+<span class="fc" id="L128">                break;</span>
+            case KeyEvent.VK_RIGHT:
+<span class="fc" id="L130">                inputs.remove(RIGHT);</span>
+<span class="fc" id="L131">                break;</span>
+            case KeyEvent.VK_UP:
+<span class="fc" id="L133">                inputs.remove(UP);</span>
+<span class="fc" id="L134">                break;</span>
+            case KeyEvent.VK_DOWN:
+<span class="fc" id="L136">                inputs.remove(DOWN);</span>
+<span class="fc" id="L137">                break;</span>
+            case KeyEvent.VK_ENTER:
+<span class="fc" id="L139">                inputs.remove(SELECT);</span>
+<span class="fc" id="L140">                break;</span>
+            case KeyEvent.VK_Q:
+<span class="fc" id="L142">                inputs.remove(QUIT);</span>
+<span class="fc" id="L143">                break;</span>
+            case KeyEvent.VK_W:
+<span class="fc" id="L145">                inputs.remove(W);</span>
+<span class="fc" id="L146">                break;</span>
+            case KeyEvent.VK_S:
+<span class="fc" id="L148">                inputs.remove(S);</span>
+<span class="fc" id="L149">                break;</span>
+            case KeyEvent.VK_A:
+<span class="fc" id="L151">                inputs.remove(A);</span>
+<span class="fc" id="L152">                break;</span>
+            case KeyEvent.VK_D:
+<span class="fc" id="L154">                inputs.remove(D);</span>
+<span class="fc" id="L155">                break;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L159">    }</span>
+
+    @Override
+    public void drawImage(Position position, BufferedImage image){
+<span class="fc" id="L163">        TextGraphics graphics = screen.newTextGraphics();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        for (int x = 0; x &lt; image.getWidth(); x++) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">            for (int y = 0; y &lt; image.getHeight(); y++) {</span>
+<span class="fc" id="L166">                int a = image.getRGB(x, y);</span>
+<span class="fc" id="L167">                int alpha = (a &gt;&gt; 24) &amp; 0xff;</span>
+<span class="fc" id="L168">                int red = (a &gt;&gt; 16) &amp; 0xff;</span>
+<span class="fc" id="L169">                int green = (a &gt;&gt; 8) &amp; 0xff;</span>
+<span class="fc" id="L170">                int blue = a &amp; 0xff;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">                if (alpha != 0) {</span>
+<span class="fc" id="L172">                    graphics.setCharacter(x+position.getX(), y+position.getY(), new TextCharacter(' ', new TextColor.RGB(red, green, blue), new TextColor.RGB(red, green, blue)));</span>
+                }
+            }
+        }
+<span class="fc" id="L176">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

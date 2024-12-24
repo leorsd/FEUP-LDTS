@@ -130,6 +130,9 @@ The function `drawElements` is implemented in different ways by [MenuVisualizer]
 This aligns with the Single Responsibility, Open/Close, and Liskov substitution principles.
 * Consequences: Using this pattern in our code improves code reusability and maintainability by centralizing the common drawing logic in SceneVisualizer while allowing customization through the drawElements method.
 It ensures consistent behavior across different visualizers and facilitates the addition of new scene types without modifying the core algorithm.
+* Code Sample:
+
+![TemplateMethod](../assets/finalDelivery/templateMethod.png)
 
 ### Architectural Pattern
 
@@ -153,15 +156,17 @@ It ensures consistent behavior across different visualizers and facilitates the 
 ## 🏁 Testing
 All the tests were developed using Spock, a testing platform based on the language Groovy. This platform was chosen over JUnit due to its simplicity and native mocking scheme.
 
+Mocking was used exhaustively to isolate test classes.
 Whenever suitable, dependency injection was used, allowing for better code and testing ease.
 
-The final test suite achieved a 97% statement coverage and all classes were tested, as the following screenshot of a Jacoco report shows:
+The final test suite achieved a 97% statement coverage and all classes were tested, as the following screenshot of a [Jacoco report](../assets/finalDelivery/jacoco/test/html/index.html) shows:
 
 ![JacocoCoverageReport](../assets/finalDelivery/coverageReport.png)
 
-To assure the strength of tests, we used implemented mutation testing with Pit Test. We were able to kill 95% of mutations, and most of the remaining ones are not testable 
+To assure the strength of tests, we used implemented mutation testing with Pit Test. We were able to kill [95% of mutations](../assets/finalDelivery/pitest/index.html), and most of the remaining ones are not testable 
 with Pit Test due to its inability to run tests that create GUI's. This forced us to create two test classes, each with one test, specifically to prevent Pit Test from running
 those tests, since Pit Test doesn't support excluding tests.
+
 ![MutationReport](../assets/finalDelivery/mutationReport.png)
 
 ## 💎 Quality Assurance
@@ -173,7 +178,7 @@ Although tests assure the quality of the output of the code, we felt like we nee
 Error-prone is a tool developed by google to catch common Java mistakes as compile-time errors. We included this tool early on in our project and all the errors it detects were solved.
 Its configuration can be seen in this [file](../build.gradle).
 
-### [JetBrains's Qodana](https://www.jetbrains.com/qodana/)
+### [JetBrains' Qodana](https://www.jetbrains.com/qodana/)
 
 This tool allowed us to automatically detect unnecessary import statements, simplifiable if clauses, unnecessary semicolons and other code smells. 
 The configuration for this tool can be seen at: [qodana config](../qodana.yaml).
@@ -188,9 +193,9 @@ Even though we used SOLID principles, used code analysis tools, and extensively 
 
 ## 🤝 Development
 
-To further improve and guarantee the quality of the software, we use additional tools, namely branch protection on `master` via [Github Actions](https://github.com/features/actions), and peer reviews on every pull request to that branch.
+To further improve and guarantee the quality of the software, we use additional tools, namely branch protection on `master` via [GitHub Actions](https://github.com/features/actions), and peer reviews on every pull request to that branch.
 
-All pull requests to the branch `master` must pass a [Github Action](../.github/workflows/test.yml) that compiles the code and runs unit tests from all classes that don't require GUI creation.
+All pull requests to the branch `master` must pass a [GitHub Action](../.github/workflows/test.yml) that compiles the code and runs unit tests from all classes that don't require GUI creation.
 
 To protect the `master` branch and ensure no code breaks it, we also enforce a set of rules that, among other things requires pull requests with 2 approving reviews to be merged.
 
