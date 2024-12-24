@@ -17,7 +17,10 @@ This file only deals with technical matters. To understand this game, please rea
   - [Respawn](#respawn)
   - [Different Levels](#different-levels)
   - [Level-Ending Logics](#level-ending-logics)
-- [Features and Mechanics](#-features-and-mechanics)
+  - [Animations](#animations-)
+  - [Movement Physics](#movement-physics)
+  - [Fullscreen](#fullscreen)
+  - [Background Music](#background-music)
 - [UML Class Diagram](#-uml-class-diagram)
 - [Design Patterns](#-design-patterns)
   - [Singleton](#singleton)
@@ -29,9 +32,10 @@ This file only deals with technical matters. To understand this game, please rea
   - [Game Loop](#game-loop)
 - [Testing](#-testing)
 - [Quality Assurance](#-quality-assurance)
-- [Code Smells](#-code-smells)
+- [Known Code Smells](#-known-code-smells)
 - [Development](#-development)
 - [Retrospective](#-retrospective)
+- [Self-Evaluation](#-self-evaluation)
 
 ## Implemented Features
 
@@ -186,7 +190,7 @@ Its configuration can be seen in this [file](../build.gradle).
 
 This tool allowed us to automatically detect unnecessary import statements, simplifiable if clauses, unnecessary semicolons and other code smells. 
 The configuration for this tool can be seen at: [qodana config](../qodana.yaml).
-## 🤢 Code Smells
+## 🤢 Known Code Smells
 
 Even though we used SOLID principles, used code analysis tools, and extensively tested our code, some other code smells remain, namely:
 - Long switch statements are still present in [LanternaGUI](../src/main/java/gui/LanternaGUI.java).
@@ -208,3 +212,16 @@ We use feature and fix branches, and common naming conventions on branches and c
 ## 🔙 Retrospective
 
 All proposed features were implemented, except for PowerUps, because we felt like that didn't make sense in the context of our game.
+
+## 🫂 Self-Evaluation
+
+><p>
+>António Lourenço Rodrigues: 33.3% 
+>
+>Gonçalo Santos: 33.3% 
+>
+>Leandro Resende: 33.3%
+></p>
+
+
+
