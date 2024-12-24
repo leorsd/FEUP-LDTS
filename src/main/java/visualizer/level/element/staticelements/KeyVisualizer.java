@@ -2,7 +2,6 @@ package visualizer.level.element.staticelements;
 
 import model.elements.staticelements.Key;
 import gui.GUI;
-import visualizer.level.element.ElementVisualizer;
 
 public class KeyVisualizer implements StaticElementVisualizer<Key> {
     @Override
