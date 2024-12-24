@@ -9,6 +9,8 @@ In this game, two players take on the roles of our main characters, Lavena and T
 
 In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, along with a surprising new challenge that will push your abilities to the limit.
 
+This file focuses solely on the gameplay aspects of the game, providing an overview of how to play. For a more in-depth understanding of the technical details, please refer to the [documentation](docs/README.md).
+
 ><p align="center">
 >This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
 ></p>
