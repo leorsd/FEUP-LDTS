@@ -7,22 +7,6 @@ In this game, two players take on the roles of our main characters, Lavena and T
 
 In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, along with a surprising new challenge that will push your abilities to the limit.
 
-## 🎮 Gameplay Functionalities and Details
-
-Number of Players: 2 (local co-op).
-
-### Controls
-
-####  __Tergon__ (Player 1)
-Move Left: A  
-Move Right: D  
-Jump: W
-
-#### __Lavena__ (Player 2)
-Move Left: ←  
-Move Right: →  
-Jump: ↑
-
 ## Implemented Features
 
 ### Interactive Menu 
@@ -96,19 +80,12 @@ This level introduces:
 * A new button-coordenated purple wall, that disappears while one of the players is pressing the (also purple) button;
 * A new enemy, the final boss, consisting of a bigger skeleton with a twist: this one stays still, only jumping vertically from time to time.
 
-## 🚀 How to Play
-Follow these steps:
-* 1. Open a terminal and launch the game with `./gradlew run`
-* 2. Use the menu to select a level, start from the tutorial or exit the game.
-* 3. Work together to collect the keys and open the gate to complete the level.
-* 4. Defeat the boss in the final level to win the game.
-
 ## 📈 UML Class Diagram
 
-The following simplified UML diagram showcases classes and interfaces, as well as used design patters.  
-![Simple UML](assets/LDTS_UML.drawio.png)
+The following simplified UML diagram showcases classes and interfaces, as well as used design patters. Most dependencies were excluded because otherwise the diagram would be chaotic and unreadable.
+![Simple UML](../assets/finalDelivery/simpleUML.drawio.png)
 For more details refer to:
-[Complete Diagram](assets/Complete_UML.drawio.png)
+[Complete Diagram](../assets/finalDelivery/CompleteUML.drawio.png)
 ## 🛠️ Design Patterns
 
 ### Creational Design Patterns
@@ -159,24 +136,44 @@ For more details refer to:
   This pattern can be broken down into five steps that repeat continuously. First, we initialize the game and set everything up for the start. Next, we process the user input, update the game objects, and draw all the elements. We then ensure updates occur at a steady rate using sleep, and the cycle repeats.
 * Consequences: To implement this pattern, we created our Game class, which orchestrates the game's lifecycle (looping every 50ms) and maintains a controlled frame rate.
   This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement it in our project.
+## 🏁 Testing
+All the tests were developed using Spock, a testing platform based on the language Groovy. This platform was chosen over JUnit due to its simplicity and native mocking scheme.
+
+Whenever suitable, dependency injection was used, allowing for better code and testing ease.
+
+The final test suite achieved a 97% statement coverage and all classes were tested, as the following screenshot of a Jacoco report shows:
+
+![JacocoCoverageReport](../assets/finalDelivery/coverageReport.png)
+
+To assure the strength of tests, we used implemented mutation testing with Pit Test. We were able to kill 95% of mutations, and most of the remaining ones are not testable 
+with Pit Test due to its inability to run tests that create GUI's. This forced us to create two test classes, each with one test, specifically to prevent Pit Test from running
+those tests, since Pit Test doesn't support excluding tests.
+![MutationReport](../assets/finalDelivery/mutationReport.png)
+
+## 💎 Quality Assurance
+
+Although tests assure the quality of the output of the code, we felt like we needed to also assure the quality of the code itself. For that purpose, we used two additional tools.
+
+### [Google's Error-Prone](https://github.com/google/error-prone)
+
+Error-prone is a tool developed by google to catch common Java mistakes as compile-time errors. We included this tool early on in our project and all the errors it detects were solved.
+Its configuration can be seen in this [file](../build.gradle).
+
+### [JetBrains's Qodana](https://www.jetbrains.com/qodana/)
+
+This tool allowed us to automatically detect unnecessary import statements, simplifiable if clauses, unnecessary semicolons and other code smells. 
+The configuration for this tool can be seen at: [qodana config](../qodana.yaml).
 
 ## 🤝 Development
 
-To further improve and guarantee the quality of the software, we use additional tools, namely branch protection, [Github Actions](https://github.com/features/actions), and peer reviews.
+To further improve and guarantee the quality of the software, we use additional tools, namely branch protection on `master` via [Github Actions](https://github.com/features/actions), and peer reviews on every pull request to that branch.
 
-To protect the master branch and ensure no code breaks it, we enforce a set of rules that, among other things requires pull requests with 2 approving reviews to be merged.
-All pull requests to the branch `master` must pass a [Github Action](.github/workflows/test.yml) that compiles the code and tuns the unit tests. Those pull requests must be approved by the other group members before being merged.
+All pull requests to the branch `master` must pass a [Github Action](../.github/workflows/test.yml) that compiles the code and runs unit tests from all classes that don't require GUI creation.
 
-We use feature and fix branches, and commonly used naming conventions on branches and commits.
+To protect the `master` branch and ensure no code breaks it, we also enforce a set of rules that, among other things requires pull requests with 2 approving reviews to be merged.
 
+We use feature and fix branches, and common naming conventions on branches and commits.
 
 ## 🔜 Future work and upcoming features
 
-* Additional collectibles for replayability (e.g., coins or artifacts).
-* Power-Ups
-* Check collisions with traps and keys, and act upon them
-* Detect collisions with monsters when any of the characters' pixels coincide and not only when the base position is equal
-* Include size in keys, traps, and walls
-* Have better images for elements and background
-* Add level-ending logics
-* Ensure players fall while moving to the sides
+All proposed features were implemented, except for PowerUps, because we felt like that didn't make sense in the context of our game.
