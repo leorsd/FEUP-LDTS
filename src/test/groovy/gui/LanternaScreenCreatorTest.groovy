@@ -66,14 +66,26 @@ class LanternaScreenCreatorTest extends Specification {
     }
     def "test getAwtTerminalFrame with full screen supported"() {
         given:
-        def screen = Mock(TerminalScreen)
-        def gd = Mock(GraphicsDevice)
-        def awtTerminalFrame = Mock(AWTTerminalFrame)
-        def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
-        gd.isFullScreenSupported() >> true
-        screen.getTerminal() >> awtTerminalFrame
-        expect:
-        lanternaScreenCreator.getAwtTerminalFrame(screen, gd) == awtTerminalFrame
+            def screen = Mock(TerminalScreen)
+            def gd = Mock(GraphicsDevice)
+            def awtTerminalFrame = Mock(AWTTerminalFrame)
+            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+            gd.isFullScreenSupported() >> true
+            screen.getTerminal() >> awtTerminalFrame
+        when:
+            def terminal = lanternaScreenCreator.getAwtTerminalFrame(screen, gd)
+        then:
+            terminal == awtTerminalFrame
+            1 * gd.setFullScreenWindow(_)
+    }
+
+    def "load font from right file"() {
+        given:
+            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+        when:
+            def font = lanternaScreenCreator.loadFont(7, "fonts/square.ttf")
+        then:
+            font!=null
     }
 
     def "load font from wrong file"() {
@@ -104,5 +116,29 @@ class LanternaScreenCreatorTest extends Specification {
         then:
         exception != null
         exception.message.substring(0, 66) == "Error while creating Lanterna screen when trying to open font file"
+    }
+
+    def "test getBestFontSize width minimal"() {
+        given:
+            terminalSize.getColumns() >> 5
+            terminalSize.getRows() >> 3
+            def dimensions = Mock(Dimension)
+            dimensions.getWidth() >> 15
+            dimensions.getHeight() >> 15
+            def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+        expect:
+            lanternaScreenCreator.getBestFontSize(dimensions) == 3
+    }
+
+    def "test getBestFontSize height minimal"() {
+        given:
+        terminalSize.getColumns() >> 3
+        terminalSize.getRows() >> 5
+        def dimensions = Mock(Dimension)
+        dimensions.getWidth() >> 15
+        dimensions.getHeight() >> 15
+        def lanternaScreenCreator = new LanternaScreenCreator(terminalFactory as DefaultTerminalFactory, terminalSize as TerminalSize, defaultBounds as Dimension)
+        expect:
+        lanternaScreenCreator.getBestFontSize(dimensions) == 3
     }
 }
