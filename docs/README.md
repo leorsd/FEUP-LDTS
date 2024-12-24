@@ -1,27 +1,14 @@
 # Dungeon Locked
 
 ## 📖 Game Overview
-__Dungeon Locked__ is a local co-op game inspired by the 00's Flash classic "Fireboy and Watergirl".
+__Dungeon Locked__ is a local  cooperative puzzle-platform game inspired by the 00's Flash classic "Fireboy and Watergirl".
 
 In this game, two players take on the roles of our main characters, Lavena and Tergon, as they navigate through challenging dungeons filled with traps and enemies. To finally achieve freedom, they have to advance through 3 levels that require teamwork and strategy to overcome.
 
-In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, along with a surprising new challenge that will push your abilities to the limit.
+In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, in a way that will push your abilities to the limit.
 
-## 🎮 Gameplay Functionalities and Details
+This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
 
-Number of Players: 2 (local co-op).
-
-### Controls
-
-####  __Tergon__ (Player 1)
-Move Left: A  
-Move Right: D  
-Jump: W
-
-#### __Lavena__ (Player 2)
-Move Left: ←  
-Move Right: →  
-Jump: ↑
 
 ## Implemented Features
 
@@ -46,8 +33,33 @@ If a player dies, they will respawn at their initial starting position from when
 We implemented a tutorial and three distinct levels, each progressively more challenging.
 
 ### Level-Ending Logics
-When both players collect all their respective keys
-## 🗺️ Features and Mechanics
+To advance to the next level, both players must reach the level's exit door. However, the door only opens once each player has collected all of their respective keys. Once this is achieved, both players must stand inside the doorframe to proceed to the next level.
+
+### Animations 
+The gameplay becomes more dynamic, fluid, and engaging through the use of sprites incorporated into some elements. These sprites adapt based on the element's orientation and state, adding a layer of interactivity and realism. 
+
+This approach is applied to various game components, including the players, monsters, and doors, allowing them to respond visually to the player's actions and the game’s progress.
+
+### Movement Physics
+To ensure our game functions as intended, we implemented a physics mechanism that simulates gravity. This allows the players to jump and naturally return to the ground, creating a realistic and responsive movement system. 
+
+## 🎮 Gameplay Functionalities and Details
+
+Number of Players: 2 (local co-op).
+
+### Controls
+
+####  __Tergon__ (Player 1)
+Move Left: A  
+Move Right: D  
+Jump: W
+
+#### __Lavena__ (Player 2)
+Move Left: ←  
+Move Right: →  
+Jump: ↑
+
+## 🗺️ Game Overview
 
 ### Menu
 Start a new game, select a specific level or exit the game.
