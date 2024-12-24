@@ -162,4 +162,35 @@ class LanternaGUITest extends Specification {
         KeyEvent.VK_S   | ACTION.S
         KeyEvent.VK_D   | ACTION.D
     }
+
+    def "test start"() {
+        given:
+            screen.startScreen() >> {throw new IOException("Error")}
+            def exception
+        when:
+            try {
+                gui.start()
+            } catch (Exception e) {
+                exception = e
+            }
+        then:
+            exception != null
+            exception.message.substring(0,51) == "Error while starting Lanterna screen in LanternaGUI"
+    }
+
+    def "test refresh"() {
+        given:
+            screen.refresh() >> {throw new IOException("Error")}
+            def exception
+        when:
+            gui.start()
+            try {
+                gui.refresh()
+            } catch (Exception e) {
+                exception = e
+            }
+        then:
+            exception != null
+            exception.message.substring(0,53) == "Error while refreshing Lanterna screen in LanternaGUI"
+    }
 }
