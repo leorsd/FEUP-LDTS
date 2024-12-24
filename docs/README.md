@@ -1,13 +1,13 @@
-# Dungeon Locked
+<p align="center">
+<img src="../assets/finalDelivery/logo.png"/>
+</p>
 
-## 📖 Game Overview
-__Dungeon Locked__ is a local  cooperative puzzle-platform game inspired by the 00's Flash classic "Fireboy and Watergirl".
+## 📖 Game Explanation
+This file only deals with technical matters. To understand this game, please read its [explanation](../README.md).
 
-In this game, two players take on the roles of our main characters, Lavena and Tergon, as they navigate through challenging dungeons filled with traps and enemies. To finally achieve freedom, they have to advance through 3 levels that require teamwork and strategy to overcome.
-
-In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, in a way that will push your abilities to the limit.
-
-This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
+><p align="center">
+>This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
+></p>
 
 ## Table of Contents
 - [Implemented Features](#implemented-features)
@@ -71,95 +71,6 @@ To ensure our game functions as intended, we implemented a physics mechanism tha
 ### Fullscreen
 To ensure optimal display settings, our game has the ability to automatically adjust the terminal and screen, switching to fullscreen mode. If your PC uses a 16:9 resolution, the game will automatically adapt the font size to fit the screen appropriately.
 
-## 🎮 Gameplay Controls
-
-Number of Players: 2 (local co-op).
-
-### Controls
-
-####  __Tergon__ (Player 1)
-Move Left: A  
-Move Right: D  
-Jump: W
-
-#### __Lavena__ (Player 2)
-Move Left: ←  
-Move Right: →  
-Jump: ↑
-
-## Detailed Challenges and Obstacles 
-
-### Goal
-In each level, the players' main objective is to collect all the keys that unlock the door, allowing them to move on to the next stage. Each player can only pick up the keys that correspond to their color, which adds an element of strategy and increases the challenge.
-
-In the tutorial, all the game features are introduced and explained, and they will be progressively implemented in more complex ways as players advance through the levels:
-
-### Obstacles
-
-#### Walls 🧱
-The walls are the obstacles that make up the majority of the map. They serve as the main platforms, acting as the ground, walls, and ceiling of the level. These elements define the playable area, shaping the environment and providing level boundaries.
-
-#### Traps 🪤
-Traps are obstacles that players may or may not collide with, depending on their color. Players can only pass through traps that match their own color. If a trap is green, it targets both players, meaning neither player can walk over or touch it.
-
-#### Enemies 🧙‍♂️
-The only enemies in this game are the druids, small creatures that inhabit the caves (how did they come down here?). These druids wander around the dungeons, moving only horizontally, left to right. If a player comes into contact with a druid, they will die instantly. The only way to avoid them is by jumping over them or carefully coordinating your movement to bypass them safely.
-
-#### Toggleable Walls and Buttons 🖲️
-While exploring a level, players may encounter a couple walls of different colors. These are toggleable walls! Unlike regular walls, toggleable walls can be deactivated using buttons. 
-
-For each toggleable wall, there must be at least one button of the same color. When a player presses the corresponding button, the toggleable wall becomes inactive and disappears. However, players must be cautious—if the button stops being pressed, the wall reappears. If a player is in the position of the wall when this happens, he will die instantly.
-
-
-####
-
-### Menu
-Start a new game, select a specific level or exit the game.
-
-![Menu](assets/menu_mockup.png)
-
-### Levels
-
-In every level, the players' primary objective is to gather two keys that unlock the gate (black line), allowing them to progress to the next stage.
-Each player can only pick up the key that matches their color, which enables the creation of more entertaining and challenging puzzles.
-New levels gradually introduce new features, like:
-* Environmental Obstacles: Toxic Lakes, platforms and walls.
-
-* Enemies: Skeleton and Final Boss Skeleton.
-
-* Traps and challenges: Toxic ponds and button-coordenated walls.
-
-### Level 1 (Tutorial)
-
-Basic layout and terrain to familiarize players with teamwork mechanics.
-
-![Level 1](assets/level1_mockup.png)
-
-In Level 1, we decided to:
-* Implement small parkour sections
-* Introduce the players to the key feature
-  All of these features allow the new players to get familiar with the controls, mechanics and objectives of the game.
-
-### Level 2
-
-Features new enemies, platforms and toxic ponds.
-
-![Level 2](assets/level2_mockup.png)
-
-This level includes:
-* More challenging parkour sections;
-* Toxic ponds (which can only be touched by the character of the matching color);
-* A new enemy, the skeleton, which moves exclusively sideways.
-* Deaths: If the wrong player touches the toxic pond or any of them comes in contact with the monster, they will die instantly and respawn at the initial position.
-
-### Level 3
-Introduced new button obstacles and a bigger boss enemy.
-
-![Level 3](assets/level3_mockup.png)
-This level introduces:
-* A new button-coordenated purple wall, that disappears while one of the players is pressing the (also purple) button;
-* A new enemy, the final boss, consisting of a bigger skeleton with a twist: this one stays still, only jumping vertically from time to time.
-
 ## 📈 UML Class Diagram
 
 The following simplified UML diagram showcases classes and interfaces, as well as used design patters. Most dependencies were excluded because otherwise the diagram would be chaotic and unreadable.
@@ -172,23 +83,25 @@ For more details refer to:
 
 #### Singleton
 
-* Justification: We also chose to apply the Singleton design pattern, which is implemented in the Game class.
-  There’s really not a point in initiating more than one instance of the Game class, since it’s the core class from which everything is created. After all, we only want a single game running at once.
-
+* Justification: We also chose to apply the Singleton design pattern, which is implemented in the [Game](../src/main/java/game/Game.java) class.
+  There’s really not a point in initiating more than one instance of the Game class. After all, we only want a single game running at once.
 
 * Consequences: In order to implement this pattern, we made the Game class constructor private, and created a static method that manages its instances. This method checks if a Game already exists. If it does, that instance is returned, if not, a new instance is initialized.
 
 ### Structural Design Patterns
 
 #### Composite
-* Justification: We decided to implement the composite design pattern in our game to manage the complexity of different controllers in a flexible and scalable way.
+* Justification: Implementing the Composite Pattern came across as natural when implementing [LevelController](../src/main/java/controller/game/LevelController.java).
 * Consequences: Due to the implementation of this design pattern we can treat individual controllers (like MonsterController, Player1Controller and Player2Controller) and the composite LevelController uniformly. By organizing controllers in this hierarchical way, we make our code cleaner and more intuitive.
   This pattern follows the Single Responsibility, the Open/Closed and the Liskov Substitution principles of SOLID, that help us make a modular system which is also easier to maintain.
+* Diagram:
+
+  ![Composite](../assets/finalDelivery/composite.png)
 
 #### Adapter
 * Justification: The adapter pattern gives more flexibility and adaptability to the code, while helping enforce the SOLID principles.
 * Consequences: This pattern forces us to have more interfaces, like GUI, and to clearly define the responsibilities of each of its subclasses. Therefore, it helps us follow the SOLID principles, namely the Single Responsibility, Open/Closed and Interface segregation principles.
-* Lanterna GUI and Level Loader: In our case, the class Lanterna GUI acts as adapter for the Viewers. Lanterna GUI implements GUI, allowing for easy switching between GUI’s. In the future, we hope do a similar thing when loading levels: make an interface Level Loader, and several classes that implement it, allowing for several ways of representing levels.
+* Lanterna GUI and Level/Menu Loader: In our case, the class [LanternaGUI](../src/main/java/gui/LanternaGUI.java) acts as adapter between the Visualizers and Lanterna's functionalities. Lanterna GUI implements GUI, allowing for easy switching between GUI’s. In the future, we hope do a similar thing when loading levels: make an interface Level Loader, and several classes that implement it, allowing for several ways of representing levels.
 
 ### Behavioral Design Patterns
 
