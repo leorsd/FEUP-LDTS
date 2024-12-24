@@ -101,20 +101,35 @@ For more details refer to:
 #### Adapter
 * Justification: The adapter pattern gives more flexibility and adaptability to the code, while helping enforce the SOLID principles.
 * Consequences: This pattern forces us to have more interfaces, like GUI, and to clearly define the responsibilities of each of its subclasses. Therefore, it helps us follow the SOLID principles, namely the Single Responsibility, Open/Closed and Interface segregation principles.
-* Lanterna GUI and Level/Menu Loader: In our case, the class [LanternaGUI](../src/main/java/gui/LanternaGUI.java) acts as adapter between the Visualizers and Lanterna's functionalities. Lanterna GUI implements GUI, allowing for easy switching between GUI’s. In the future, we hope do a similar thing when loading levels: make an interface Level Loader, and several classes that implement it, allowing for several ways of representing levels.
+* Lanterna GUI and Level/Menu Loader: In our case, the class [LanternaGUI](../src/main/java/gui/LanternaGUI.java) acts as adapter between the Visualizers and Lanterna's functionalities. Lanterna GUI implements GUI, allowing for easy switching between GUI’s.
+In the future, we could do a similar thing when loading levels and menu entries: make an interface Level Loader, and several classes that implement it, allowing for several ways of representing levels. Currently, we don't think we need to represent levels and menu entries in different 
+ways, so we decided not to do that.
+
+* Diagram:
+
+![Adapter](../assets/finalDelivery/adapter.png)
 
 ### Behavioral Design Patterns
 
 #### State
-* Justification: In our game, there are only two possible states: Menu or Level. The behavior of the Controller and Visualizer class has to adapt depending on the current state.
-  This design pattern also aligns with the Single Responsibility and Open/Closed principles of SOLID, which are great for our project. It organizes the code into distinct classes, each dedicated to a specific function, and enables the addition of new states without changing the existing ones.
+* Justification: In our game, there are only two possible states: Menu or Level. The behavior of the controllers and visualizers must depend on the current state.
+  This design pattern also aligns with the Single Responsibility and Open/Closed principles of SOLID, which help us maintain good code quality. It organizes the code into distinct classes, each dedicated to a specific function, and enables the addition of new states without changing the existing ones.
 
-* Consequences:This design pattern is implemented in our game through our GameManager class and Scene interface. The scene interface is implemented by the Menu and Level classes, which represent our only states. Then, everytime the game updates, the GameManager checks whether the current Scene is a Menu or a Level and adjusts its behavior accordingly.
+* Consequences: Even though the names of the classes don't make it obvious, this design pattern is implemented in our game through our [GameManager](../src/main/java/game/GameManager.java) class and [Scene](../src/main/java/model/scenes/Scene.java) interface. The scene interface is implemented by the [Menu](../src/main/java/model/scenes/Menu.java) and [Level](../src/main/java/model/scenes/Level.java) classes, which represent our only states. 
+Then, everytime the game updates, GameManager checks whether the current Scene is a Menu or a Level and adjusts its behavior accordingly.
+
+* Diagram:
+
+![Adapter](../assets/finalDelivery/state.png)
 
 #### Template Method
 
-* Justification: The Template Method Pattern allows for defining a general structure for drawing scenes while enabling subclasses to customize specific steps, like drawing scene elements. This promotes code reuse, as the shared logic (clearing and refreshing the GUI) is centralized in the base class, reducing duplication and ensuring consistency across different visualizers. This aligns with the Single Responsibility, Open/Close, and Liskov substitution principles.
-* Consequences: Using this pattern in our code improves code reusability and maintainability by centralizing the common drawing logic in the SceneVisualizer class while allowing customization through the drawElements method. It ensures consistent behavior across different visualizers and facilitates the addition of new scene types without modifying the core algorithm.
+* Justification: The Template Method Pattern allows for defining a general structure for an algorithm, and allowing subclasses to customize specific steps. In our case,
+this fits the [Scene Visualizer](../src/main/java/visualizer/SceneVisualizer.java), since the function `draw` clears the GUI, then calls `drawElements` and finally then refreshes the GUI.
+The function `drawElements` is implemented in different ways by [MenuVisualizer](../src/main/java/visualizer/menu/MenuVisualizer.java) and [LevelVisualizer](../src/main/java/visualizer/menu/LevelVisualizer.java). Since clearing and refreshing the GUI is centralized in the base class, we reduce duplication and ensuring consistency across different visualizers.
+This aligns with the Single Responsibility, Open/Close, and Liskov substitution principles.
+* Consequences: Using this pattern in our code improves code reusability and maintainability by centralizing the common drawing logic in SceneVisualizer while allowing customization through the drawElements method.
+It ensures consistent behavior across different visualizers and facilitates the addition of new scene types without modifying the core algorithm.
 
 ### Architectural Pattern
 
@@ -125,10 +140,16 @@ For more details refer to:
 ### Sequencing Pattern
 
 #### Game Loop
-* Justification: We decided to use this pattern because we don't really need to differentiate entities’ movement rates, and also to avoid synchronization errors between the threads. This pattern also ensures that the update and render processes happen in a consistent and smooth way. Additionally, it allows us to control the game's update rate, making it either smoother or lighter depending on our needs.
-  This pattern can be broken down into five steps that repeat continuously. First, we initialize the game and set everything up for the start. Next, we process the user input, update the game objects, and draw all the elements. We then ensure updates occur at a steady rate using sleep, and the cycle repeats.
-* Consequences: To implement this pattern, we created our Game class, which orchestrates the game's lifecycle (looping every 50ms) and maintains a controlled frame rate.
-  This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement it in our project.
+* Justification: We decided to use this pattern because due to lack of necessity of various threads, and to avoid synchronization errors between the threads. 
+  This pattern also ensures that the update and render processes happen in a consistent and smooth way. Additionally, it allows us to control the game's update rate, making it either smoother or lighter depending on the user's needs.
+  This pattern can be broken down into four steps that repeat continuously. First, we process the user input, update the game objects, and draw all the elements. We then ensure updates occur at a steady rate using sleep, and the cycle repeats.
+* Consequences: To implement this pattern, we created our [Game](../src/main/java/game/Game.java) class, which orchestrates the game's lifecycle (looping every 50ms) and maintains a controlled frame rate.
+  This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement this pattern in our project.
+* Diagram:
+
+![GameLoop](../assets/finalDelivery/gameLoop.png)
+
+
 ## 🏁 Testing
 All the tests were developed using Spock, a testing platform based on the language Groovy. This platform was chosen over JUnit due to its simplicity and native mocking scheme.
 

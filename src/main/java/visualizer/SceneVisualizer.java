@@ -22,3 +22,4 @@ public abstract class SceneVisualizer<T> {
 
     protected abstract void drawElements(GUI gui) throws IOException;
 }
+
