@@ -101,20 +101,38 @@ For more details refer to:
 #### Adapter
 * Justification: The adapter pattern gives more flexibility and adaptability to the code, while helping enforce the SOLID principles.
 * Consequences: This pattern forces us to have more interfaces, like GUI, and to clearly define the responsibilities of each of its subclasses. Therefore, it helps us follow the SOLID principles, namely the Single Responsibility, Open/Closed and Interface segregation principles.
-* Lanterna GUI and Level/Menu Loader: In our case, the class [LanternaGUI](../src/main/java/gui/LanternaGUI.java) acts as adapter between the Visualizers and Lanterna's functionalities. Lanterna GUI implements GUI, allowing for easy switching between GUI’s. In the future, we hope do a similar thing when loading levels: make an interface Level Loader, and several classes that implement it, allowing for several ways of representing levels.
+* Lanterna GUI and Level/Menu Loader: In our case, the class [LanternaGUI](../src/main/java/gui/LanternaGUI.java) acts as adapter between the Visualizers and Lanterna's functionalities. Lanterna GUI implements GUI, allowing for easy switching between GUI’s.
+In the future, we could do a similar thing when loading levels and menu entries: make an interface Level Loader, and several classes that implement it, allowing for several ways of representing levels. Currently, we don't think we need to represent levels and menu entries in different 
+ways, so we decided not to do that.
+
+* Diagram:
+
+![Adapter](../assets/finalDelivery/adapter.png)
 
 ### Behavioral Design Patterns
 
 #### State
-* Justification: In our game, there are only two possible states: Menu or Level. The behavior of the Controller and Visualizer class has to adapt depending on the current state.
-  This design pattern also aligns with the Single Responsibility and Open/Closed principles of SOLID, which are great for our project. It organizes the code into distinct classes, each dedicated to a specific function, and enables the addition of new states without changing the existing ones.
+* Justification: In our game, there are only two possible states: Menu or Level. The behavior of the controllers and visualizers must depend on the current state.
+  This design pattern also aligns with the Single Responsibility and Open/Closed principles of SOLID, which help us maintain good code quality. It organizes the code into distinct classes, each dedicated to a specific function, and enables the addition of new states without changing the existing ones.
 
-* Consequences:This design pattern is implemented in our game through our GameManager class and Scene interface. The scene interface is implemented by the Menu and Level classes, which represent our only states. Then, everytime the game updates, the GameManager checks whether the current Scene is a Menu or a Level and adjusts its behavior accordingly.
+* Consequences: Even though the names of the classes don't make it obvious, this design pattern is implemented in our game through our [GameManager](../src/main/java/game/GameManager.java) class and [Scene](../src/main/java/model/scenes/Scene.java) interface. The scene interface is implemented by the [Menu](../src/main/java/model/scenes/Menu.java) and [Level](../src/main/java/model/scenes/Level.java) classes, which represent our only states. 
+Then, everytime the game updates, GameManager checks whether the current Scene is a Menu or a Level and adjusts its behavior accordingly.
+
+* Diagram:
+
+![Adapter](../assets/finalDelivery/state.png)
 
 #### Template Method
 
-* Justification: The Template Method Pattern allows for defining a general structure for drawing scenes while enabling subclasses to customize specific steps, like drawing scene elements. This promotes code reuse, as the shared logic (clearing and refreshing the GUI) is centralized in the base class, reducing duplication and ensuring consistency across different visualizers. This aligns with the Single Responsibility, Open/Close, and Liskov substitution principles.
-* Consequences: Using this pattern in our code improves code reusability and maintainability by centralizing the common drawing logic in the SceneVisualizer class while allowing customization through the drawElements method. It ensures consistent behavior across different visualizers and facilitates the addition of new scene types without modifying the core algorithm.
+* Justification: The Template Method Pattern allows for defining a general structure for an algorithm, and allowing subclasses to customize specific steps. In our case,
+this fits the [Scene Visualizer](../src/main/java/visualizer/SceneVisualizer.java), since the function `draw` clears the GUI, then calls `drawElements` and finally then refreshes the GUI.
+The function `drawElements` is implemented in different ways by [MenuVisualizer](../src/main/java/visualizer/menu/MenuVisualizer.java) and [LevelVisualizer](../src/main/java/visualizer/menu/LevelVisualizer.java). Since clearing and refreshing the GUI is centralized in the base class, we reduce duplication and ensuring consistency across different visualizers.
+This aligns with the Single Responsibility, Open/Close, and Liskov substitution principles.
+* Consequences: Using this pattern in our code improves code reusability and maintainability by centralizing the common drawing logic in SceneVisualizer while allowing customization through the drawElements method.
+It ensures consistent behavior across different visualizers and facilitates the addition of new scene types without modifying the core algorithm.
+* Code Sample:
+
+![TemplateMethod](../assets/finalDelivery/templateMethod.png)
 
 ### Architectural Pattern
 
@@ -126,22 +144,29 @@ For more details refer to:
 ### Sequencing Pattern
 
 #### Game Loop
-* Justification: We decided to use this pattern because we don't really need to differentiate entities’ movement rates, and also to avoid synchronization errors between the threads. This pattern also ensures that the update and render processes happen in a consistent and smooth way. Additionally, it allows us to control the game's update rate, making it either smoother or lighter depending on our needs.
-  This pattern can be broken down into five steps that repeat continuously. First, we initialize the game and set everything up for the start. Next, we process the user input, update the game objects, and draw all the elements. We then ensure updates occur at a steady rate using sleep, and the cycle repeats.
-* Consequences: To implement this pattern, we created our Game class, which orchestrates the game's lifecycle (looping every 50ms) and maintains a controlled frame rate.
-  This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement it in our project. For more information of how this was implemented you can check the [Game](../src/main/java/game/Game.java) and the [GameManager](../src/main/java/game/GameManager.java) classes.
+* Justification: We decided to use this pattern because due to lack of necessity of various threads, and to avoid synchronization errors between the threads. 
+  This pattern also ensures that the update and render processes happen in a consistent and smooth way. Additionally, it allows us to control the game's update rate, making it either smoother or lighter depending on the user's needs.
+  This pattern can be broken down into four steps that repeat continuously. First, we process the user input, update the game objects, and draw all the elements. We then ensure updates occur at a steady rate using sleep, and the cycle repeats.
+* Consequences: To implement this pattern, we created our [Game](../src/main/java/game/Game.java) class, which orchestrates the game's lifecycle (looping every 50ms) and maintains a controlled frame rate.
+  This approach makes the game highly responsive and provides the player with a smooth and enjoyable experience, and we don't have any reason not to implement this pattern in our project.
+* Diagram:
+
+![GameLoop](../assets/finalDelivery/gameLoop.png)
+
 ## 🏁 Testing
 All the tests were developed using Spock, a testing platform based on the language Groovy. This platform was chosen over JUnit due to its simplicity and native mocking scheme.
 
+Mocking was used exhaustively to isolate test classes.
 Whenever suitable, dependency injection was used, allowing for better code and testing ease.
 
-The final test suite achieved a 97% statement coverage and all classes were tested, as the following screenshot of a Jacoco report shows:
+The final test suite achieved a 97% statement coverage and all classes were tested, as the following screenshot of a [Jacoco report](../assets/finalDelivery/jacoco/test/html/index.html) shows:
 
 ![JacocoCoverageReport](../assets/finalDelivery/coverageReport.png)
 
-To assure the strength of tests, we used implemented mutation testing with Pit Test. We were able to kill 95% of mutations, and most of the remaining ones are not testable 
+To assure the strength of tests, we used implemented mutation testing with Pit Test. We were able to kill [95% of mutations](../assets/finalDelivery/pitest/index.html), and most of the remaining ones are not testable 
 with Pit Test due to its inability to run tests that create GUI's. This forced us to create two test classes, each with one test, specifically to prevent Pit Test from running
 those tests, since Pit Test doesn't support excluding tests.
+
 ![MutationReport](../assets/finalDelivery/mutationReport.png)
 
 ## 💎 Quality Assurance
@@ -153,7 +178,7 @@ Although tests assure the quality of the output of the code, we felt like we nee
 Error-prone is a tool developed by google to catch common Java mistakes as compile-time errors. We included this tool early on in our project and all the errors it detects were solved.
 Its configuration can be seen in this [file](../build.gradle).
 
-### [JetBrains's Qodana](https://www.jetbrains.com/qodana/)
+### [JetBrains' Qodana](https://www.jetbrains.com/qodana/)
 
 This tool allowed us to automatically detect unnecessary import statements, simplifiable if clauses, unnecessary semicolons and other code smells. 
 The configuration for this tool can be seen at: [qodana config](../qodana.yaml).
@@ -168,9 +193,9 @@ Even though we used SOLID principles, used code analysis tools, and extensively 
 
 ## 🤝 Development
 
-To further improve and guarantee the quality of the software, we use additional tools, namely branch protection on `master` via [Github Actions](https://github.com/features/actions), and peer reviews on every pull request to that branch.
+To further improve and guarantee the quality of the software, we use additional tools, namely branch protection on `master` via [GitHub Actions](https://github.com/features/actions), and peer reviews on every pull request to that branch.
 
-All pull requests to the branch `master` must pass a [Github Action](../.github/workflows/test.yml) that compiles the code and runs unit tests from all classes that don't require GUI creation.
+All pull requests to the branch `master` must pass a [GitHub Action](../.github/workflows/test.yml) that compiles the code and runs unit tests from all classes that don't require GUI creation.
 
 To protect the `master` branch and ensure no code breaks it, we also enforce a set of rules that, among other things requires pull requests with 2 approving reviews to be merged.
 

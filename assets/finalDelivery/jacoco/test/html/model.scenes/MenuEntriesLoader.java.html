@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuEntriesLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">model.scenes</a> &gt; <span class="el_source">MenuEntriesLoader.java</span></div><h1>MenuEntriesLoader.java</h1><pre class="source lang-java linenums">package model.scenes;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L11">public class MenuEntriesLoader {</span>
+
+    public static List&lt;String&gt; readFile(String menu) throws IOException {
+<span class="fc" id="L14">        List&lt;String&gt; entries = new ArrayList&lt;&gt;();</span>
+        BufferedReader br;
+<span class="fc" id="L16">        Path path = Paths.get(menu);</span>
+        try {
+<span class="fc" id="L18">            br = Files.newBufferedReader(path);</span>
+<span class="fc" id="L19">        } catch (IOException e) {</span>
+<span class="fc" id="L20">            throw new IOException(&quot;Error while trying to open menu configs file while trying to load menu&quot;);</span>
+<span class="fc" id="L21">        }</span>
+        String line;
+        try {
+<span class="fc" id="L24">            line = br.readLine();</span>
+<span class="nc" id="L25">        } catch (IOException e) {</span>
+<span class="nc" id="L26">            throw new IOException(&quot;Error while trying to read line from menu configs file while trying to load menu&quot;);</span>
+<span class="fc" id="L27">        }</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        while (line  != null) {</span>
+<span class="fc" id="L29">            entries.add(line);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (&quot;EXIT&quot;.equals(line)) {</span>
+<span class="fc" id="L31">                break;</span>
+            }
+            try {
+<span class="fc" id="L34">                line = br.readLine();</span>
+<span class="nc" id="L35">            } catch (IOException e) {</span>
+<span class="nc" id="L36">                throw new IOException(&quot;Error while trying to read line from menu configs file while trying to load menu&quot;);</span>
+<span class="fc" id="L37">            }</span>
+        }
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (entries.size() != 6) throw new IOException(&quot;Error: Menu should have 6 entries&quot;);</span>
+<span class="fc" id="L40">        return entries;</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

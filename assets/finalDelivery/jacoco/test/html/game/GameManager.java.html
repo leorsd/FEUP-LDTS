@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">game</a> &gt; <span class="el_source">GameManager.java</span></div><h1>GameManager.java</h1><pre class="source lang-java linenums">package game;
+
+import controller.game.MonsterController;
+import controller.game.Player1Controller;
+import controller.game.Player2Controller;
+import model.scenes.Level;
+import model.scenes.Menu;
+import model.scenes.Scene;
+import gui.GUI;
+import visualizer.level.LevelVisualizer;
+import visualizer.menu.MenuVisualizer;
+import visualizer.SceneVisualizer;
+import controller.Controller;
+import controller.game.LevelController;
+import controller.menu.MenuController;
+
+import java.io.IOException;
+
+public class GameManager {
+    Scene currentScene;
+    Controller&lt;? extends Scene&gt; controller; // Java requires keyword &quot;extends&quot; even though Scene is an interface
+    SceneVisualizer&lt;? extends Scene&gt; sceneVisualizer;
+
+<span class="fc" id="L24">    public GameManager(Scene currentScene) {</span>
+<span class="fc" id="L25">        this.currentScene = currentScene;</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (currentScene instanceof Menu) {</span>
+<span class="fc" id="L27">            controller = new MenuController((Menu) currentScene);</span>
+<span class="fc" id="L28">            sceneVisualizer = new MenuVisualizer((Menu) currentScene);</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        } else if (currentScene instanceof Level) {</span>
+<span class="fc" id="L30">            controller = new LevelController((Level) currentScene, new Player1Controller((Level) currentScene), new Player2Controller((Level) currentScene), new MonsterController((Level) currentScene));</span>
+<span class="fc" id="L31">            sceneVisualizer = new LevelVisualizer((Level) currentScene);</span>
+        }else {
+<span class="fc" id="L33">            throw new IllegalArgumentException(&quot;Scene must be either a Menu or a Level&quot;);</span>
+        }
+<span class="fc" id="L35">    }</span>
+
+    public Scene getCurrentScene() {
+<span class="fc" id="L38">        return currentScene;</span>
+    }
+
+    public void setCurrentScene(Scene currentScene) {
+<span class="fc" id="L42">        this.currentScene = currentScene;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (currentScene instanceof Menu) {</span>
+<span class="fc" id="L44">            controller = new MenuController((Menu) currentScene);</span>
+<span class="fc" id="L45">            sceneVisualizer = new MenuVisualizer((Menu) currentScene);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        } else if (currentScene instanceof Level) {</span>
+<span class="fc" id="L47">            controller = new LevelController((Level) currentScene, new Player1Controller((Level) currentScene), new Player2Controller((Level) currentScene), new MonsterController((Level) currentScene));</span>
+<span class="fc" id="L48">            sceneVisualizer = new LevelVisualizer((Level) currentScene);</span>
+        }
+<span class="fc" id="L50">    }</span>
+
+    public boolean step(GUI gui, long currentTime) throws IOException {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (currentScene == null) {</span>
+<span class="fc" id="L54">            return false;</span>
+        }
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (controller!=null) controller.update(this, gui.getNextAction(), currentTime);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (sceneVisualizer != null) {</span>
+<span class="fc" id="L58">            sceneVisualizer.draw(gui);</span>
+        }
+<span class="fc" id="L60">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player2Visualizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">visualizer.level.element.dynamicelements</a> &gt; <span class="el_source">Player2Visualizer.java</span></div><h1>Player2Visualizer.java</h1><pre class="source lang-java linenums">package visualizer.level.element.dynamicelements;
+
+import gui.GUI;
+import model.elements.dynamicelements.Player;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class Player2Visualizer implements DynamicElementVisualizer&lt;Player&gt; {
+    private final Map&lt;Player.ORIENTATION, List&lt;String&gt;&gt; spriteMap;
+
+<span class="fc" id="L18">    public Player2Visualizer() {</span>
+<span class="fc" id="L19">        spriteMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L20">        spriteMap.put(Player.ORIENTATION.UP, List.of(&quot;src/main/resources/images/players/lavena-jumping.png&quot;));</span>
+<span class="fc" id="L21">        spriteMap.put(Player.ORIENTATION.LEFT, List.of(&quot;src/main/resources/images/players/lavena-left-1.png&quot;,</span>
+                &quot;src/main/resources/images/players/lavena-left-2.png&quot;,
+                &quot;src/main/resources/images/players/lavena-left-3.png&quot;,
+                &quot;src/main/resources/images/players/lavena-left-4.png&quot;));
+<span class="fc" id="L25">        spriteMap.put(Player.ORIENTATION.DOWN, List.of(&quot;src/main/resources/images/players/lavena-jumping-down.png&quot;));</span>
+<span class="fc" id="L26">        spriteMap.put(Player.ORIENTATION.RIGHT, List.of(&quot;src/main/resources/images/players/lavena-right-1.png&quot;,</span>
+                &quot;src/main/resources/images/players/lavena-right-2.png&quot;,
+                &quot;src/main/resources/images/players/lavena-right-3.png&quot;,
+                &quot;src/main/resources/images/players/lavena-right-4.png&quot;));
+<span class="fc" id="L30">        spriteMap.put(Player.ORIENTATION.UPLEFT, List.of(&quot;src/main/resources/images/players/lavena-jumping-left.png&quot;));</span>
+<span class="fc" id="L31">        spriteMap.put(Player.ORIENTATION.UPRIGHT, List.of(&quot;src/main/resources/images/players/lavena-jumping-right.png&quot;));</span>
+<span class="fc" id="L32">        spriteMap.put(Player.ORIENTATION.DOWNLEFT, List.of(&quot;src/main/resources/images/players/lavena-jumping-left.png&quot;));</span>
+<span class="fc" id="L33">        spriteMap.put(Player.ORIENTATION.DOWNRIGHT, List.of(&quot;src/main/resources/images/players/lavena-jumping-right.png&quot;));</span>
+<span class="fc" id="L34">        spriteMap.put(Player.ORIENTATION.STANDING, List.of(&quot;src/main/resources/images/players/lavena-standing.png&quot;));</span>
+<span class="fc" id="L35">    }</span>
+
+    @Override
+    public void draw(Player player, GUI gui) throws IOException {
+<span class="fc" id="L39">        String sprite = getSprite(player);</span>
+        BufferedImage loadedSprite;
+        try {
+<span class="fc" id="L42">            loadedSprite = ImageIO.read(new File(sprite));</span>
+<span class="nc" id="L43">        } catch (IOException e) {</span>
+<span class="nc" id="L44">            throw new IOException(&quot;Could not load sprite for Player 2 from path: &quot; + sprite);</span>
+<span class="fc" id="L45">        }</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (loadedSprite != null)</span>
+<span class="fc" id="L47">            gui.drawImage(player.getPosition(), loadedSprite);</span>
+<span class="fc" id="L48">    }</span>
+
+    private String getSprite(Player player) {
+<span class="fc" id="L51">        List&lt;String&gt; spriteActionList = spriteMap.get(player.getOrientation());</span>
+<span class="fc" id="L52">        return spriteActionList.get((player.getLastActionCount()/2 % spriteActionList.size()));</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

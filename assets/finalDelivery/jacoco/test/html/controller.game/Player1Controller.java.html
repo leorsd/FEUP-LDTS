@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player1Controller.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">controller.game</a> &gt; <span class="el_source">Player1Controller.java</span></div><h1>Player1Controller.java</h1><pre class="source lang-java linenums">package controller.game;
+
+import game.GameManager;
+import model.Position;
+import model.elements.dynamicelements.Player;
+import model.scenes.Level;
+import controller.Controller;
+import gui.GUI;
+
+import java.util.Set;
+
+public class Player1Controller extends Controller&lt;Level&gt; {
+<span class="fc" id="L13">    private boolean isJumping = false;</span>
+<span class="fc" id="L14">    private int currentJumpHeight = 0;</span>
+
+    public Player1Controller(Level level) {
+<span class="fc" id="L17">        super(level);</span>
+<span class="fc" id="L18">    }</span>
+
+    public void movePlayer1Left() {
+<span class="fc" id="L21">        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX() - 1, getModel().getPlayer1().getPosition().getY());</span>
+<span class="fc" id="L22">        movePlayer(desiredPosition);</span>
+<span class="fc" id="L23">    }</span>
+
+    public void movePlayer1Right() {
+<span class="fc" id="L26">        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX() + 1, getModel().getPlayer1().getPosition().getY());</span>
+<span class="fc" id="L27">        movePlayer(desiredPosition);</span>
+<span class="fc" id="L28">    }</span>
+
+    public void movePlayer1Up() {
+<span class="fc" id="L31">        Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() - 1);</span>
+<span class="fc" id="L32">        movePlayer(desiredPosition);</span>
+<span class="fc" id="L33">    }</span>
+
+    public void movePlayer1Down() {
+<span class="pc bpc" id="L36" title="1 of 4 branches missed.">        if(!isOnGround() &amp;&amp; !isJumping) {</span>
+<span class="fc" id="L37">            Position desiredPosition = new Position(getModel().getPlayer1().getPosition().getX(), getModel().getPlayer1().getPosition().getY() + 1);</span>
+<span class="fc" id="L38">            movePlayer(desiredPosition);</span>
+        }
+<span class="fc" id="L40">    }</span>
+
+    private void movePlayer(Position position) {
+<span class="fc" id="L43">        int playerSizeX = getModel().getPlayer1().getSizeX();</span>
+<span class="fc" id="L44">        int playerSizeY = getModel().getPlayer1().getSizeY();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (int i = 0; i &lt; playerSizeX; i++) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            for (int j = 0; j &lt; playerSizeY; j++) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">                if (! getModel().isPositionFree(new Position(position.getX() + i, position.getY() + j))) return;</span>
+            }
+        }
+<span class="fc" id="L50">        getModel().getPlayer1().setPosition(position);</span>
+<span class="fc" id="L51">    }</span>
+
+    public boolean isOnGround() {
+<span class="fc" id="L54">        int playerSizeX = getModel().getPlayer1().getSizeX();</span>
+<span class="fc" id="L55">        int playerSizeY = getModel().getPlayer1().getSizeY();</span>
+<span class="fc" id="L56">        boolean isOnGround = false;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for(int i = 0; i &lt; playerSizeX; i++) {</span>
+<span class="fc" id="L58">            Position belowPosition = new Position(getModel().getPlayer1().getPosition().getX()+i, getModel().getPlayer1().getPosition().getY() + playerSizeY);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            isOnGround |= !getModel().isPositionFree(belowPosition);</span>
+        }
+<span class="fc" id="L61">        return isOnGround;</span>
+    }
+
+    private boolean canJump() {
+<span class="fc" id="L65">        int playerSizeX = getModel().getPlayer1().getSizeX();</span>
+<span class="fc" id="L66">        boolean canJump = true;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for(int i = 0; i &lt; playerSizeX; i++) {</span>
+<span class="fc" id="L68">            Position upPosition = new Position(getModel().getPlayer1().getPosition().getX() + i, getModel().getPlayer1().getPosition().getY() - 1);</span>
+<span class="fc" id="L69">            canJump &amp;= getModel().isPositionFree(upPosition);</span>
+        }
+<span class="fc" id="L71">        return canJump;</span>
+    }
+
+    private void jump() {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if(isOnGround()) {</span>
+<span class="fc" id="L76">            isJumping = true;</span>
+<span class="fc" id="L77">            currentJumpHeight = 0;</span>
+        }
+<span class="fc" id="L79">    }</span>
+
+    private void updatePlayerLastAction(Set&lt;GUI.ACTION&gt; actions) {
+<span class="fc bfc" id="L82" title="All 4 branches covered.">        if (isJumping &amp;&amp; actions.contains(GUI.ACTION.RIGHT)) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPRIGHT) {</span>
+<span class="fc" id="L84">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L86">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPRIGHT);</span>
+<span class="fc" id="L87">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L89" title="All 4 branches covered.">        } else if (isJumping &amp;&amp; actions.contains(GUI.ACTION.LEFT)) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPLEFT) {</span>
+<span class="fc" id="L91">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L93">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPLEFT);</span>
+<span class="fc" id="L94">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        } else if (isJumping) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UP) {</span>
+<span class="fc" id="L98">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L100">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UP);</span>
+<span class="fc" id="L101">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L103" title="All 4 branches covered.">        } else if (actions.contains(GUI.ACTION.UP) &amp;&amp; actions.contains(GUI.ACTION.RIGHT)) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPRIGHT) {</span>
+<span class="fc" id="L105">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L107">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPRIGHT);</span>
+<span class="fc" id="L108">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L110" title="All 4 branches covered.">        } else if (actions.contains(GUI.ACTION.UP) &amp;&amp; actions.contains(GUI.ACTION.LEFT)) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UPLEFT) {</span>
+<span class="fc" id="L112">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L114">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UPLEFT);</span>
+<span class="fc" id="L115">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        }  else if (actions.contains(GUI.ACTION.UP)) {</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.UP) {</span>
+<span class="fc" id="L119">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L121">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.UP);</span>
+<span class="fc" id="L122">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L124" title="All 4 branches covered.">        } else if (actions.contains(GUI.ACTION.RIGHT) &amp;&amp; actions.contains(GUI.ACTION.DOWN)) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.DOWNRIGHT) {</span>
+<span class="fc" id="L126">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L128">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.DOWNRIGHT);</span>
+<span class="fc" id="L129">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L131" title="All 4 branches covered.">        } else if (actions.contains(GUI.ACTION.LEFT) &amp;&amp; actions.contains(GUI.ACTION.DOWN)) {</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.DOWNLEFT) {</span>
+<span class="fc" id="L133">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L135">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.DOWNLEFT);</span>
+<span class="fc" id="L136">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        } else if (actions.contains(GUI.ACTION.DOWN)) {</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.DOWN) {</span>
+<span class="fc" id="L140">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L142">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.DOWN);</span>
+<span class="fc" id="L143">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        } else if (actions.contains(GUI.ACTION.RIGHT)) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.RIGHT) {</span>
+<span class="fc" id="L147">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L149">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.RIGHT);</span>
+<span class="fc" id="L150">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        } else if (actions.contains(GUI.ACTION.LEFT)) {</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.LEFT) {</span>
+<span class="fc" id="L154">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L156">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.LEFT);</span>
+<span class="fc" id="L157">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+        } else {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if (getModel().getPlayer1().getOrientation() == Player.ORIENTATION.STANDING) {</span>
+<span class="fc" id="L161">                getModel().getPlayer1().setLastActionCount(getModel().getPlayer1().getLastActionCount() + 1);</span>
+            } else {
+<span class="fc" id="L163">                getModel().getPlayer1().setOrientation(Player.ORIENTATION.STANDING);</span>
+<span class="fc" id="L164">                getModel().getPlayer1().setLastActionCount(0);</span>
+            }
+        }
+<span class="fc" id="L167">    }</span>
+
+    public void setJumping (boolean jumping) {
+<span class="fc" id="L170">        isJumping = jumping;</span>
+<span class="fc" id="L171">    }</span>
+
+    public boolean getIsJumping() {
+<span class="fc" id="L174">        return isJumping;</span>
+    }
+
+    public int getCurrentJumpHeight() {
+<span class="fc" id="L178">        return currentJumpHeight;</span>
+    }
+
+    public void setCurrentJumpHeight(int currentJumpHeight) {
+<span class="fc" id="L182">        this.currentJumpHeight = currentJumpHeight;</span>
+<span class="fc" id="L183">    }</span>
+
+    @Override
+    public void update(GameManager gameManager, Set&lt;GUI.ACTION&gt; actions, long updateTime) {
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (actions.contains(GUI.ACTION.UP)) jump();</span>
+<span class="fc" id="L188">        int playerSpeed = getModel().getPlayer1().getSpeed();</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        for (GUI.ACTION action : actions) {</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (action == GUI.ACTION.RIGHT){</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">                for (int i = 0; i &lt; playerSpeed; i++) {</span>
+<span class="fc" id="L192">                    movePlayer1Right();</span>
+                }
+            }
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            if (action == GUI.ACTION.DOWN){</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                for (int i = 0; i &lt; playerSpeed; i++) {</span>
+<span class="fc" id="L197">                    movePlayer1Down();</span>
+                }
+            }
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            if (action == GUI.ACTION.LEFT){</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                for (int i = 0; i &lt; playerSpeed; i++) {</span>
+<span class="fc" id="L202">                    movePlayer1Left();</span>
+                }
+            }
+<span class="fc" id="L205">        }</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        if(isJumping){</span>
+<span class="fc" id="L207">            int maxJumpHeight=getModel().getPlayer1().getMaxJumpHeight();</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            for (int i = 0; i&lt;playerSpeed; i++) {</span>
+<span class="fc bfc" id="L209" title="All 4 branches covered.">                if (currentJumpHeight &lt; maxJumpHeight &amp;&amp; canJump()) {</span>
+<span class="fc" id="L210">                    movePlayer1Up();</span>
+<span class="fc" id="L211">                    currentJumpHeight++;</span>
+                } else {
+<span class="fc" id="L213">                    isJumping = false;</span>
+<span class="fc" id="L214">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L218">        updatePlayerLastAction(actions);</span>
+<span class="fc" id="L219">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

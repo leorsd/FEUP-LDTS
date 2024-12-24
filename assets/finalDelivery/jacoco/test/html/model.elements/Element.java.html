@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Element.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">model.elements</a> &gt; <span class="el_source">Element.java</span></div><h1>Element.java</h1><pre class="source lang-java linenums">package model.elements;
+
+import model.Position;
+
+import java.util.Objects;
+
+public abstract class Element {
+    private Position position;
+    private int sizeX;
+    private int sizeY;
+
+<span class="fc" id="L12">    public Element(Position position, int sizeX, int sizeY) {</span>
+<span class="fc" id="L13">        this.position = position;</span>
+<span class="fc" id="L14">        this.sizeX = sizeX;</span>
+<span class="fc" id="L15">        this.sizeY = sizeY;</span>
+<span class="fc" id="L16">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (!(o instanceof Element element)) return false;</span>
+<span class="fc bfc" id="L22" title="All 6 branches covered.">        return Objects.equals(position, element.position) &amp;&amp; sizeX==element.sizeX &amp;&amp; sizeY==element.sizeY;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L27">        return Objects.hash(position, sizeX, sizeY);</span>
+    }
+
+    public Position getPosition() {
+<span class="fc" id="L31">        return position;</span>
+    }
+
+    public void setPosition(Position position) {
+<span class="fc" id="L35">        this.position = position;</span>
+<span class="fc" id="L36">    }</span>
+
+    public int getSizeX() {
+<span class="fc" id="L39">        return sizeX;</span>
+    }
+
+    public void setSizeX(int sizeX) {
+<span class="fc" id="L43">        this.sizeX = sizeX;</span>
+<span class="fc" id="L44">    }</span>
+
+    public int getSizeY() {
+<span class="fc" id="L47">        return sizeY;</span>
+    }
+
+    public void setSizeY(int sizeY) {
+<span class="fc" id="L51">        this.sizeY = sizeY;</span>
+<span class="fc" id="L52">    }</span>
+
+    public boolean hasCollided(Position position, int otherSizeX, int otherSizeY) {
+<span class="fc" id="L55">        int thisX = this.getPosition().getX();</span>
+<span class="fc" id="L56">        int thisY = this.getPosition().getY();</span>
+<span class="fc" id="L57">        int thisSizeX = this.getSizeX();</span>
+<span class="fc" id="L58">        int thisSizeY = this.getSizeY();</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">        return thisX &lt; position.getX() + otherSizeX &amp;&amp; thisX + thisSizeX &gt; position.getX() &amp;&amp;</span>
+<span class="fc bfc" id="L60" title="All 4 branches covered.">                thisY &lt; position.getY() + otherSizeY &amp;&amp; thisY + thisSizeY &gt; position.getY();</span>
+    }
+
+    public boolean isInside(Element otherElement) {
+<span class="fc" id="L64">        int thisX = this.getPosition().getX();</span>
+<span class="fc" id="L65">        int thisY = this.getPosition().getY();</span>
+<span class="fc" id="L66">        int otherX = otherElement.getPosition().getX();</span>
+<span class="fc" id="L67">        int otherY = otherElement.getPosition().getY();</span>
+<span class="fc bfc" id="L68" title="All 4 branches covered.">        if (thisX &lt; otherX || thisY &lt; otherY) return false;</span>
+<span class="fc bfc" id="L69" title="All 4 branches covered.">        return thisX + this.getSizeX() &lt;= otherX + otherElement.getSizeX() &amp;&amp; thisY + this.getSizeY() &lt;= otherY + otherElement.getSizeY();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

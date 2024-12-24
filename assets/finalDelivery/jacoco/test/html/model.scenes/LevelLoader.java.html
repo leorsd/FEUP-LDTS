@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LevelLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">model.scenes</a> &gt; <span class="el_source">LevelLoader.java</span></div><h1>LevelLoader.java</h1><pre class="source lang-java linenums">package model.scenes;
+
+import model.elements.dynamicelements.Door;
+import model.elements.staticelements.ToggleableWall;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.elements.staticelements.Key;
+import model.elements.staticelements.Button;
+import model.elements.staticelements.Trap;
+import model.elements.staticelements.Wall;
+import model.Position;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.List;
+
+import com.google.common.base.Splitter;
+
+import static com.google.common.base.Charsets.UTF_8;
+
+<span class="fc" id="L26">public class LevelLoader {</span>
+<span class="fc" id="L27">    Integer xBoundary = null;</span>
+<span class="fc" id="L28">    Integer yBoundary = null;</span>
+
+<span class="fc" id="L30">    BufferedImage wallBackground = null;</span>
+<span class="fc" id="L31">    BufferedImage background = null;</span>
+
+    Player player1;
+    Player player2;
+
+    Door levelEndingDoor;
+<span class="fc" id="L37">    List&lt;Wall&gt; walls = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L38">    List&lt;ToggleableWall&gt; toggleableWalls = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L39">    List&lt;Button&gt; buttons = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L40">    Map&lt;Integer, ToggleableWall&gt; toggleableWallsMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L41">    List&lt;Key&gt; keys = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L42">    List&lt;Monster&gt; monsters = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">    List&lt;Trap&gt; traps = new ArrayList&lt;&gt;();</span>
+
+    String nextLevel;
+
+    public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
+<span class="fc" id="L48">        BufferedImage resizedImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L49">        Graphics2D g = resizedImage.createGraphics();</span>
+<span class="fc" id="L50">        g.drawImage(originalImage, 0, 0, width, height, null);</span>
+<span class="fc" id="L51">        g.dispose();</span>
+<span class="fc" id="L52">        return resizedImage;</span>
+    }
+
+    private void readLevelConfig(BufferedReader br) throws IOException {
+        String line;
+        try {
+<span class="fc" id="L58">            line = br.readLine();</span>
+<span class="fc" id="L59">        } catch (IOException e) {</span>
+<span class="fc" id="L60">            throw new IOException(&quot;Could not read line for level config&quot;);</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (line == null) {</span>
+<span class="fc" id="L64">            throw new IOException(&quot;Null line caused error while trying to read level configuration&quot;);</span>
+        }
+
+<span class="fc" id="L67">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (parts.size() != 5) {</span>
+<span class="fc" id="L70">            throw new IOException(&quot;Level config line needs to be like: xBoundary,yBoundary,regularWallsImagePath,backgroundImagePath,nextLevelPath&quot;);</span>
+        } else {
+            try {
+<span class="fc" id="L73">                xBoundary = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L74">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L75">                throw new IOException(&quot;Invalid xBoundary number when loading level&quot;);</span>
+<span class="fc" id="L76">            }</span>
+            try {
+<span class="fc" id="L78">                yBoundary = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L79">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L80">                throw new IOException(&quot;Invalid yBoundary number when loading level&quot;);</span>
+<span class="fc" id="L81">            }</span>
+            try {
+<span class="fc" id="L83">                wallBackground = ImageIO.read(new File(parts.get(2)));</span>
+<span class="fc" id="L84">            } catch (IOException e) {</span>
+<span class="fc" id="L85">                throw new IOException(&quot;Could not read wall background image when loading level&quot;);</span>
+<span class="fc" id="L86">            }</span>
+            try {
+<span class="fc" id="L88">                background = ImageIO.read(new File(parts.get(3)));</span>
+<span class="fc" id="L89">            } catch (IOException e) {</span>
+<span class="fc" id="L90">                throw new IOException(&quot;Could not read background image when loading level&quot;);</span>
+<span class="fc" id="L91">            }</span>
+<span class="fc" id="L92">            nextLevel = parts.get(4);</span>
+<span class="fc" id="L93">            wallBackground = resizeImage(wallBackground,xBoundary,yBoundary);</span>
+<span class="fc" id="L94">            background = resizeImage(background,xBoundary,yBoundary);</span>
+        }
+<span class="fc" id="L96">    }</span>
+
+    private void readPlayer1(BufferedReader br) throws IOException {
+        String line;
+        try {
+<span class="fc" id="L101">            line = br.readLine();</span>
+<span class="fc" id="L102">        } catch (IOException e) {</span>
+<span class="fc" id="L103">            throw new IOException(&quot;Could not read line for player 1 when loading level&quot;);</span>
+<span class="fc" id="L104">        }</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (line == null) {</span>
+<span class="fc" id="L107">            throw new IOException(&quot;Null line caused error when trying to read player1's information&quot;);</span>
+        }
+
+<span class="fc" id="L110">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L113">            throw new IOException(&quot;Player 1 specification needs to be like: x,y,sizeX,sizeY,maxJumpHeight,speed&quot;);</span>
+        } else {
+            int x;
+            int y;
+            int sizeX;
+            int sizeY;
+            int maxJumpHeight;
+            int speed;
+            try {
+<span class="fc" id="L122">                x = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L123">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L124">                throw new IOException(&quot;Invalid x when trying to read player1's information when loading level&quot;);</span>
+<span class="fc" id="L125">            }</span>
+            try {
+<span class="fc" id="L127">                y = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L128">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L129">                throw new IOException(&quot;Invalid y when trying to read player1's information when loading level&quot;);</span>
+<span class="fc" id="L130">            }</span>
+            try {
+<span class="fc" id="L132">                sizeX = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L133">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L134">                throw new IOException(&quot;Invalid sizeX when trying to read player1's information when loading level&quot;);</span>
+<span class="fc" id="L135">            }</span>
+            try {
+<span class="fc" id="L137">                sizeY = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L138">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L139">                throw new IOException(&quot;Invalid sizeY when trying to read player1's information when loading level&quot;);</span>
+<span class="fc" id="L140">            }</span>
+            try {
+<span class="fc" id="L142">                maxJumpHeight = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L143">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L144">                throw new IOException(&quot;Invalid maxJumpHeight for player 1 when loading level&quot;);</span>
+<span class="fc" id="L145">            }</span>
+            try {
+<span class="fc" id="L147">                speed = Integer.parseInt(parts.get(5));</span>
+<span class="fc" id="L148">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L149">                throw new IOException(&quot;Invalid speed for player 1 when loading level&quot;);</span>
+<span class="fc" id="L150">            }</span>
+<span class="fc" id="L151">            player1 = new Player(</span>
+                    &quot;Tergon&quot;,
+                    sizeX,
+                    sizeY,
+                    new Position(x, y),
+                    speed,
+                    maxJumpHeight
+            );
+        }
+<span class="fc" id="L160">    }</span>
+
+    private void readPlayer2(BufferedReader br) throws IOException {
+        String line;
+        try {
+<span class="fc" id="L165">            line = br.readLine();</span>
+<span class="fc" id="L166">        } catch (IOException e) {</span>
+<span class="fc" id="L167">            throw new IOException(&quot;Could not read line for player 2 when loading level&quot;);</span>
+<span class="fc" id="L168">        }</span>
+
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (line == null) {</span>
+<span class="fc" id="L171">            throw new IOException(&quot;Null line caused error when trying to read player2's information&quot;);</span>
+        }
+
+<span class="fc" id="L174">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L177">            throw new IOException(&quot;Player 2 specification needs to be like: x,y,sizeX,sizeY,maxJumpHeight,speed&quot;);</span>
+        } else {
+            int x;
+            int y;
+            int sizeX;
+            int sizeY;
+            int maxJumpHeight;
+            int speed;
+            try {
+<span class="fc" id="L186">                x = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L187">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L188">                throw new IOException(&quot;Invalid x when trying to read player2's information when loading level&quot;);</span>
+<span class="fc" id="L189">            }</span>
+            try {
+<span class="fc" id="L191">                y = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L192">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L193">                throw new IOException(&quot;Invalid y when trying to read player2's information when loading level&quot;);</span>
+<span class="fc" id="L194">            }</span>
+            try {
+<span class="fc" id="L196">                sizeX = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L197">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L198">                throw new IOException(&quot;Invalid sizeX when trying to read player2's information when loading level&quot;);</span>
+<span class="fc" id="L199">            }</span>
+            try {
+<span class="fc" id="L201">                sizeY = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L202">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L203">                throw new IOException(&quot;Invalid sizeY when trying to read player2's information when loading level&quot;);</span>
+<span class="fc" id="L204">            }</span>
+            try {
+<span class="fc" id="L206">                maxJumpHeight = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L207">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L208">                throw new IOException(&quot;Invalid maxJumpHeight for player 2 when loading level&quot;);</span>
+<span class="fc" id="L209">            }</span>
+            try {
+<span class="fc" id="L211">                speed = Integer.parseInt(parts.get(5));</span>
+<span class="fc" id="L212">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L213">                throw new IOException(&quot;Invalid speed for player 2 when loading level&quot;);</span>
+<span class="fc" id="L214">            }</span>
+<span class="fc" id="L215">            player2 = new Player(</span>
+                    &quot;Lavena&quot;,
+                    sizeX,
+                    sizeY,
+                    new Position(x, y),
+                    speed,
+                    maxJumpHeight
+            );
+        }
+<span class="fc" id="L224">    }</span>
+
+    private void readKey(String line) throws IOException {
+<span class="fc" id="L227">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L229">            throw new IOException(&quot;Key specification needs to be like: target,x,y,sizeX,sizeY,imagePath&quot;);</span>
+        }
+        int X;
+        int Y;
+        BufferedImage image;
+        int sizeX;
+        int sizeY;
+        try {
+<span class="fc" id="L237">            X = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L238">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L239">            throw new IOException(&quot;Invalid x when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L240">        }</span>
+        try {
+<span class="fc" id="L242">            Y = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L243">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L244">            throw new IOException(&quot;Invalid y when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L245">        }</span>
+
+        try {
+<span class="fc" id="L248">            image = ImageIO.read(new File(parts.get(5)));</span>
+<span class="fc" id="L249">        } catch (IOException e) {</span>
+<span class="fc" id="L250">            throw new IOException(&quot;Could not read image for key when loading level&quot;);</span>
+<span class="fc" id="L251">        }</span>
+
+        try {
+<span class="fc" id="L254">            sizeX = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L255">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L256">            throw new IOException(&quot;Invalid sizeX when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L257">        }</span>
+
+        try {
+<span class="fc" id="L260">            sizeY = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L261">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L262">            throw new IOException(&quot;Invalid sizeY when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L263">        }</span>
+
+<span class="fc" id="L265">        this.keys.add(new Key(</span>
+                new Position(X, Y),
+                image,
+                sizeX,
+                sizeY,
+<span class="fc" id="L270">                parts.get(0)</span>
+        ));
+<span class="fc" id="L272">    }</span>
+
+    private void readMonster(String line) throws IOException {
+<span class="fc" id="L275">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L277">            throw new IOException(&quot;Monster specification needs to be like: x,y,sizeX,sizeY,minX,maxX&quot;);</span>
+        }
+        int X;
+        int Y;
+        int sizeX;
+        int sizeY;
+        int minX;
+        int maxX;
+        try {
+<span class="fc" id="L286">            X = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L287">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L288">            throw new IOException(&quot;Invalid x when trying to read monster when loading level&quot;);</span>
+<span class="fc" id="L289">        }</span>
+        try {
+<span class="fc" id="L291">            Y = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L292">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L293">            throw new IOException(&quot;Invalid y when trying to read monster when loading level&quot;);</span>
+<span class="fc" id="L294">        }</span>
+
+        try {
+<span class="fc" id="L297">            sizeX = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L298">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L299">            throw new IOException(&quot;Invalid sizeX when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L300">        }</span>
+
+        try {
+<span class="fc" id="L303">            sizeY = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L304">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L305">            throw new IOException(&quot;Invalid sizeY when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L306">        }</span>
+
+        try {
+<span class="fc" id="L309">            minX = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L310">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L311">            throw new IOException(&quot;Invalid minX when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L312">        }</span>
+
+        try {
+<span class="fc" id="L315">            maxX = Integer.parseInt(parts.get(5));</span>
+<span class="fc" id="L316">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L317">            throw new IOException(&quot;Invalid maxX when trying to read key when loading level&quot;);</span>
+<span class="fc" id="L318">        }</span>
+<span class="fc" id="L319">        this.monsters.add(new Monster(</span>
+                new Position(X, Y),
+                sizeX,
+                sizeY,
+                minX,
+                maxX
+        ));
+<span class="fc" id="L326">    }</span>
+
+    private void readTrap(String line) throws IOException {
+<span class="fc" id="L329">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L331">            throw new IOException(&quot;Trap specification needs to be like: target,x,y,sizeX,sizeY,imagePath&quot;);</span>
+        }
+        int X;
+        int Y;
+        BufferedImage image;
+        int sizeX;
+        int sizeY;
+        try {
+<span class="fc" id="L339">            X = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L340">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L341">            throw new IOException(&quot;Invalid x when trying to read trap when loading level&quot;);</span>
+<span class="fc" id="L342">        }</span>
+        try {
+<span class="fc" id="L344">            Y = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L345">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L346">            throw new IOException(&quot;Invalid y when trying to read trap when loading level&quot;);</span>
+<span class="fc" id="L347">        }</span>
+
+        try {
+<span class="fc" id="L350">            sizeX = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L351">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L352">            throw new IOException(&quot;Invalid sizeX when trying to read trap when loading level&quot;);</span>
+<span class="fc" id="L353">        }</span>
+
+        try {
+<span class="fc" id="L356">            sizeY = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L357">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L358">            throw new IOException(&quot;Invalid sizeY when trying to read trap when loading level&quot;);</span>
+<span class="fc" id="L359">        }</span>
+
+        try {
+<span class="fc" id="L362">            image = ImageIO.read(new File(parts.get(5))).getSubimage(0,0, sizeX, sizeY);</span>
+<span class="fc" id="L363">        } catch (IOException e) {</span>
+<span class="fc" id="L364">            throw new IOException(&quot;Could not read image for trap when loading level&quot;);</span>
+<span class="fc" id="L365">        }</span>
+
+<span class="fc" id="L367">        String target = parts.getFirst();</span>
+
+<span class="fc" id="L369">        this.traps.add(new Trap(</span>
+                target,
+                new Position(X, Y),
+                image,
+                sizeX,
+                sizeY
+        ));
+<span class="fc" id="L376">    }</span>
+
+    private void readWall(String line) throws IOException {
+<span class="fc" id="L379">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">        if (parts.size() != 4) {</span>
+<span class="fc" id="L381">            throw new IOException(&quot;Wall specification needs to be like: x,y,sizeX,sizeY&quot;);</span>
+        }
+        int xPos;
+        int yPos ;
+        int width;
+        int height;
+        try {
+<span class="fc" id="L388">            xPos = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L389">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L390">            throw new IOException(&quot;Invalid x when trying to read wall when loading level&quot;);</span>
+<span class="fc" id="L391">        }</span>
+        try {
+<span class="fc" id="L393">            yPos = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L394">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L395">            throw new IOException(&quot;Invalid y when trying to read wall when loading level&quot;);</span>
+<span class="fc" id="L396">        }</span>
+        try {
+<span class="fc" id="L398">            width = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L399">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L400">            throw new IOException(&quot;Invalid width when trying to read wall when loading level&quot;);</span>
+<span class="fc" id="L401">        }</span>
+        try {
+<span class="fc" id="L403">            height = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L404">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L405">            throw new IOException(&quot;Invalid height when trying to read wall when loading level&quot;);</span>
+<span class="fc" id="L406">        }</span>
+<span class="fc" id="L407">        BufferedImage wallBackground2 = wallBackground.getSubimage(xPos, yPos, width, height);</span>
+<span class="fc" id="L408">        this.walls.add(new Wall(</span>
+                new Position(xPos,yPos),
+                wallBackground2,
+                width,
+                height
+        ));
+<span class="fc" id="L414">    }</span>
+
+    private void readToggleableWall(String line) throws IOException {
+<span class="fc" id="L417">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L419">            throw new IOException(&quot;ToggleableWall specification needs to be like: id,x,y,sizeX,sizeY,imagePath&quot;);</span>
+        }
+        int id;
+        int width;
+        int height;
+        BufferedImage wallBackground;
+        int xPos;
+        int yPos;
+        try {
+<span class="fc" id="L428">            id = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L429">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L430">            throw new IOException(&quot;Invalid id when trying to read toggleable wall when loading level&quot;);</span>
+<span class="fc" id="L431">        }</span>
+
+        try {
+<span class="fc" id="L434">            width = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L435">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L436">            throw new IOException(&quot;Invalid width when trying to read toggleable wall when loading level&quot;);</span>
+<span class="fc" id="L437">        }</span>
+        try {
+<span class="fc" id="L439">            height = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L440">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L441">            throw new IOException(&quot;Invalid height when trying to read toggleable wall when loading level&quot;);</span>
+<span class="fc" id="L442">        }</span>
+        try {
+<span class="fc" id="L444">            wallBackground = ImageIO.read(new File(parts.get(5))).getSubimage(0, 0, width, height);</span>
+<span class="fc" id="L445">        } catch (IOException e) {</span>
+<span class="fc" id="L446">            throw new IOException(&quot;Could not read image for toggleable wall when loading level&quot;);</span>
+<span class="fc" id="L447">        }</span>
+        try {
+<span class="fc" id="L449">            xPos = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L450">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L451">            throw new IOException(&quot;Invalid x when trying to read toggleable wall when loading level&quot;);</span>
+<span class="fc" id="L452">        }</span>
+        try {
+<span class="fc" id="L454">             yPos = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L455">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L456">            throw new IOException(&quot;Invalid y when trying to read toggleable wall when loading level&quot;);</span>
+<span class="fc" id="L457">        }</span>
+<span class="fc" id="L458">        ToggleableWall toggleableWall = new ToggleableWall(new Position(xPos,yPos), wallBackground, width, height);</span>
+<span class="fc" id="L459">        toggleableWallsMap.put(id, toggleableWall);</span>
+<span class="fc" id="L460">        toggleableWalls.add(toggleableWall);</span>
+<span class="fc" id="L461">    }</span>
+
+    private void readButtons(String line) throws IOException {
+<span class="fc" id="L464">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">        if (parts.size() != 6) {</span>
+<span class="fc" id="L466">            throw new IOException(&quot;Button specification needs to be like: idToggleableWall,x,y,sizeX,sizeY,imagePath&quot;);</span>
+        }
+        int id;
+        int xPos;
+        int yPos;
+        int width;
+        int height;
+        BufferedImage buttonImage;
+        try {
+<span class="fc" id="L475">            id = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L476">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L477">            throw new IOException(&quot;Invalid id when trying to read button when loading level&quot;);</span>
+<span class="fc" id="L478">        }</span>
+        try {
+<span class="fc" id="L480">            xPos = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L481">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L482">            throw new IOException(&quot;Invalid x when trying to read button when loading level&quot;);</span>
+<span class="fc" id="L483">        }</span>
+        try {
+<span class="fc" id="L485">            yPos = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L486">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L487">            throw new IOException(&quot;Invalid y when trying to read button when loading level&quot;);</span>
+<span class="fc" id="L488">        }</span>
+        try {
+<span class="fc" id="L490">            width = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L491">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L492">            throw new IOException(&quot;Invalid width when trying to read button when loading level&quot;);</span>
+<span class="fc" id="L493">        }</span>
+        try {
+<span class="fc" id="L495">            height = Integer.parseInt(parts.get(4));</span>
+<span class="fc" id="L496">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L497">            throw new IOException(&quot;Invalid height when trying to read button when loading level&quot;);</span>
+<span class="fc" id="L498">        }</span>
+
+        try {
+<span class="fc" id="L501">            buttonImage = ImageIO.read(new File(parts.get(5))).getSubimage(0,0, width, height);</span>
+<span class="fc" id="L502">        } catch (IOException e) {</span>
+<span class="fc" id="L503">            throw new IOException(&quot;Could not read image for button when loading level&quot;);</span>
+<span class="fc" id="L504">        }</span>
+
+<span class="fc" id="L506">        Button button = new Button(new Position(xPos, yPos), buttonImage, width, height, toggleableWallsMap.get(id));</span>
+<span class="fc" id="L507">        buttons.add(button);</span>
+<span class="fc" id="L508">    }</span>
+
+
+    private void readLevelTransitionWall(String line) throws IOException {
+<span class="fc" id="L512">        List&lt;String&gt; parts = Splitter.on(',').splitToList(line);</span>
+<span class="fc bfc" id="L513" title="All 2 branches covered.">        if (parts.size() != 4) {</span>
+<span class="fc" id="L514">            throw new IOException(&quot;Level Transition Door specification needs to be like: x,y,sizeX,sizeY&quot;);</span>
+        }
+        int xPos;
+        int yPos;
+        int width;
+        int height;
+        try {
+<span class="fc" id="L521">            xPos = Integer.parseInt(parts.getFirst());</span>
+<span class="fc" id="L522">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L523">            throw new IOException(&quot;Invalid x when trying to read levelTransitionWall when loading level&quot;);</span>
+<span class="fc" id="L524">        }</span>
+        try {
+<span class="fc" id="L526">            yPos = Integer.parseInt(parts.get(1));</span>
+<span class="fc" id="L527">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L528">            throw new IOException(&quot;Invalid y when trying to read levelTransitionWall when loading level&quot;);</span>
+<span class="fc" id="L529">        }</span>
+        try {
+<span class="fc" id="L531">            width = Integer.parseInt(parts.get(2));</span>
+<span class="fc" id="L532">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L533">            throw new IOException(&quot;Invalid width when trying to read levelTransitionWall when loading level&quot;);</span>
+<span class="fc" id="L534">        }</span>
+        try {
+<span class="fc" id="L536">            height = Integer.parseInt(parts.get(3));</span>
+<span class="fc" id="L537">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L538">            throw new IOException(&quot;Invalid height when trying to read levelTransitionWall when loading level&quot;);</span>
+<span class="fc" id="L539">        }</span>
+<span class="fc" id="L540">        this.levelEndingDoor = new Door(</span>
+                new Position(xPos,yPos),
+                width,
+                height
+        );
+<span class="fc" id="L545">    }</span>
+
+    public Level loadLevel(String levelName) throws IOException {
+        BufferedReader br;
+        try {
+<span class="fc" id="L550">            br = Files.newBufferedReader(Paths.get(levelName), UTF_8); // Open level configurations file</span>
+<span class="fc" id="L551">        } catch (IOException e) {</span>
+<span class="fc" id="L552">            throw new IOException(&quot;Error in LevelLoader when trying to open file: &quot; + levelName);</span>
+<span class="fc" id="L553">        }</span>
+
+<span class="fc" id="L555">        readLevelConfig(br);</span>
+
+        try {
+<span class="fc" id="L558">            br.readLine(); // Read empty line</span>
+<span class="nc" id="L559">        } catch (IOException e) {</span>
+<span class="nc" id="L560">            throw new IOException(&quot;Error when trying to read empty line between levelConfig and Player1's configs when loading level&quot;);</span>
+<span class="fc" id="L561">        }</span>
+
+<span class="fc" id="L563">        readPlayer1(br);</span>
+
+        try {
+<span class="fc" id="L566">            br.readLine(); // Read empty line</span>
+<span class="nc" id="L567">        } catch (IOException e) {</span>
+<span class="nc" id="L568">            throw new IOException(&quot;Error when trying to read empty line between Player1 and Player2's configs when loading level&quot;);</span>
+<span class="fc" id="L569">        }</span>
+
+<span class="fc" id="L571">        readPlayer2(br);</span>
+
+        try {
+<span class="fc" id="L574">            br.readLine(); // Read empty line</span>
+<span class="nc" id="L575">        } catch (IOException e) {</span>
+<span class="nc" id="L576">            throw new IOException(&quot;Error when trying to read empty line between Player2's configs and keys when loading level&quot;);</span>
+<span class="fc" id="L577">        }</span>
+
+        while (true) {
+            String line;
+            try {
+<span class="fc" id="L582">                line = br.readLine();</span>
+<span class="nc" id="L583">            } catch (IOException e) {</span>
+<span class="nc" id="L584">                throw new IOException(&quot;Error when trying to read line with key config, or empty line between keys and monsters&quot;);</span>
+<span class="fc" id="L585">            }</span>
+<span class="pc bpc" id="L586" title="1 of 2 branches missed.">            if (line == null) {</span>
+<span class="nc" id="L587">                throw new IOException(&quot;Error while trying to read Key&quot;);</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">            } else if (line.isEmpty()) {</span>
+<span class="fc" id="L589">                break;</span>
+            }
+<span class="fc" id="L591">            readKey(line);</span>
+<span class="fc" id="L592">        }</span>
+
+        while (true) {
+            String line;
+            try {
+<span class="fc" id="L597">                line = br.readLine();</span>
+<span class="nc" id="L598">            } catch (IOException e) {</span>
+<span class="nc" id="L599">                throw new IOException(&quot;Error when trying to read line with monster config, or empty line between monsters and traps&quot;);</span>
+<span class="fc" id="L600">            }</span>
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">            if (line == null) {</span>
+<span class="nc" id="L602">                throw new IOException(&quot;Error while trying to read Monster&quot;);</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">            } else if (line.isEmpty()) {</span>
+<span class="fc" id="L604">                break;</span>
+            }
+<span class="fc" id="L606">            readMonster(line);</span>
+<span class="fc" id="L607">        }</span>
+
+        while (true) {
+            String line;
+            try {
+<span class="fc" id="L612">                line = br.readLine();</span>
+<span class="nc" id="L613">            } catch (IOException e) {</span>
+<span class="nc" id="L614">                throw new IOException(&quot;Error when trying to read line with trap config, or empty line between traps and walls&quot;);</span>
+<span class="fc" id="L615">            }</span>
+<span class="pc bpc" id="L616" title="1 of 2 branches missed.">            if (line == null) {</span>
+<span class="nc" id="L617">                throw new IOException(&quot;Error while trying to read Trap&quot;);</span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">            } else if (line.isEmpty()) {</span>
+<span class="fc" id="L619">                break;</span>
+            }
+<span class="fc" id="L621">            readTrap(line);</span>
+<span class="fc" id="L622">        }</span>
+
+        while (true) {
+            String line;
+            try {
+<span class="fc" id="L627">                line = br.readLine();</span>
+<span class="nc" id="L628">            } catch (IOException e) {</span>
+<span class="nc" id="L629">                throw new IOException(&quot;Error when trying to read line with wall config, or empty line between walls and levelTransitionDoor&quot;);</span>
+<span class="fc" id="L630">            }</span>
+<span class="pc bpc" id="L631" title="1 of 4 branches missed.">            if (line == null || line.isEmpty()) {</span>
+<span class="fc" id="L632">                break;</span>
+            }
+<span class="fc" id="L634">            readWall(line);</span>
+<span class="fc" id="L635">        }</span>
+
+        String line;
+        try {
+<span class="fc" id="L639">            line = br.readLine();</span>
+<span class="nc" id="L640">        } catch (IOException e) {</span>
+<span class="nc" id="L641">            throw new IOException(&quot;Error when trying to read line with levelTransitionDoor&quot;);</span>
+<span class="fc" id="L642">        }</span>
+<span class="pc bpc" id="L643" title="2 of 4 branches missed.">        if (line == null || line.isEmpty()) {</span>
+<span class="nc" id="L644">            throw new IOException(&quot;Level lacks level transition door: going to next levels wouldn't be possible. Failing.&quot;);</span>
+        } else {
+<span class="fc" id="L646">            readLevelTransitionWall(line);</span>
+        }
+
+
+        try {
+<span class="fc" id="L651">            br.readLine(); // Read empty line</span>
+<span class="nc" id="L652">        } catch (IOException e) {</span>
+<span class="nc" id="L653">            throw new IOException(&quot;Error when trying to read empty line between levelTransitionDoor and toggleableWalls when loading level&quot;);</span>
+<span class="fc" id="L654">        }</span>
+
+        while (true) {
+            try {
+<span class="fc" id="L658">                line = br.readLine();</span>
+<span class="nc" id="L659">            } catch (IOException e) {</span>
+<span class="nc" id="L660">                throw new IOException(&quot;Error when trying to read line with toggleableWall config, or empty line between toggleableWalls and buttons&quot;);</span>
+<span class="fc" id="L661">            }</span>
+<span class="fc bfc" id="L662" title="All 4 branches covered.">            if (line == null || line.isEmpty()) {</span>
+<span class="fc" id="L663">                break;</span>
+            }
+<span class="fc" id="L665">            readToggleableWall(line);</span>
+        }
+
+        while (true) {
+            try {
+<span class="fc" id="L670">                line = br.readLine();</span>
+<span class="nc" id="L671">            } catch (IOException e) {</span>
+<span class="nc" id="L672">                throw new IOException(&quot;Error when trying to read line with button configs&quot;);</span>
+<span class="fc" id="L673">            }</span>
+<span class="pc bpc" id="L674" title="1 of 4 branches missed.">            if (line == null || line.isEmpty()) {</span>
+<span class="nc" id="L675">                break;</span>
+            }
+<span class="fc" id="L677">            readButtons(line);</span>
+        }
+
+<span class="fc" id="L680">        return new Level(this.walls, this.toggleableWalls, this.buttons, this.monsters, this.traps,this.keys, this.player1, this.player2, this.xBoundary, this.yBoundary, this.background, this.levelEndingDoor,this.nextLevel);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

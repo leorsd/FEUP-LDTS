@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MonsterVisualizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">visualizer.level.element.dynamicelements</a> &gt; <span class="el_source">MonsterVisualizer.java</span></div><h1>MonsterVisualizer.java</h1><pre class="source lang-java linenums">package visualizer.level.element.dynamicelements;
+
+import model.elements.dynamicelements.Monster;
+import gui.GUI;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class MonsterVisualizer implements DynamicElementVisualizer&lt;Monster&gt; {
+    private final Map&lt;Monster.ORIENTATION, List&lt;String&gt;&gt; spriteMap;
+
+<span class="fc" id="L17">    public MonsterVisualizer() {</span>
+<span class="fc" id="L18">        spriteMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L19">        spriteMap.put(Monster.ORIENTATION.LEFT, List.of(&quot;src/main/resources/images/elements/druid-left-1.png&quot;,</span>
+                &quot;src/main/resources/images/elements/druid-left-2.png&quot;,
+                &quot;src/main/resources/images/elements/druid-left-3.png&quot;));
+<span class="fc" id="L22">        spriteMap.put(Monster.ORIENTATION.RIGHT, List.of(&quot;src/main/resources/images/elements/druid-right-1.png&quot;,</span>
+                &quot;src/main/resources/images/elements/druid-right-2.png&quot;,
+                &quot;src/main/resources/images/elements/druid-right-3.png&quot;));
+<span class="fc" id="L25">        spriteMap.put(Monster.ORIENTATION.STANDING, List.of(&quot;src/main/resources/images/elements/druid-right-1.png&quot;));</span>
+<span class="fc" id="L26">    }</span>
+    @Override
+    public void draw(Monster monster, GUI gui) throws IOException {
+<span class="fc" id="L29">        String sprite = getSprite(monster);</span>
+        BufferedImage loadedSprite;
+        try {
+<span class="fc" id="L32">            loadedSprite = ImageIO.read(new File(sprite));</span>
+<span class="nc" id="L33">        } catch (IOException e) {</span>
+<span class="nc" id="L34">            throw new IOException(&quot;Could not load sprite for Monster from path: &quot; + sprite);</span>
+<span class="fc" id="L35">        }</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (loadedSprite != null)</span>
+<span class="fc" id="L37">            gui.drawImage(monster.getPosition(), loadedSprite);</span>
+<span class="fc" id="L38">    }</span>
+
+    private String getSprite(Monster monster) {
+<span class="fc" id="L41">        List&lt;String&gt; spriteActionList = spriteMap.get(monster.getOrientation());</span>
+<span class="fc" id="L42">        return spriteActionList.get((monster.getLastControlCount()/5 % spriteActionList.size()));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Level.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">model.scenes</a> &gt; <span class="el_source">Level.java</span></div><h1>Level.java</h1><pre class="source lang-java linenums">package model.scenes;
+
+import model.elements.dynamicelements.Door;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.Position;
+import model.elements.staticelements.*;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class Level implements Scene{
+    private Door levelEndingDoor;
+    private final List&lt;Wall&gt; walls;
+    private final List&lt;ToggleableWall&gt; toggleableWalls;
+    private final List&lt;Button&gt; buttons;
+    private final List&lt;Monster&gt; monsters;
+    private final List&lt;Trap&gt; traps;
+    private final List&lt;Key&gt; keys;
+    private final Player player1;
+    private final Player player2;
+    private final int xBoundary;
+    private final int yBoundary;
+    private final BufferedImage background;
+    private Position player1SpawnPosition;
+    private Position player2SpawnPosition;
+    private String nextLevel;
+
+<span class="fc" id="L29">    public Level(List&lt;Wall&gt; walls, List&lt;ToggleableWall&gt; toggleableWalls, List&lt;Button&gt; buttons, List&lt;Monster&gt; monsters, List&lt;Trap&gt; traps, List&lt;Key&gt; keys, Player player1, Player player2, int xBoundary, int yBoundary, BufferedImage background, Door levelEndingWall, String nextLevel) {</span>
+<span class="fc" id="L30">        this.walls = walls;</span>
+<span class="fc" id="L31">        this.toggleableWalls = toggleableWalls;</span>
+<span class="fc" id="L32">        this.buttons = buttons;</span>
+<span class="fc" id="L33">        this.monsters = monsters;</span>
+<span class="fc" id="L34">        this.traps = traps;</span>
+<span class="fc" id="L35">        this.keys = keys;</span>
+<span class="fc" id="L36">        this.player1 = player1;</span>
+<span class="fc" id="L37">        this.player2 = player2;</span>
+<span class="fc" id="L38">        this.xBoundary = xBoundary;</span>
+<span class="fc" id="L39">        this.yBoundary = yBoundary;</span>
+<span class="fc" id="L40">        this.background = background;</span>
+<span class="fc" id="L41">        this.levelEndingDoor = levelEndingWall;</span>
+<span class="fc" id="L42">        this.player1SpawnPosition = player1.getPosition();</span>
+<span class="fc" id="L43">        this.player2SpawnPosition = player2.getPosition();</span>
+<span class="fc" id="L44">        this.nextLevel = nextLevel;</span>
+<span class="fc" id="L45">    }</span>
+
+    public String getNextLevel() {
+<span class="fc" id="L48">        return nextLevel;</span>
+    }
+
+    public void setNextLevel(String nextLevel) {
+<span class="fc" id="L52">        this.nextLevel = nextLevel;</span>
+<span class="fc" id="L53">    }</span>
+
+    public List&lt;Wall&gt; getWalls() {
+<span class="fc" id="L56">        return walls;</span>
+    }
+
+    public List&lt;Monster&gt; getMonsters() {
+<span class="fc" id="L60">        return monsters;</span>
+    }
+
+    public List&lt;Trap&gt; getTraps() {
+<span class="fc" id="L64">        return traps;</span>
+    }
+
+    public List&lt;Key&gt; getKeys() {
+<span class="fc" id="L68">        return keys;</span>
+    }
+
+    public Player getPlayer1() {
+<span class="fc" id="L72">        return player1;</span>
+    }
+
+    public Player getPlayer2() {
+<span class="fc" id="L76">        return player2;</span>
+    }
+
+    public List&lt;ToggleableWall&gt; getToggleableWalls() {
+<span class="fc" id="L80">        return toggleableWalls;</span>
+    }
+
+    public List&lt;Button&gt; getButtons() {
+<span class="fc" id="L84">        return buttons;</span>
+    }
+
+    public int getxBoundary() {
+<span class="fc" id="L88">        return xBoundary;</span>
+    }
+
+    public int getyBoundary() {
+<span class="fc" id="L92">        return yBoundary;</span>
+    }
+
+    public BufferedImage getBackground() {
+<span class="fc" id="L96">        return background;</span>
+    }
+
+    public Door getLevelEndingDoor() {
+<span class="fc" id="L100">        return levelEndingDoor;</span>
+    }
+
+    public void setLevelEndingDoor(Door levelEndingDoor) {
+<span class="fc" id="L104">        this.levelEndingDoor = levelEndingDoor;</span>
+<span class="fc" id="L105">    }</span>
+
+    public boolean isPositionFree(Position position) {
+<span class="fc bfc" id="L108" title="All 4 branches covered.">        if (position.getX() &lt; 0 || position.getX() &gt;= xBoundary) {</span>
+<span class="fc" id="L109">            return false;</span>
+        }
+<span class="fc bfc" id="L111" title="All 4 branches covered.">        if (position.getY() &lt; 0 || position.getY() &gt;= yBoundary) {</span>
+<span class="fc" id="L112">            return false;</span>
+        }
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (Wall wall : walls) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            if (wall.hasCollided(position, 1, 1)) {</span>
+<span class="fc" id="L116">                return false;</span>
+            }
+<span class="fc" id="L118">        }</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        for (ToggleableWall wall : toggleableWalls) {</span>
+<span class="fc bfc" id="L120" title="All 4 branches covered.">            if (wall.isActive() &amp;&amp; wall.hasCollided(position, 1, 1)) {</span>
+<span class="fc" id="L121">                return false;</span>
+            }
+<span class="fc" id="L123">        }</span>
+<span class="fc" id="L124">        return true;</span>
+    }
+
+    public Position getPlayerSpawnPosition(Player player) {
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (player.equals(player1)) {</span>
+<span class="fc" id="L129">            return player1SpawnPosition;</span>
+        }
+        else {
+<span class="fc" id="L132">            return player2SpawnPosition;</span>
+        }
+    }
+
+    public void setPlayerSpawnPosition(Player player, Position playerSpawnPosition) {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (player.equals(player1)) {</span>
+<span class="fc" id="L138">            this.player1SpawnPosition = playerSpawnPosition;</span>
+        } else {
+<span class="fc" id="L140">            this.player2SpawnPosition = playerSpawnPosition;</span>
+        }
+<span class="fc" id="L142">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

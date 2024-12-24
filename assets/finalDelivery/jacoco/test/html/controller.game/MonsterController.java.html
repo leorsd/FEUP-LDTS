@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MonsterController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">controller.game</a> &gt; <span class="el_source">MonsterController.java</span></div><h1>MonsterController.java</h1><pre class="source lang-java linenums">package controller.game;
+
+import game.GameManager;
+import model.elements.dynamicelements.Monster;
+import model.Position;
+import model.scenes.Level;
+import controller.Controller;
+import gui.GUI;
+
+import java.util.Set;
+
+public class MonsterController extends Controller&lt;Level&gt; {
+    public MonsterController(Level level) {
+<span class="fc" id="L14">        super(level);</span>
+<span class="fc" id="L15">    }</span>
+
+    private void moveMonster(Monster monster, Position position) {
+<span class="fc" id="L18">        int monsterSizeX = monster.getSizeX();</span>
+<span class="fc" id="L19">        int monsterSizeY = monster.getSizeY();</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (int i = 0; i &lt; monsterSizeX; i++) {</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">            for (int j = 0; j &lt; monsterSizeY; j++) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">                if (! getModel().isPositionFree(new Position(position.getX() + i, position.getY() + j))) {</span>
+<span class="fc" id="L23">                    monster.setDirection(monster.getDirection() * -1);</span>
+<span class="fc" id="L24">                    return;</span>
+                }
+            }
+        }
+<span class="fc" id="L28">        monster.setPosition(position);</span>
+<span class="fc" id="L29">    }</span>
+
+    @Override
+    public void update(GameManager gameManager, Set&lt;GUI.ACTION&gt; actions, long updateTime) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (Monster monster : getModel().getMonsters()) {</span>
+<span class="fc" id="L34">            int posX = monster.getPosition().getX();</span>
+<span class="fc" id="L35">            int posY = monster.getPosition().getY();</span>
+<span class="fc" id="L36">            int desiredX = posX + monster.getDirection();</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if(desiredX == monster.getMaxX()){</span>
+<span class="fc" id="L38">                monster.setDirection(monster.getDirection() * -1);</span>
+<span class="fc" id="L39">                monster.setOrientation(Monster.ORIENTATION.LEFT);</span>
+<span class="fc" id="L40">                monster.setLastControlCount(0);</span>
+<span class="fc" id="L41">                desiredX = posX + monster.getDirection();</span>
+<span class="fc" id="L42">                moveMonster(monster, new Position(desiredX, posY));</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            }else if(desiredX == monster.getMinX()){</span>
+<span class="fc" id="L44">                monster.setDirection(monster.getDirection() * -1);</span>
+<span class="fc" id="L45">                monster.setOrientation(Monster.ORIENTATION.RIGHT);</span>
+<span class="fc" id="L46">                monster.setLastControlCount(0);</span>
+<span class="fc" id="L47">                desiredX = posX + monster.getDirection();</span>
+<span class="fc" id="L48">                moveMonster(monster, new Position(desiredX, posY));</span>
+            }else{
+<span class="fc" id="L50">                moveMonster(monster, new Position(desiredX, posY));</span>
+<span class="fc" id="L51">                monster.setLastControlCount(monster.getLastControlCount() + 1);</span>
+            }
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

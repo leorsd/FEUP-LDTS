@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LanternaScreenCreator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">gui</a> &gt; <span class="el_source">LanternaScreenCreator.java</span></div><h1>LanternaScreenCreator.java</h1><pre class="source lang-java linenums">package gui;
+
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
+
+import java.awt.*;
+import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Objects;
+
+public class LanternaScreenCreator implements ScreenCreator {
+    private final DefaultTerminalFactory terminalFactory;
+    private final TerminalSize terminalSize;
+    private final Dimension defaultBounds;
+
+<span class="fc" id="L23">    public LanternaScreenCreator(DefaultTerminalFactory terminalFactory, TerminalSize terminalSize, Dimension defaultBounds) {</span>
+<span class="fc" id="L24">        this.terminalFactory = terminalFactory;</span>
+<span class="fc" id="L25">        this.terminalSize = terminalSize;</span>
+<span class="fc" id="L26">        this.defaultBounds = defaultBounds;</span>
+<span class="fc" id="L27">        terminalFactory.setInitialTerminalSize(terminalSize);</span>
+<span class="fc" id="L28">        terminalFactory.setForceAWTOverSwing(true);</span>
+<span class="fc" id="L29">    }</span>
+
+    @Override
+    public Screen createScreen(KeyListener keyListener) throws IOException {
+<span class="fc" id="L33">        int fontSize = getBestFontSize(defaultBounds);</span>
+<span class="fc" id="L34">        AWTTerminalFontConfiguration fontConfig = loadFont(fontSize, &quot;fonts/square.ttf&quot;);</span>
+<span class="fc" id="L35">        terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);</span>
+        TerminalScreen screen;
+        try {
+<span class="nc" id="L38">            screen = terminalFactory.createScreen();</span>
+<span class="fc" id="L39">        } catch (IOException e) {</span>
+<span class="fc" id="L40">            throw new IOException(&quot;Error when trying to create Lanterna screen: &quot; + e.getMessage());</span>
+<span class="nc" id="L41">        }</span>
+<span class="nc" id="L42">        AWTTerminalFrame terminal = getAwtTerminalFrame(screen, GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());</span>
+<span class="nc" id="L43">        terminal.getComponent(0).addKeyListener(keyListener);</span>
+<span class="nc" id="L44">        return screen;</span>
+    }
+
+    private AWTTerminalFrame getAwtTerminalFrame(TerminalScreen screen, GraphicsDevice gd) {
+<span class="fc" id="L48">        AWTTerminalFrame terminal = (AWTTerminalFrame) screen.getTerminal();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (gd.isFullScreenSupported()) {</span>
+<span class="fc" id="L50">            gd.setFullScreenWindow(terminal);</span>
+        }else {
+<span class="fc" id="L52">            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();</span>
+<span class="fc" id="L53">            terminal.setSize(screenSize);</span>
+<span class="fc" id="L54">            terminal.setLocation(0, 0);</span>
+        }
+<span class="fc" id="L56">        return terminal;</span>
+    }
+
+    private AWTTerminalFontConfiguration loadFont(int fontSize, String path) throws IOException {
+<span class="fc" id="L60">        URL resource = getClass().getClassLoader().getResource(path);</span>
+        File fontFile;
+        try {
+<span class="fc" id="L63">            fontFile = new File(Objects.requireNonNull(resource).toURI());</span>
+<span class="fc" id="L64">        } catch (NullPointerException | URISyntaxException e) {</span>
+<span class="fc" id="L65">            throw new IOException(&quot;Error while creating Lanterna screen when trying to open font file: &quot; + e.getMessage());</span>
+<span class="fc" id="L66">        }</span>
+        Font font;
+        try {
+<span class="fc" id="L69">            font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);</span>
+<span class="fc" id="L70">        } catch (Exception e) {</span>
+<span class="fc" id="L71">            throw new IOException(&quot;Error while creating Lanterna screen when trying to load font: &quot; + e.getMessage() + &quot; cause : &quot; +  e.getCause());</span>
+<span class="fc" id="L72">        }</span>
+<span class="fc" id="L73">        return AWTTerminalFontConfiguration.newInstance(font);</span>
+    }
+
+    private int getBestFontSize(Dimension terminalBounds) {
+<span class="fc" id="L77">        double maxFontWidth = terminalBounds.getWidth() / terminalSize.getColumns();</span>
+<span class="fc" id="L78">        double maxFontHeight = terminalBounds.getHeight() / terminalSize.getRows();</span>
+<span class="fc" id="L79">        return (int) Math.min(maxFontWidth, maxFontHeight);</span>
+    }
+
+    @Override
+    public int getWidth() {
+<span class="fc" id="L84">        return terminalSize.getColumns();</span>
+    }
+
+    @Override
+    public int getHeight() {
+<span class="fc" id="L89">        return terminalSize.getRows();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

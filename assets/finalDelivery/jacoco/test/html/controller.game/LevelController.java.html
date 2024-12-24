@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LevelController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Project_LDTS</a> &gt; <a href="index.source.html" class="el_package">controller.game</a> &gt; <span class="el_source">LevelController.java</span></div><h1>LevelController.java</h1><pre class="source lang-java linenums">package controller.game;
+
+import game.GameManager;
+import model.elements.dynamicelements.Door;
+import model.elements.staticelements.Button;
+import model.elements.staticelements.Key;
+import model.elements.staticelements.ToggleableWall;
+import model.elements.dynamicelements.Monster;
+import model.elements.dynamicelements.Player;
+import model.elements.staticelements.Trap;
+import model.scenes.Level;
+import model.scenes.LevelLoader;
+import model.scenes.Menu;
+import controller.Controller;
+import gui.GUI;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+public class LevelController extends Controller&lt;Level&gt; {
+    private final Player1Controller player1Controller;
+    private final Player2Controller player2Controller;
+    private final MonsterController monsterController;
+
+    public LevelController(Level level, Player1Controller player1Controller, Player2Controller player2Controller, MonsterController monsterController) {
+<span class="fc" id="L29">        super(level);</span>
+
+<span class="fc" id="L31">        this.player1Controller = player1Controller;</span>
+<span class="fc" id="L32">        this.player2Controller = player2Controller;</span>
+<span class="fc" id="L33">        this.monsterController = monsterController;</span>
+<span class="fc" id="L34">    }</span>
+
+    private boolean checkPlayerDead(Player player) {
+<span class="fc" id="L37">        boolean result = false;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Monster monster : getModel().getMonsters()) {</span>
+<span class="fc" id="L39">            result |= player.hasCollided(monster.getPosition(), monster.getSizeX(), monster.getSizeY());</span>
+<span class="fc" id="L40">        }</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (Trap trap : getModel().getTraps()) {</span>
+<span class="fc bfc" id="L42" title="All 6 branches covered.">            result |= (player.hasCollided(trap.getPosition(), trap.getSizeX(), trap.getSizeY()) &amp;&amp; (player.getName().equals(trap.getTarget()) || trap.getTarget().equals(&quot;Both&quot;)));</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (ToggleableWall wall : getModel().getToggleableWalls()) {</span>
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">            result |= player.hasCollided(wall.getPosition(), wall.getSizeX(), wall.getSizeY()) &amp;&amp; wall.isActive();</span>
+<span class="fc" id="L46">        }</span>
+<span class="fc" id="L47">        return result;</span>
+    }
+
+    private void checkButtonsClicked() {
+<span class="fc" id="L51">        HashMap&lt;ToggleableWall, Boolean&gt; activeWallsTemp = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (ToggleableWall wall : getModel().getToggleableWalls()) {</span>
+<span class="fc" id="L53">            activeWallsTemp.put(wall, true);</span>
+<span class="fc" id="L54">        }</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (Button button : getModel().getButtons()) {</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">            if (button.hasCollided(getModel().getPlayer1().getPosition(), getModel().getPlayer1().getSizeX(), getModel().getPlayer1().getSizeY()) || button.hasCollided(getModel().getPlayer2().getPosition(), getModel().getPlayer2().getSizeX(), getModel().getPlayer2().getSizeY())) {</span>
+<span class="fc" id="L57">                button.setPressed(true);</span>
+<span class="fc" id="L58">                activeWallsTemp.put(button.getToggleableWall(), false);</span>
+            } else {
+<span class="fc" id="L60">                button.setPressed(false);</span>
+            }
+<span class="fc" id="L62">        }</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (ToggleableWall wall : getModel().getToggleableWalls()) {</span>
+<span class="fc" id="L64">            wall.setActive(activeWallsTemp.get(wall));</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc" id="L66">    }</span>
+
+    private void collectKeys() {
+<span class="fc" id="L69">        String player1Name = getModel().getPlayer1().getName();</span>
+<span class="fc" id="L70">        Player player1 = getModel().getPlayer1();</span>
+<span class="fc" id="L71">        String player2Name = getModel().getPlayer2().getName();</span>
+<span class="fc" id="L72">        Player player2 = getModel().getPlayer2();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        for (Key key : getModel().getKeys()) {</span>
+<span class="fc bfc" id="L74" title="All 8 branches covered.">            if ((key.getTarget().equals(player1Name) &amp;&amp; player1.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY())) || (key.getTarget().equals(player2Name) &amp;&amp; player2.hasCollided(key.getPosition(), key.getSizeX(), key.getSizeY()))) {</span>
+<span class="fc" id="L75">                key.setCollected(true);</span>
+            }
+<span class="fc" id="L77">        }</span>
+<span class="fc" id="L78">    }</span>
+
+    private boolean allKeysCollected () {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (Key key : getModel().getKeys()) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (!key.isCollected()) {</span>
+<span class="fc" id="L83">                return false;</span>
+            }
+<span class="fc" id="L85">        }</span>
+<span class="fc" id="L86">        getModel().getLevelEndingDoor().setState(Door.STATE.OPEN);</span>
+<span class="fc" id="L87">        return true;</span>
+    }
+
+    private void playerDied(Player player) {
+<span class="fc" id="L91">        player.setPosition(getModel().getPlayerSpawnPosition(player));</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (Key key : getModel().getKeys()) {</span>
+<span class="fc bfc" id="L93" title="All 4 branches covered.">            if (key.getTarget().equals(player.getName()) &amp;&amp; key.isCollected()) {</span>
+<span class="fc" id="L94">                key.setCollected(false);</span>
+            }
+<span class="fc" id="L96">        }</span>
+<span class="fc" id="L97">        getModel().getLevelEndingDoor().setState(Door.STATE.CLOSED);</span>
+<span class="fc" id="L98">    }</span>
+
+    private boolean checkLevelTransition() {
+<span class="fc bfc" id="L101" title="All 6 branches covered.">        return allKeysCollected() &amp;&amp; getModel().getPlayer1().isInside(getModel().getLevelEndingDoor()) &amp;&amp; getModel().getPlayer2().isInside(getModel().getLevelEndingDoor());</span>
+    }
+
+    @Override
+    public void update(GameManager gameManager, Set&lt;GUI.ACTION&gt; actions, long updateTime) throws IOException {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (actions.contains(GUI.ACTION.QUIT)) {</span>
+<span class="fc" id="L107">            gameManager.setCurrentScene(new Menu());</span>
+<span class="fc" id="L108">            return;</span>
+        }
+<span class="fc" id="L110">        Set&lt;GUI.ACTION&gt; player1Actions = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L111">        Set&lt;GUI.ACTION&gt; player2Actions = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (!player1Controller.isOnGround()) {</span>
+<span class="fc" id="L113">            player1Actions.add(GUI.ACTION.DOWN);</span>
+        }
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (!player2Controller.isOnGround()) {</span>
+<span class="fc" id="L116">            player2Actions.add(GUI.ACTION.S);</span>
+        }
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (GUI.ACTION action : actions) {</span>
+<span class="pc bpc" id="L119" title="2 of 6 branches missed.">            if (action == GUI.ACTION.UP || action == GUI.ACTION.RIGHT || action == GUI.ACTION.LEFT) {</span>
+<span class="fc" id="L120">                player1Actions.add(action);</span>
+            }
+<span class="pc bpc" id="L122" title="2 of 6 branches missed.">            if (action == GUI.ACTION.W || action == GUI.ACTION.D || action == GUI.ACTION.A) {</span>
+<span class="fc" id="L123">                player2Actions.add(action);</span>
+            }
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">        player1Controller.update(gameManager, player1Actions, updateTime);</span>
+<span class="fc" id="L127">        player2Controller.update(gameManager, player2Actions, updateTime);</span>
+<span class="fc" id="L128">        collectKeys();</span>
+
+<span class="fc" id="L130">        checkButtonsClicked();</span>
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (checkPlayerDead(getModel().getPlayer1())) {</span>
+<span class="fc" id="L133">            playerDied(getModel().getPlayer1());</span>
+<span class="fc" id="L134">            player1Controller.setJumping(false);</span>
+        }
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (checkPlayerDead(getModel().getPlayer2())) {</span>
+<span class="fc" id="L137">            playerDied(getModel().getPlayer2());</span>
+<span class="fc" id="L138">            player2Controller.setJumping(false);</span>
+        }
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (checkLevelTransition()) {</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (Objects.equals(getModel().getNextLevel(), &quot;menu&quot;)) {</span>
+<span class="fc" id="L143">                gameManager.setCurrentScene(new Menu());</span>
+            }
+            else {
+<span class="fc" id="L146">                gameManager.setCurrentScene(new LevelLoader().loadLevel(getModel().getNextLevel()));</span>
+            }
+<span class="fc" id="L148">            return;</span>
+        }
+<span class="fc" id="L150">        monsterController.update(gameManager, actions, updateTime);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (checkPlayerDead(getModel().getPlayer1())) {</span>
+<span class="fc" id="L152">            playerDied(getModel().getPlayer1());</span>
+<span class="fc" id="L153">            player1Controller.setJumping(false);</span>
+        }
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (checkPlayerDead(getModel().getPlayer2())) {</span>
+<span class="fc" id="L156">            playerDied(getModel().getPlayer2());</span>
+<span class="fc" id="L157">            player2Controller.setJumping(false);</span>
+        }
+<span class="fc" id="L159">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
