@@ -1,11 +1,13 @@
 # Dungeon Locked
 
 ## 📖 Game Overview
-__Dungeon Locked__ is a local co-op game inspired by the 00's Flash classic "Fireboy and Watergirl".
+__Dungeon Locked__ is a local  cooperative puzzle-platform game inspired by the 00's Flash classic "Fireboy and Watergirl".
 
 In this game, two players take on the roles of our main characters, Lavena and Tergon, as they navigate through challenging dungeons filled with traps and enemies. To finally achieve freedom, they have to advance through 3 levels that require teamwork and strategy to overcome.
 
-In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, along with a surprising new challenge that will push your abilities to the limit.
+In each level, the difficulty increases, introducing new challenges. In the final level, you'll face all the obstacles from the previous levels, in a way that will push your abilities to the limit.
+
+This project was brought to life by António Lourenço Rodrigues (up202306331@up.pt), Gonçalo Santos (up202306340@up.pt) and Leandro Resende (up202306343@up.pt) for the LDTS 2024/25 curricular unit.
 
 ## Implemented Features
 
@@ -17,6 +19,8 @@ The currently highlighted option is indicated by a key on the left side, and the
 Key inputs are processed and translated into actions within the game. 
 
 The controls for the two players are handled independently: Player 1 uses the WASD keys, while Player 2 uses the Arrow Keys. Additionally, pressing the Q key allows players to exit the current level and return to the main menu.
+
+Multiple keyboard inputs can be processed per frame, enabling both players to move simultaneously and even in diagonal directions.
 
 ### Colision Detection
 We implemented all the collision mechanics that seemed essential for our game. 
@@ -30,8 +34,60 @@ If a player dies, they will respawn at their initial starting position from when
 We implemented a tutorial and three distinct levels, each progressively more challenging.
 
 ### Level-Ending Logics
-When both players collect all their respective keys
-## 🗺️ Features and Mechanics
+To advance to the next level, both players must reach the level's exit door. However, the door only opens once each player has collected all of their respective keys. Once this is achieved, both players must stand inside the doorframe to proceed to the next level.
+
+### Animations 
+The gameplay becomes more dynamic, fluid, and engaging through the use of sprites incorporated into some elements. These sprites adapt based on the element's orientation and state, adding a layer of interactivity and realism. 
+
+This approach is applied to various game components, including the players, monsters, and doors, allowing them to respond visually to the player's actions and the game’s progress.
+
+### Movement Physics
+To ensure our game functions as intended, we implemented a physics mechanism that simulates gravity. This allows the players to jump and naturally return to the ground, creating a realistic and responsive movement system. 
+
+### Fullscreen
+To ensure optimal display settings, our game has the ability to automatically adjust the terminal and screen, switching to fullscreen mode. If your PC uses a 16:9 resolution, the game will automatically adapt the font size to fit the screen appropriately.
+
+## 🎮 Gameplay Controls
+
+Number of Players: 2 (local co-op).
+
+### Controls
+
+####  __Tergon__ (Player 1)
+Move Left: A  
+Move Right: D  
+Jump: W
+
+#### __Lavena__ (Player 2)
+Move Left: ←  
+Move Right: →  
+Jump: ↑
+
+## Detailed Challenges and Obstacles 
+
+### Goal
+In each level, the players' main objective is to collect all the keys that unlock the door, allowing them to move on to the next stage. Each player can only pick up the keys that correspond to their color, which adds an element of strategy and increases the challenge.
+
+In the tutorial, all the game features are introduced and explained, and they will be progressively implemented in more complex ways as players advance through the levels:
+
+### Obstacles
+
+#### Walls 🧱
+The walls are the obstacles that make up the majority of the map. They serve as the main platforms, acting as the ground, walls, and ceiling of the level. These elements define the playable area, shaping the environment and providing level boundaries.
+
+#### Traps 🪤
+Traps are obstacles that players may or may not collide with, depending on their color. Players can only pass through traps that match their own color. If a trap is green, it targets both players, meaning neither player can walk over or touch it.
+
+#### Enemies 🧙‍♂️
+The only enemies in this game are the druids, small creatures that inhabit the caves (how did they come down here?). These druids wander around the dungeons, moving only horizontally, left to right. If a player comes into contact with a druid, they will die instantly. The only way to avoid them is by jumping over them or carefully coordinating your movement to bypass them safely.
+
+#### Toggleable Walls and Buttons 🖲️
+While exploring a level, players may encounter a couple walls of different colors. These are toggleable walls! Unlike regular walls, toggleable walls can be deactivated using buttons. 
+
+For each toggleable wall, there must be at least one button of the same color. When a player presses the corresponding button, the toggleable wall becomes inactive and disappears. However, players must be cautious—if the button stops being pressed, the wall reappears. If a player is in the position of the wall when this happens, he will die instantly.
+
+
+####
 
 ### Menu
 Start a new game, select a specific level or exit the game.
